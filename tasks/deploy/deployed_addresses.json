@@ -1,0 +1,17 @@
+[
+  { "address": "0x3B14F26CDC1b25DB455a311f9aA7d63815815F4C", "constructorArguments": [] },
+  {
+    "address": "0x1a61bfA6Fd6FBB1D0d66213d72c200b10c39c332",
+    "constructorArguments": ["0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF", "0x3B14F26CDC1b25DB455a311f9aA7d63815815F4C"]
+  },
+  { "address": "0x7a68d8Ef1BF29b400eb0cDf5a4d036A78faAb6CB", "constructorArguments": [] },
+  { "address": "0x237eCFD6a9CBf4695311a3dFEdd78810Be5f29e8", "constructorArguments": [] },
+  { "address": "0xB70E55460d31655854A0eFC5d31a2971efE9b5d5", "constructorArguments": [] },
+  { "address": "0x9Ac654D2B3b04a9845891385d9c75C3C41Bfa3c2", "constructorArguments": [] },
+  { "address": "0xB6Ec5030e985E2027066618daC9e48aba79Cd4dF", "constructorArguments": [] },
+  { "address": "0xe085380450b3D19Ae6D79DF9a2D81B38dE9A6641", "constructorArguments": [] },
+  { "address": "0x178B9885457aCd87B6587926F556DADC5CbcD65D", "constructorArguments": [] },
+  { "address": "0x24b369De48c41260FF7f4c457593d9a52035b482", "constructorArguments": [] },
+  { "address": "0x64611f1e0BDBEBDC7bE1A4f0D7755B9b7F7cB768", "constructorArguments": [] },
+  { "address": "0xed37458Dca7cA137d218F15f94DE464f8601D016", "constructorArguments": [] }
+]
