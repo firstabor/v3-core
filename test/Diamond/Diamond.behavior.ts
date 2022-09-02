@@ -1,7 +1,7 @@
 import { assert } from "chai";
 import { ethers } from "hardhat";
 
-import { FacetCutAction, getSelectors } from "../../tasks/deploy/utils";
+import { FacetCutAction, getSelectors } from "../../tasks/utils/diamondCut";
 
 export function shouldBehaveLikeDiamond(): void {
   const addresses: string[] = [];

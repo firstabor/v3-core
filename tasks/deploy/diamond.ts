@@ -1,13 +1,16 @@
+import { TransactionReceipt } from "@ethersproject/providers";
 import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import fs from "fs";
-import { task } from "hardhat/config";
+import { task, types } from "hardhat/config";
 
-import { FacetCutAction, FacetNames, getSelectors } from "./utils";
+import { FacetCutAction, getSelectors } from "../utils/diamondCut";
+import { readData, writeData } from "../utils/fs";
+import { generateGasReport } from "../utils/gas";
+import { FacetNames } from "./constants";
 
-const WRITE_PATH = "./tasks/deploy/deployed_addresses.json";
+const JSON_FILE_NAME = "deployed.json";
 
 task("verify:deployment", "Verifies the initial deployment").setAction(async (_, { run }) => {
-  const deployedAddresses = JSON.parse(fs.readFileSync(WRITE_PATH, "utf8"));
+  const deployedAddresses = readData(JSON_FILE_NAME);
 
   for (const address of deployedAddresses) {
     try {
@@ -22,86 +25,116 @@ task("verify:deployment", "Verifies the initial deployment").setAction(async (_,
   }
 });
 
-task("deploy:Diamond", "Deploys the Diamond contract").setAction(async (_, { ethers }) => {
-  const signers: SignerWithAddress[] = await ethers.getSigners();
-  const owner: SignerWithAddress = signers[0];
+task("deploy:diamond", "Deploys the Diamond contract")
+  .addParam("logData", "Write the deployed addresses to a data file", false, types.boolean)
+  .addParam("reportGas", "Report gas consumption and costs", true, types.boolean)
+  .setAction(async ({ logData, reportGas }, { ethers }) => {
+    const signers: SignerWithAddress[] = await ethers.getSigners();
+    const owner: SignerWithAddress = signers[0];
+    let totalGasUsed = ethers.BigNumber.from(0);
+    let receipt: TransactionReceipt;
 
-  // Deploy DiamondCutFacet
-  const DiamondCutFacetFactory = await ethers.getContractFactory("DiamondCutFacet");
-  const diamondCutFacet = await DiamondCutFacetFactory.deploy();
-  await diamondCutFacet.deployed();
-  console.log("DiamondCutFacet deployed:", diamondCutFacet.address);
+    // Deploy DiamondCutFacet
+    const DiamondCutFacetFactory = await ethers.getContractFactory("DiamondCutFacet");
+    const diamondCutFacet = await DiamondCutFacetFactory.deploy();
+    await diamondCutFacet.deployed();
+    receipt = await diamondCutFacet.deployTransaction.wait();
+    totalGasUsed = totalGasUsed.add(receipt.gasUsed);
+    console.log("DiamondCutFacet deployed:", diamondCutFacet.address);
 
-  // Deploy Diamond
-  const DiamondFactory = await ethers.getContractFactory("Diamond");
-  const diamond = await DiamondFactory.deploy(owner.address, diamondCutFacet.address);
-  await diamond.deployed();
-  console.log("Diamond deployed:", diamond.address);
+    // Deploy Diamond
+    const DiamondFactory = await ethers.getContractFactory("Diamond");
+    const diamond = await DiamondFactory.deploy(owner.address, diamondCutFacet.address);
+    await diamond.deployed();
+    receipt = await diamond.deployTransaction.wait();
+    totalGasUsed = totalGasUsed.add(receipt.gasUsed);
+    console.log("Diamond deployed:", diamond.address);
 
-  // Deploy DiamondInit
-  const DiamondInit = await ethers.getContractFactory("DiamondInit");
-  const diamondInit = await DiamondInit.deploy();
-  await diamondInit.deployed();
-  console.log("DiamondInit deployed:", diamondInit.address);
+    // Deploy DiamondInit
+    const DiamondInit = await ethers.getContractFactory("DiamondInit");
+    const diamondInit = await DiamondInit.deploy();
+    await diamondInit.deployed();
+    receipt = await diamondInit.deployTransaction.wait();
+    totalGasUsed = totalGasUsed.add(receipt.gasUsed);
+    console.log("DiamondInit deployed:", diamondInit.address);
 
-  // Deploy Facets
-  const cut: Array<{
-    facetAddress: string;
-    action: FacetCutAction;
-    functionSelectors: string[];
-  }> = [];
+    // Deploy Facets
+    const cut: Array<{
+      facetAddress: string;
+      action: FacetCutAction;
+      functionSelectors: string[];
+    }> = [];
 
-  console.log("Deploying facets: ", FacetNames);
-  for (const facetName of FacetNames) {
-    const FacetFactory = await ethers.getContractFactory(facetName);
-    const facet = await FacetFactory.deploy();
-    await facet.deployed();
-    console.log(`${facetName} deployed: ${facet.address}`);
+    const deployedFacets: Array<{
+      name: string;
+      address: string;
+    }> = [];
 
-    cut.push({
-      facetAddress: facet.address,
-      action: FacetCutAction.Add,
-      functionSelectors: getSelectors(facet).selectors,
-    });
-  }
+    console.log("Deploying facets: ", FacetNames);
+    for (const facetName of FacetNames) {
+      const FacetFactory = await ethers.getContractFactory(facetName);
+      const facet = await FacetFactory.deploy();
+      await facet.deployed();
+      receipt = await facet.deployTransaction.wait();
+      totalGasUsed = totalGasUsed.add(receipt.gasUsed);
+      console.log(`${facetName} deployed: ${facet.address}`);
 
-  // Upgrade Diamond with Facets
-  const diamondCut = await ethers.getContractAt("IDiamondCut", diamond.address);
+      cut.push({
+        facetAddress: facet.address,
+        action: FacetCutAction.Add,
+        functionSelectors: getSelectors(facet).selectors,
+      });
 
-  // Call Initializer
-  const call = diamondInit.interface.encodeFunctionData("init");
-  const tx = await diamondCut.diamondCut(cut, diamondInit.address, call);
-  const receipt = await tx.wait();
+      deployedFacets.push({
+        name: facetName,
+        address: facet.address,
+      });
+    }
 
-  if (!receipt.status) {
-    throw Error(`Diamond upgrade failed: ${tx.hash}`);
-  }
+    // Upgrade Diamond with Facets
+    const diamondCut = await ethers.getContractAt("IDiamondCut", diamond.address);
 
-  console.log("Completed Diamond Cut");
+    // Call Initializer
+    const call = diamondInit.interface.encodeFunctionData("init");
+    const tx = await diamondCut.diamondCut(cut, diamondInit.address, call);
+    receipt = await tx.wait();
+    totalGasUsed = totalGasUsed.add(receipt.gasUsed);
 
-  // Write addresses to JSON file for etherscan verification
-  fs.writeFileSync(
-    WRITE_PATH,
-    JSON.stringify([
-      {
-        address: diamondCutFacet.address,
-        constructorArguments: [],
-      },
-      {
-        address: diamond.address,
-        constructorArguments: [owner.address, diamondCutFacet.address],
-      },
-      {
-        address: diamondInit.address,
-        constructorArguments: [],
-      },
-      ...cut.map(facet => ({
-        address: facet.facetAddress,
-        constructorArguments: [],
-      })),
-    ]),
-  );
-  console.log("Deployed addresses written to json file");
+    if (!receipt.status) {
+      throw Error(`Diamond upgrade failed: ${tx.hash}`);
+    }
+    console.log("Completed Diamond Cut");
 
-  return diamond;
-});
+    if (reportGas) {
+      await generateGasReport(ethers.provider, totalGasUsed);
+    }
+
+    // Write addresses to JSON file for etherscan verification
+    if (logData) {
+      writeData(JSON_FILE_NAME, [
+        {
+          name: "DiamondCut",
+          address: diamondCutFacet.address,
+          constructorArguments: [],
+        },
+        {
+          name: "Diamond",
+          address: diamond.address,
+          constructorArguments: [owner.address, diamondCutFacet.address],
+        },
+        {
+          name: "DiamondInit",
+          address: diamondInit.address,
+          constructorArguments: [],
+        },
+        ...deployedFacets.map(facet => ({
+          name: facet.name,
+          address: facet.address,
+          constructorArguments: [],
+        })),
+      ]);
+      console.log("Deployed addresses written to json file");
+    }
+
+    return diamond;
+  });

@@ -1,4 +1,5 @@
-import { ethers } from "ethers";
+import { Interface, Fragment } from "@ethersproject/abi";
+import { Contract, ContractFactory } from "@ethersproject/contracts";
 
 export enum FacetCutAction {
   Add,
@@ -6,20 +7,8 @@ export enum FacetCutAction {
   Remove,
 }
 
-export const FacetNames = [
-  "DiamondLoupeFacet",
-  "OwnershipFacet",
-  "AccountFacet",
-  "HedgersFacet",
-  "MarketsFacet",
-  "LiquidationFacet",
-  "MasterFacet",
-  "OpenMarketSingleFacet",
-  "CloseMarketSingleFacet",
-];
-
 // Get function selectors from ABI
-export function getSelectors(contract: ethers.Contract | ethers.ContractFactory) {
+export function getSelectors(contract: Contract | ContractFactory) {
   const signatures = Object.keys(contract.interface.functions);
 
   const selectors = signatures.reduce((acc, val) => {
@@ -60,6 +49,6 @@ export function getSelectors(contract: ethers.Contract | ethers.ContractFactory)
 
 // Get function selector from function signature
 export function getSelector(func: string) {
-  const abiInterface = new ethers.utils.Interface([func]);
-  return abiInterface.getSighash(ethers.utils.Fragment.from(func));
+  const abiInterface = new Interface([func]);
+  return abiInterface.getSighash(Fragment.from(func));
 }
