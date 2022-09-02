@@ -3,6 +3,7 @@ name: "CI"
 env:
   FANTOM_RPC_URL: ${{ secrets.FANTOM_RPC_URL }}
   PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+  FTMSCAN_API_KEY: ${{ secrets.FTMSCAN_API_KEY }}
 
 on:
   pull_request:
