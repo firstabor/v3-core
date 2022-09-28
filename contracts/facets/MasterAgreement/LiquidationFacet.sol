@@ -124,7 +124,7 @@ contract LiquidationFacet {
         uint256 deficit = owed - received;
 
         if (deficit < totalSingleLiquidationFees) {
-            /// @dev See _distributePnLDecificitOne.
+            /// @dev See _distributePnLDeficitOne.
             Decimal.D256 memory liquidationFeeRatio = Decimal.ratio(
                 totalSingleLiquidationFees - deficit,
                 totalSingleLiquidationFees
@@ -134,7 +134,7 @@ contract LiquidationFacet {
                 _updatePositionDataCross(positionPrices[i].positionId, positionPrices[i]);
             }
         } else if (deficit < totalSingleLiquidationFees + totalSingleCVA) {
-            /// @dev See _distributePnLDecificitTwo.
+            /// @dev See _distributePnLDeficitTwo.
             Decimal.D256 memory cvaRatio = Decimal.ratio(
                 totalSingleLiquidationFees + totalSingleCVA - deficit,
                 totalSingleCVA
@@ -144,7 +144,7 @@ contract LiquidationFacet {
                 _updatePositionDataCross(positionPrices[i].positionId, positionPrices[i]);
             }
         } else if (deficit < totalSingleLiquidationFees + totalSingleCVA * 2) {
-            /// @dev See _distributePnLDecificitThree.
+            /// @dev See _distributePnLDeficitThree.
             Decimal.D256 memory cvaRatio = Decimal.ratio(
                 totalSingleLiquidationFees + (totalSingleCVA * 2) - deficit,
                 totalSingleCVA
@@ -154,7 +154,7 @@ contract LiquidationFacet {
                 _updatePositionDataCross(positionPrices[i].positionId, positionPrices[i]);
             }
         } else if (deficit < totalSingleLiquidationFees * 2 + totalSingleCVA * 2) {
-            /// @dev See _distributePnLDecificitFour.
+            /// @dev See _distributePnLDeficitFour.
             Decimal.D256 memory liquidationFeeRatio = Decimal.ratio(
                 (totalSingleLiquidationFees * 2) + (totalSingleCVA * 2) - deficit,
                 totalSingleLiquidationFees
@@ -164,7 +164,7 @@ contract LiquidationFacet {
                 _updatePositionDataCross(positionPrices[i].positionId, positionPrices[i]);
             }
         } else {
-            /// @dev See _distributePnLDecificitFive.
+            /// @dev See _distributePnLDeficitFive.
             // The deficit is too high, winning counterparties will receive a reduced PNL.
             uint256 pendingDeficit = deficit - (totalSingleLiquidationFees * 2) + (totalSingleCVA * 2);
             Decimal.D256 memory pnlRatio = pendingDeficit >= received
