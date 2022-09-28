@@ -46,9 +46,9 @@ contract LiquidationFacet {
 
         // If partyA is in a loss, then that means he's the one who needs to be liquidated
         if (pnlA < 0) {
-            s.ma._marginBalances[position.partyB] = amount;
+            s.ma._marginBalances[position.partyB] += amount;
         } else {
-            s.ma._marginBalances[position.partyA] = amount;
+            s.ma._marginBalances[position.partyA] += amount;
         }
 
         // Reward the liquidator
