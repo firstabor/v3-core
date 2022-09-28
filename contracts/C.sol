@@ -19,18 +19,12 @@ library C {
     uint8 private constant MIN_REQUIRED_SIGNATURES = 0; // TODO
 
     // Configuration
-    uint256 private constant MARGIN_OVERHEAD = 0.5e18; // 50%
-    uint256 private constant LIQUIDATION_FEE = 0.1e18; // 10%
-
-    uint16 private constant MAX_LEVERAGE = 1000;
-
-    uint256 private constant SOLVENCY_THRESHOLD_TRADE_USER = 0.3e18; // 30%
-    uint256 private constant SOLVENCY_THRESHOLD_TRADE_HEDGER = 0; // 0%
-
-    uint256 private constant SOLVENCY_THRESHOLD_REMOVE_USER = 1e18; // 30%
-    uint256 private constant SOLVENCY_THRESHOLD_REMOVE_HEDGER = 0.5e18; // 0%
-
+    uint256 private constant PROTOCOL_FEE = 0.002e18; // 0.2%
+    uint256 private constant LIQUIDATION_FEE = 0.05e18; // 5%
+    uint256 private constant CVA = 0.05e18; // 5%
+    uint256 private constant SOLVENCY_THRESHOLD_REMOVE = 1e18; // 100%
     uint256 private constant REQUEST_TIMEOUT = 1 minutes;
+    uint256 private constant MAX_OPEN_POSITIONS_CROSS = 10;
 
     function getCollateral() internal pure returns (address) {
         return COLLATERAL;
@@ -52,34 +46,28 @@ library C {
         return MIN_REQUIRED_SIGNATURES;
     }
 
-    function getMaxLeverage() internal pure returns (uint16) {
-        return MAX_LEVERAGE;
-    }
-
-    function getMarginOverhead() internal pure returns (Decimal.D256 memory) {
-        return Decimal.ratio(MARGIN_OVERHEAD, PERCENT_BASE);
+    function getProtocolFee() internal pure returns (uint256) {
+        return PROTOCOL_FEE;
     }
 
     function getLiquidationFee() internal pure returns (Decimal.D256 memory) {
         return Decimal.ratio(LIQUIDATION_FEE, PERCENT_BASE);
     }
 
-    function getSolvencyThresholdToTrade(bool isHedger) internal pure returns (Decimal.D256 memory) {
-        return
-            isHedger
-                ? Decimal.ratio(SOLVENCY_THRESHOLD_TRADE_HEDGER, PERCENT_BASE)
-                : Decimal.ratio(SOLVENCY_THRESHOLD_TRADE_USER, PERCENT_BASE);
+    function getCVA() internal pure returns (Decimal.D256 memory) {
+        return Decimal.ratio(CVA, PERCENT_BASE);
     }
 
-    function getSolvencyThresholdToRemoveLockedMargin(bool isHedger) internal pure returns (Decimal.D256 memory) {
-        return
-            isHedger
-                ? Decimal.ratio(SOLVENCY_THRESHOLD_REMOVE_HEDGER, PERCENT_BASE)
-                : Decimal.ratio(SOLVENCY_THRESHOLD_REMOVE_USER, PERCENT_BASE);
+    function getSolvencyThresholdToRemoveLockedMargin() internal pure returns (Decimal.D256 memory) {
+        return Decimal.ratio(SOLVENCY_THRESHOLD_REMOVE, PERCENT_BASE);
     }
 
     function getRequestTimeout() internal pure returns (uint256) {
         return REQUEST_TIMEOUT;
+    }
+
+    function getMaxOpenPositionsCross() internal pure returns (uint256) {
+        return MAX_OPEN_POSITIONS_CROSS;
     }
 
     function getChainId() internal view returns (uint256) {

@@ -7,7 +7,7 @@ struct SchnorrSign {
     address nonce;
 }
 
-interface IMuonV02 {
+interface IMuonV03 {
     function verify(
         bytes calldata reqId,
         uint256 hash,

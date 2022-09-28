@@ -28,6 +28,11 @@ enum OrderType {
     MARKET
 }
 
+enum PositionType {
+    ISOLATED,
+    CROSS
+}
+
 enum RequestForQuoteState {
     ORPHAN,
     CANCELATION_REQUESTED,

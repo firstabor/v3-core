@@ -6,7 +6,6 @@ struct Hedger {
     address addr;
     string[] pricingWssURLs;
     string[] marketsHttpsURLs;
-    bool slippageControl;
 }
 
 struct Market {
@@ -18,11 +17,14 @@ struct Market {
     string baseCurrency;
     string quoteCurrency;
     string symbol;
+    // TODO: bytes32 muonPriceFeedID;
+    // TODO: bytes32 muonFundingRateFeedID;
 }
 
 struct RequestForQuote {
     uint256 rfqId;
     RequestForQuoteState state;
+    PositionType positionType;
     OrderType orderType;
     address partyA;
     address partyB;
@@ -30,15 +32,19 @@ struct RequestForQuote {
     uint256 marketId;
     Side side;
     uint256 notionalUsd;
-    uint16 leverageUsed;
-    uint256 marginRequiredPercentage;
-    uint256 lockedMarginA;
-    uint256 lockedMarginB;
+    uint256 leverageUsed;
+    uint256 lockedMargin;
+    uint256 protocolFee;
+    uint256 liquidationFee;
+    uint256 cva;
+    uint256 minExpectedUnits;
+    uint256 maxExpectedUnits;
     uint256 creationTimestamp;
     uint256 mutableTimestamp;
 }
 
 struct Fill {
+    uint256 positionId;
     Side side;
     uint256 filledAmountUnits;
     uint256 avgPriceUsd;
@@ -48,13 +54,16 @@ struct Fill {
 struct Position {
     uint256 positionId;
     PositionState state;
+    PositionType positionType;
     uint256 marketId;
     address partyA;
     address partyB;
-    uint256 lockedMarginA;
-    uint256 lockedMarginB;
-    uint16 leverageUsed;
+    uint256 leverageUsed;
     Side side;
+    uint256 lockedMargin;
+    uint256 protocolFeePaid;
+    uint256 liquidationFee;
+    uint256 cva;
     uint256 currentBalanceUnits;
     uint256 initialNotionalUsd;
     uint256 creationTimestamp;
@@ -72,15 +81,20 @@ struct MarketsState {
 }
 
 struct MAState {
-    mapping(address => mapping(uint256 => RequestForQuote)) _requestForQuoteMap;
-    mapping(address => uint256) _requestForQuotesLength;
+    // Balances
     mapping(address => uint256) _accountBalances;
     mapping(address => uint256) _marginBalances;
     mapping(address => uint256) _lockedMargin;
     mapping(address => uint256) _lockedMarginReserved;
+    // RequestForQuotes
+    mapping(uint256 => RequestForQuote) _requestForQuotesMap;
+    uint256 _requestForQuotesLength;
+    mapping(address => uint256[]) _openRequestForQuotesList;
+    // Positions
     mapping(uint256 => Position) _allPositionsMap;
     uint256 _allPositionsLength;
-    mapping(address => uint256[]) _openPositionsList;
+    mapping(address => uint256[]) _openPositionsIsolatedList;
+    mapping(address => uint256[]) _openPositionsCrossList;
     mapping(uint256 => Fill[]) _positionFills;
 }
 

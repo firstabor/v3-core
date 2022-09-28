@@ -11,11 +11,10 @@ contract HedgersFacet {
     //----- PUBLIC WRITE FUNCTIONS ----//
     // --------------------------------//
 
-    function enlist(
-        string[] calldata pricingWssURLs,
-        string[] calldata marketsHttpsURLs,
-        bool slippageControl
-    ) external returns (Hedger memory hedger) {
+    function enlist(string[] calldata pricingWssURLs, string[] calldata marketsHttpsURLs)
+        external
+        returns (Hedger memory hedger)
+    {
         require(msg.sender != address(0), "Invalid address");
         require(s.hedgers._hedgerMap[msg.sender].addr != msg.sender, "Hedger already exists");
 
@@ -24,7 +23,7 @@ contract HedgersFacet {
         mustBeHTTPSOrThrow(marketsHttpsURLs);
         mustBeWSSOrThrow(pricingWssURLs);
 
-        hedger = Hedger(msg.sender, pricingWssURLs, marketsHttpsURLs, slippageControl);
+        hedger = Hedger(msg.sender, pricingWssURLs, marketsHttpsURLs);
         s.hedgers._hedgerMap[msg.sender] = hedger;
         s.hedgers._hedgerList.push(hedger);
 
@@ -51,15 +50,6 @@ contract HedgersFacet {
         mustBeHTTPSOrThrow(_marketsHttpsURLs);
 
         s.hedgers._hedgerMap[msg.sender].marketsHttpsURLs = _marketsHttpsURLs;
-
-        // TODO: emit event
-    }
-
-    function updateSlippageControl(bool _slippageControl) external {
-        Hedger memory hedger = LibHedgers.getHedgerByAddressOrThrow(msg.sender);
-        require(hedger.addr == msg.sender, "Access Denied");
-
-        s.hedgers._hedgerMap[msg.sender].slippageControl = _slippageControl;
 
         // TODO: emit event
     }

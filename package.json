@@ -63,10 +63,7 @@
   "keywords": [
     "defi",
     "ethereum",
-    "hardhat",
-    "smart-contracts",
-    "solidity",
-    "typescript"
+    "derivatives"
   ],
   "packageManager": "yarn@3.2.1",
   "publishConfig": {

@@ -4,68 +4,103 @@ pragma solidity >=0.8.16;
 import { AppStorage, RequestForQuote, Position } from "../../libraries/LibAppStorage.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
-import { MarketPrice } from "../../interfaces/IOracle.sol";
+import { PositionPrice } from "../../libraries/LibOracle.sol";
 import "../../libraries/LibEnums.sol";
 
 contract MasterFacet {
     AppStorage internal s;
 
-    function getRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
-        uint256 len = s.ma._requestForQuotesLength[party];
+    function getOpenRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
+        uint256 len = s.ma._openRequestForQuotesList[party].length;
         rfqs = new RequestForQuote[](len);
 
         for (uint256 i = 0; i < len; i++) {
-            rfqs[i] = (s.ma._requestForQuoteMap[party][i]);
+            rfqs[i] = (s.ma._requestForQuotesMap[s.ma._openRequestForQuotesList[party][i]]);
         }
     }
 
-    function getRequestForQuote(address party, uint256 rfqId) external view returns (RequestForQuote memory) {
-        return s.ma._requestForQuoteMap[party][rfqId];
+    function getRequestForQuotes(uint256[] calldata rfqIds) external view returns (RequestForQuote[] memory rfqs) {
+        uint256 len = rfqIds.length;
+        rfqs = new RequestForQuote[](len);
+
+        for (uint256 i = 0; i < len; i++) {
+            rfqs[i] = (s.ma._requestForQuotesMap[rfqIds[i]]);
+        }
     }
 
-    function getOpenPositions(address partyA) external view returns (Position[] memory) {
-        return LibMaster.getOpenPositions(partyA);
+    function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory) {
+        return s.ma._requestForQuotesMap[rfqId];
     }
 
-    function calculateLockedMargin(
-        uint256 notionalUsd,
-        uint8 marginRequiredPercentage,
-        bool isHedger
-    ) external pure returns (uint256) {
-        return LibMaster.calculateLockedMargin(notionalUsd, marginRequiredPercentage, isHedger);
+    function getOpenPositionsIsolated(address party) external view returns (Position[] memory) {
+        return LibMaster.getOpenPositionsIsolated(party);
     }
 
-    function calculateUPnLCross(MarketPrice[] memory marketPrices, address party)
+    function getOpenPositionsCross(address party) external view returns (Position[] memory) {
+        return LibMaster.getOpenPositionsCross(party);
+    }
+
+    function calculateUPnLIsolated(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice
+    ) external view returns (int256 uPnLA, int256 uPnLB) {
+        return LibMaster.calculateUPnLIsolated(positionId, bidPrice, askPrice);
+    }
+
+    function calculateUPnLCross(PositionPrice[] memory positionPrices, address party)
         external
         view
         returns (int256 uPnLCross, int256 notionalCross)
     {
-        return LibMaster.calculateUPnLCross(marketPrices, party);
+        return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 
-    function calculateUPnLIsolated(
-        Side side,
-        uint256 currentBalanceUnits,
-        uint256 initialNotionalUsd,
-        uint256 bidPrice,
-        uint256 askPrice
-    ) external pure returns (int256 uPnL, int256 notionalIsolated) {
-        return LibMaster.calculateUPnLIsolated(side, currentBalanceUnits, initialNotionalUsd, bidPrice, askPrice);
+    function calculateProtocolFeeAmount(uint256 notionalUsd) external pure returns (uint256) {
+        return LibMaster.calculateProtocolFeeAmount(notionalUsd);
     }
 
-    function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnLCross)
+    function calculateLiquidationFeeAmount(uint256 lockedMargin) external pure returns (uint256) {
+        return LibMaster.calculateLiquidationFeeAmount(lockedMargin);
+    }
+
+    function calculateCVAAmount(uint256 lockedMargin) external pure returns (uint256) {
+        return LibMaster.calculateCVAAmount(lockedMargin);
+    }
+
+    function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnL)
         external
         pure
         returns (Decimal.D256 memory ratio)
     {
-        return LibMaster.calculateCrossMarginHealth(lockedMargin, uPnLCross);
+        return LibMaster.calculateCrossMarginHealth(lockedMargin, uPnL);
     }
 
-    function solvencySafeguardToTrade(
-        uint256 lockedMargin,
-        int256 uPnLCross,
-        bool isHedger
-    ) external pure returns (bool) {
-        return LibMaster.solvencySafeguardToTrade(lockedMargin, uPnLCross, isHedger);
+    function positionShouldBeLiquidatedIsolated(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice
+    )
+        external
+        view
+        returns (
+            bool shouldLiquidated,
+            int256 pnlA,
+            int256 pnlB
+        )
+    {
+        return LibMaster.positionShouldBeLiquidatedIsolated(positionId, bidPrice, askPrice);
+    }
+
+    function shouldBeLiquidatedCross(address party, int256 uPnLCross) external view returns (bool) {
+        return LibMaster.partyShouldBeLiquidatedCross(party, uPnLCross);
+    }
+
+    function solvencySafeguardToRemoveLockedMargin(uint256 lockedMargin, int256 uPnLCross)
+        external
+        pure
+        returns (bool)
+    {
+        return LibMaster.solvencySafeguardToRemoveLockedMargin(lockedMargin, uPnLCross);
     }
 }

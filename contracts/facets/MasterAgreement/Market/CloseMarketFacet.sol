@@ -3,6 +3,7 @@ pragma solidity >=0.8.16;
 
 import { AppStorage, LibAppStorage, Position, Fill } from "../../../libraries/LibAppStorage.sol";
 import { LibMaster } from "../../../libraries/LibMaster.sol";
+import { LibOracle, SchnorrSign } from "../../../libraries/LibOracle.sol";
 import { C } from "../../../C.sol";
 import "../../../libraries/LibEnums.sol";
 
@@ -10,7 +11,7 @@ import "../../../libraries/LibEnums.sol";
  * Close a Position through a Market order.
  * @dev Can only be done via the original partyB (hedgerMode=Single).
  */
-contract CloseMarketSingleFacet {
+contract CloseMarketFacet {
     AppStorage internal s;
 
     function requestCloseMarket(uint256 positionId) external {
@@ -74,36 +75,23 @@ contract CloseMarketSingleFacet {
         // TODO: emit event
     }
 
-    function fillCloseMarket(uint256 positionId, uint256 avgPriceUsd) external {
+    function fillCloseMarket(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice,
+        bytes calldata reqId,
+        SchnorrSign[] calldata sigs
+    ) external {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        // Add the Fill
-        Fill memory fill = LibMaster.createFill(position.side, position.currentBalanceUnits, avgPriceUsd);
-        s.ma._positionFills[positionId].push(fill);
+        // Verify oracle signatures
+        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sigs);
 
-        // Calculate the PnL of PartyA
-        (int256 pnlA, ) = LibMaster.calculateUPnLIsolated(
-            position.side,
-            position.currentBalanceUnits,
-            position.initialNotionalUsd,
-            avgPriceUsd,
-            avgPriceUsd
-        );
-
-        // Distribute the PnL accordingly
-        LibMaster.distributePnL(position.partyA, position.partyB, pnlA);
-
-        // Update Position
-        position.state = PositionState.CLOSED;
-        position.currentBalanceUnits = 0;
-        position.mutableTimestamp = block.timestamp;
-
-        // Update mappings
-        LibMaster.removeOpenPosition(position.partyA, positionId);
-        LibMaster.removeOpenPosition(position.partyB, positionId);
+        // Handle the fill
+        LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
 
         // TODO: emit event
     }

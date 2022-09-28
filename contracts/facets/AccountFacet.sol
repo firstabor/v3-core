@@ -5,10 +5,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ReentrancyGuard } from "../utils/ReentrancyGuard.sol";
 import { C } from "../C.sol";
 import { LibHedgers } from "../libraries/LibHedgers.sol";
-import { LibOracle } from "../libraries/LibOracle.sol";
+import { LibOracle, PositionPrice } from "../libraries/LibOracle.sol";
 import { LibMaster } from "../libraries/LibMaster.sol";
-import { SchnorrSign } from "../interfaces/IMuonV02.sol";
-import { MarketPrice } from "../interfaces/IOracle.sol";
+import { SchnorrSign } from "../interfaces/IMuonV03.sol";
 
 contract AccountFacet is ReentrancyGuard {
     // --------------------------------//
@@ -47,11 +46,11 @@ contract AccountFacet is ReentrancyGuard {
 
     function dangerouslyRemoveLockedMargin(
         uint256 amount,
-        MarketPrice[] calldata marketPrices,
-        bytes calldata reqId,
-        SchnorrSign[] calldata sigs
+        uint256[] memory positionIds,
+        uint256[] memory bidPrices,
+        uint256[] memory askPrices
     ) external {
-        _dangerouslyRemoveLockedMargin(msg.sender, amount, marketPrices, reqId, sigs);
+        _dangerouslyRemoveLockedMargin(msg.sender, amount, positionIds, bidPrices, askPrices);
     }
 
     // --------------------------------//
@@ -99,25 +98,28 @@ contract AccountFacet is ReentrancyGuard {
         // TODO: emit event
     }
 
+    /// @dev We don't have to verify the prices because the safeguard is only there to protect the party.
+    ///      If the party knows what they are doing, they can bypass the safeguard.
     function _dangerouslyRemoveLockedMargin(
         address party,
         uint256 amount,
-        MarketPrice[] calldata marketPrices,
-        bytes calldata reqId,
-        SchnorrSign[] calldata sigs
+        uint256[] memory positionIds,
+        uint256[] memory bidPrices,
+        uint256[] memory askPrices
     ) private {
         require(s.ma._lockedMargin[party] >= amount, "Insufficient lockedMargin balance");
 
-        // Validate raw oracle signatures. Can be bypassed if a user has no open positions.
-        if (s.ma._openPositionsList[party].length > 0) {
-            bool valid = LibOracle.isValidMarketPrices(marketPrices, reqId, sigs);
-            require(valid, "Invalid oracle inputs");
+        if (s.ma._openPositionsCrossList[party].length == 0) {
+            s.ma._lockedMargin[party] -= amount;
+            s.ma._marginBalances[party] += amount;
+            return;
         }
 
-        (int256 uPnLCross, ) = LibMaster.calculateUPnLCross(marketPrices, party);
-        (bool isHedger, ) = LibHedgers.isValidHedger(party);
+        PositionPrice[] memory positionPrices = LibOracle.createPositionPrices(positionIds, bidPrices, askPrices);
+
+        (int256 uPnLCross, ) = LibMaster.calculateUPnLCross(positionPrices, party);
         require(
-            LibMaster.solvencySafeguardToRemoveLockedMargin(s.ma._lockedMargin[party] - amount, uPnLCross, isHedger),
+            LibMaster.solvencySafeguardToRemoveLockedMargin(s.ma._lockedMargin[party] - amount, uPnLCross),
             "Party fails solvency safeguard"
         );
 
