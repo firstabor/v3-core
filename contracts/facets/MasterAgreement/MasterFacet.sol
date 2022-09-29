@@ -10,13 +10,8 @@ import "../../libraries/LibEnums.sol";
 contract MasterFacet {
     AppStorage internal s;
 
-    function getOpenRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
-        uint256 len = s.ma._openRequestForQuotesList[party].length;
-        rfqs = new RequestForQuote[](len);
-
-        for (uint256 i = 0; i < len; i++) {
-            rfqs[i] = (s.ma._requestForQuotesMap[s.ma._openRequestForQuotesList[party][i]]);
-        }
+    function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory rfq) {
+        return s.ma._requestForQuotesMap[rfqId];
     }
 
     function getRequestForQuotes(uint256[] calldata rfqIds) external view returns (RequestForQuote[] memory rfqs) {
@@ -28,16 +23,46 @@ contract MasterFacet {
         }
     }
 
-    function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory) {
-        return s.ma._requestForQuotesMap[rfqId];
+    function getOpenRequestForQuoteIds(address party) external view returns (uint256[] memory rfqIds) {
+        return s.ma._openRequestForQuotesList[party];
     }
 
-    function getOpenPositionsIsolated(address party) external view returns (Position[] memory) {
+    function getOpenRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
+        uint256 len = s.ma._openRequestForQuotesList[party].length;
+        rfqs = new RequestForQuote[](len);
+
+        for (uint256 i = 0; i < len; i++) {
+            rfqs[i] = (s.ma._requestForQuotesMap[s.ma._openRequestForQuotesList[party][i]]);
+        }
+    }
+
+    function getPosition(uint256 positionId) external view returns (Position memory position) {
+        return s.ma._allPositionsMap[positionId];
+    }
+
+    function getPositions(uint256[] calldata positionIds) external view returns (Position[] memory positions) {
+        uint256 len = positionIds.length;
+        positions = new Position[](len);
+
+        for (uint256 i = 0; i < len; i++) {
+            positions[i] = (s.ma._allPositionsMap[positionIds[i]]);
+        }
+    }
+
+    function getOpenPositionsIsolated(address party) external view returns (Position[] memory openPositionsIsolated) {
         return LibMaster.getOpenPositionsIsolated(party);
     }
 
-    function getOpenPositionsCross(address party) external view returns (Position[] memory) {
+    function getOpenPositionsCross(address party) external view returns (Position[] memory openPositionsCross) {
         return LibMaster.getOpenPositionsCross(party);
+    }
+
+    function getOpenPositionIdsIsolated(address party) external view returns (uint256[] memory positionIds) {
+        return s.ma._openPositionsIsolatedList[party];
+    }
+
+    function getOpenPositionIdsCross(address party) external view returns (uint256[] memory positionIds) {
+        return s.ma._openPositionsCrossList[party];
     }
 
     function calculateUPnLIsolated(
@@ -48,7 +73,7 @@ contract MasterFacet {
         return LibMaster.calculateUPnLIsolated(positionId, bidPrice, askPrice);
     }
 
-    function calculateUPnLCross(PositionPrice[] memory positionPrices, address party)
+    function calculateUPnLCross(PositionPrice[] calldata positionPrices, address party)
         external
         view
         returns (int256 uPnLCross, int256 notionalCross)
@@ -92,7 +117,7 @@ contract MasterFacet {
         return LibMaster.positionShouldBeLiquidatedIsolated(positionId, bidPrice, askPrice);
     }
 
-    function shouldBeLiquidatedCross(address party, int256 uPnLCross) external view returns (bool) {
+    function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) external view returns (bool) {
         return LibMaster.partyShouldBeLiquidatedCross(party, uPnLCross);
     }
 
