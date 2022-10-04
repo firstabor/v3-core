@@ -44,13 +44,8 @@ contract AccountFacet is ReentrancyGuard {
         _addFreeMargin(msg.sender, amount);
     }
 
-    function dangerouslyRemoveLockedMargin(
-        uint256 amount,
-        uint256[] memory positionIds,
-        uint256[] memory bidPrices,
-        uint256[] memory askPrices
-    ) external {
-        _dangerouslyRemoveLockedMargin(msg.sender, amount, positionIds, bidPrices, askPrices);
+    function removeFreeMargin() external {
+        _removeFreeMargin(msg.sender);
     }
 
     // --------------------------------//
@@ -98,32 +93,12 @@ contract AccountFacet is ReentrancyGuard {
         // TODO: emit event
     }
 
-    /// @dev We don't have to verify the prices because the safeguard is only there to protect the party.
-    ///      If the party knows what they are doing, they can bypass the safeguard.
-    function _dangerouslyRemoveLockedMargin(
-        address party,
-        uint256 amount,
-        uint256[] memory positionIds,
-        uint256[] memory bidPrices,
-        uint256[] memory askPrices
-    ) private {
-        require(s.ma._lockedMargin[party] >= amount, "Insufficient lockedMargin balance");
+    function _removeFreeMargin(address party) private {
+        require(s.ma._openPositionsCrossList[party].length == 0, "Removal denied");
+        require(s.ma._lockedMargin[party] > 0, "No locked margin");
 
-        if (s.ma._openPositionsCrossList[party].length == 0) {
-            s.ma._lockedMargin[party] -= amount;
-            s.ma._marginBalances[party] += amount;
-            return;
-        }
-
-        PositionPrice[] memory positionPrices = LibOracle.createPositionPrices(positionIds, bidPrices, askPrices);
-
-        (int256 uPnLCross, ) = LibMaster.calculateUPnLCross(positionPrices, party);
-        require(
-            LibMaster.solvencySafeguardToRemoveLockedMargin(s.ma._lockedMargin[party] - amount, uPnLCross),
-            "Party fails solvency safeguard"
-        );
-
-        s.ma._lockedMargin[party] -= amount;
+        uint256 amount = s.ma._lockedMargin[party];
+        s.ma._lockedMargin[party] = 0;
         s.ma._marginBalances[party] += amount;
     }
 

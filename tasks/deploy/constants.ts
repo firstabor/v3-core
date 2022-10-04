@@ -7,5 +7,5 @@ export const FacetNames = [
   "LiquidationFacet",
   "MasterFacet",
   "OpenMarketSingleFacet",
-  "CloseMarketSingleFacet",
+  "CloseMarketFacet",
 ];

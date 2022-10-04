@@ -7,6 +7,8 @@ import { LibOracle, PositionPrice } from "../../libraries/LibOracle.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
 import { LibHedgers } from "../../libraries/LibHedgers.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
+import { LibDiamond } from "../../libraries/LibDiamond.sol";
+import { C } from "../../C.sol";
 import "../../libraries/LibEnums.sol";
 
 contract LiquidationFacet {
@@ -306,9 +308,11 @@ contract LiquidationFacet {
             s.ma._marginBalances[counterParty] += amount;
         }
 
-        // Reward the liquidator
+        // Reward the liquidator + protocol
         uint256 liquidationFee = Decimal.mul(liquidationFeeRatio, position.liquidationFee).asUint256();
-        s.ma._marginBalances[liquidator] += liquidationFee;
+        uint256 protocolShare = Decimal.mul(C.getProtocolLiquidationShare(), liquidationFee).asUint256();
+        s.ma._accountBalances[liquidator] += (liquidationFee - protocolShare);
+        s.ma._accountBalances[LibDiamond.contractOwner()] += protocolShare;
     }
 
     /**

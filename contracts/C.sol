@@ -21,6 +21,7 @@ library C {
     // Configuration
     uint256 private constant PROTOCOL_FEE = 0.002e18; // 0.2%
     uint256 private constant LIQUIDATION_FEE = 0.05e18; // 5%
+    uint256 private constant PROTOCOL_LIQUIDATION_SHARE = 0.1e18; // 10%
     uint256 private constant CVA = 0.05e18; // 5%
     uint256 private constant SOLVENCY_THRESHOLD_REMOVE = 1e18; // 100%
     uint256 private constant REQUEST_TIMEOUT = 1 minutes;
@@ -52,6 +53,10 @@ library C {
 
     function getLiquidationFee() internal pure returns (Decimal.D256 memory) {
         return Decimal.ratio(LIQUIDATION_FEE, PERCENT_BASE);
+    }
+
+    function getProtocolLiquidationShare() internal pure returns (Decimal.D256 memory) {
+        return Decimal.ratio(PROTOCOL_LIQUIDATION_SHARE, PERCENT_BASE);
     }
 
     function getCVA() internal pure returns (Decimal.D256 memory) {

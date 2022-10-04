@@ -15,7 +15,7 @@ task("verify:deployment", "Verifies the initial deployment").setAction(async (_,
   for (const address of deployedAddresses) {
     try {
       console.log(`Verifying ${address.address}`);
-      await run("verify:verify", {
+      run("verify:verify", {
         address: address.address,
         constructorArguments: address.constructorArguments,
       });
@@ -26,7 +26,7 @@ task("verify:deployment", "Verifies the initial deployment").setAction(async (_,
 });
 
 task("deploy:diamond", "Deploys the Diamond contract")
-  .addParam("logData", "Write the deployed addresses to a data file", false, types.boolean)
+  .addParam("logData", "Write the deployed addresses to a data file", true, types.boolean)
   .addParam("reportGas", "Report gas consumption and costs", true, types.boolean)
   .setAction(async ({ logData, reportGas }, { ethers }) => {
     const signers: SignerWithAddress[] = await ethers.getSigners();
