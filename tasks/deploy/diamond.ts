@@ -15,7 +15,7 @@ task("verify:deployment", "Verifies the initial deployment").setAction(async (_,
   for (const address of deployedAddresses) {
     try {
       console.log(`Verifying ${address.address}`);
-      run("verify:verify", {
+      await run("verify:verify", {
         address: address.address,
         constructorArguments: address.constructorArguments,
       });

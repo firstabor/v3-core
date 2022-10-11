@@ -1,0 +1,4 @@
+[
+  { "name": "LiquidationFacet", "address": "0xE77033eDD95c93954d5A52c08A2986a92EC66831", "constructorArguments": [] },
+  { "name": "AccountFacet", "address": "0x4b8De0cB2642A90E67a5B5c911bc7D73c7626A72", "constructorArguments": [] }
+]

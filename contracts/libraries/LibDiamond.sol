@@ -27,14 +27,15 @@ library LibDiamond {
         address contractOwner;
     }
 
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
+
     function diamondStorage() internal pure returns (DiamondStorage storage ds) {
         bytes32 position = DIAMOND_STORAGE_POSITION;
         assembly {
             ds.slot := position
         }
     }
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     function setContractOwner(address _newOwner) internal {
         DiamondStorage storage ds = diamondStorage();
@@ -57,8 +58,6 @@ library LibDiamond {
     function enforceIsContractOwner() internal view {
         require(msg.sender == diamondStorage().contractOwner, "LibDiamond: Must be contract owner");
     }
-
-    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // Internal function version of diamondCut
     function diamondCut(

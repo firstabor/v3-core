@@ -8,8 +8,6 @@ import { AppStorage } from "../libraries/LibAppStorage.sol";
 contract OwnershipFacet is Ownable {
     AppStorage internal s;
 
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
     function transferOwnership(address _newOwner) external onlyOwner {
         s.ownerCandidate = _newOwner;
     }

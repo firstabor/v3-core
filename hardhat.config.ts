@@ -5,6 +5,7 @@ import type { HardhatUserConfig } from "hardhat/config";
 import { resolve } from "path";
 
 import "./tasks/deploy";
+import "./tasks/upgrade";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
