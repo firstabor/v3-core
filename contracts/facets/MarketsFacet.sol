@@ -60,4 +60,17 @@ contract MarketsFacet is Ownable {
     function getMarketsLength() external view returns (uint256 length) {
         return s.markets._marketList.length;
     }
+
+    function getMarketFromPositionId(uint256 positionId) external view returns (Market memory market) {
+        uint256 marketId = s.ma._allPositionsMap[positionId].marketId;
+        market = s.markets._marketMap[marketId];
+    }
+
+    function getMarketsFromPositionIds(uint256[] calldata positionIds) external view returns (Market[] memory markets) {
+        markets = new Market[](positionIds.length);
+        for (uint256 i = 0; i < positionIds.length; i++) {
+            uint256 marketId = s.ma._allPositionsMap[positionIds[i]].marketId;
+            markets[i] = s.markets._marketMap[marketId];
+        }
+    }
 }
