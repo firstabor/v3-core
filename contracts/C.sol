@@ -19,11 +19,10 @@ library C {
     uint8 private constant MIN_REQUIRED_SIGNATURES = 0; // TODO
 
     // Configuration
-    uint256 private constant PROTOCOL_FEE = 0.002e18; // 0.2%
-    uint256 private constant LIQUIDATION_FEE = 0.05e18; // 5%
+    uint256 private constant PROTOCOL_FEE = 0.0005e18; // 0.05%
+    uint256 private constant LIQUIDATION_FEE = 0.005e18; // 0.5%
     uint256 private constant PROTOCOL_LIQUIDATION_SHARE = 0.1e18; // 10%
-    uint256 private constant CVA = 0.05e18; // 5%
-    uint256 private constant SOLVENCY_THRESHOLD_REMOVE = 1e18; // 100%
+    uint256 private constant CVA = 0.02e18; // 2%
     uint256 private constant REQUEST_TIMEOUT = 1 minutes;
     uint256 private constant MAX_OPEN_POSITIONS_CROSS = 10;
 
@@ -47,8 +46,8 @@ library C {
         return MIN_REQUIRED_SIGNATURES;
     }
 
-    function getProtocolFee() internal pure returns (uint256) {
-        return PROTOCOL_FEE;
+    function getProtocolFee() internal pure returns (Decimal.D256 memory) {
+        return Decimal.ratio(PROTOCOL_FEE, PERCENT_BASE);
     }
 
     function getLiquidationFee() internal pure returns (Decimal.D256 memory) {
@@ -61,10 +60,6 @@ library C {
 
     function getCVA() internal pure returns (Decimal.D256 memory) {
         return Decimal.ratio(CVA, PERCENT_BASE);
-    }
-
-    function getSolvencyThresholdToRemoveLockedMargin() internal pure returns (Decimal.D256 memory) {
-        return Decimal.ratio(SOLVENCY_THRESHOLD_REMOVE, PERCENT_BASE);
     }
 
     function getRequestTimeout() internal pure returns (uint256) {

@@ -9,6 +9,9 @@ import "../libraries/LibEnums.sol";
 contract MarketsFacet is Ownable {
     AppStorage internal s;
 
+    event CreateMarket(uint256 indexed marketId);
+    event UpdateMarketStatus(uint256 indexed marketId, bool oldStatus, bool newStatus);
+
     // --------------------------------//
     //----- PUBLIC WRITE FUNCTIONS ----//
     // --------------------------------//
@@ -22,7 +25,7 @@ contract MarketsFacet is Ownable {
         string memory quoteCurrency,
         string memory symbol
     ) external onlyOwner returns (Market memory market) {
-        uint256 currentMarketId = s.markets._marketList.length;
+        uint256 currentMarketId = s.markets._marketList.length + 1;
         market = Market(
             currentMarketId,
             identifier,
@@ -37,12 +40,12 @@ contract MarketsFacet is Ownable {
         s.markets._marketMap[currentMarketId] = market;
         s.markets._marketList.push(market);
 
-        // TODO: emit event
+        emit CreateMarket(currentMarketId);
     }
 
     function updateMarketStatus(uint256 marketId, bool status) external onlyOwner {
         s.markets._marketMap[marketId].active = status;
-        // TODO: emit event
+        emit UpdateMarketStatus(marketId, !status, status);
     }
 
     // --------------------------------//

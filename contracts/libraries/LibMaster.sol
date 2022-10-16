@@ -25,7 +25,7 @@ library LibMaster {
         HedgerMode hedgerMode,
         Side side,
         uint256 usdAmountToSpend,
-        uint256 leverage,
+        uint16 leverage,
         uint256 minExpectedUnits,
         uint256 maxExpectedUnits
     ) internal returns (RequestForQuote memory rfq) {
@@ -33,16 +33,18 @@ library LibMaster {
 
         require(LibMarkets.isValidMarketId(marketId), "Invalid market");
 
-        uint256 notionalUsd = (usdAmountToSpend * leverage) / C.getPrecision();
+        uint256 notionalUsd = usdAmountToSpend * leverage;
         uint256 protocolFee = calculateProtocolFeeAmount(notionalUsd);
         uint256 liquidationFee = calculateLiquidationFeeAmount(notionalUsd);
         uint256 cva = calculateCVAAmount(notionalUsd);
+        uint256 amount = usdAmountToSpend + protocolFee + liquidationFee + cva;
 
-        require(protocolFee + liquidationFee + cva <= usdAmountToSpend, "Reserved amounts exceed amount to spend");
-        uint256 lockedMargin = usdAmountToSpend - protocolFee - liquidationFee - cva;
+        require(amount <= s.ma._marginBalances[partyA], "Insufficient margin balance");
+        s.ma._marginBalances[partyA] -= amount;
+        s.ma._lockedMarginReserved[partyA] += amount;
 
         // Create the RFQ
-        uint256 currentRfqId = s.ma._requestForQuotesLength;
+        uint256 currentRfqId = s.ma._requestForQuotesLength + 1;
         rfq = RequestForQuote({
             rfqId: currentRfqId,
             state: RequestForQuoteState.ORPHAN,
@@ -55,7 +57,7 @@ library LibMaster {
             side: side,
             notionalUsd: notionalUsd,
             leverageUsed: leverage,
-            lockedMargin: lockedMargin,
+            lockedMargin: usdAmountToSpend,
             protocolFee: protocolFee,
             liquidationFee: liquidationFee,
             cva: cva,
@@ -68,11 +70,6 @@ library LibMaster {
         s.ma._requestForQuotesMap[currentRfqId] = rfq;
         s.ma._requestForQuotesLength++;
         s.ma._openRequestForQuotesList[partyA].push(currentRfqId);
-
-        // We will lock partyB's margin after he accepts this RFQ.
-        require(usdAmountToSpend <= s.ma._marginBalances[partyA], "Insufficient margin balance");
-        s.ma._marginBalances[partyA] -= usdAmountToSpend;
-        s.ma._lockedMarginReserved[partyA] += usdAmountToSpend;
     }
 
     function onFillOpenMarket(
@@ -99,7 +96,7 @@ library LibMaster {
         LibMaster.removeOpenRequestForQuote(rfq.partyA, rfqId);
 
         // Create the Position
-        uint256 currentPositionId = s.ma._allPositionsLength;
+        uint256 currentPositionId = s.ma._allPositionsLength + 1;
         position = Position({
             positionId: currentPositionId,
             state: PositionState.OPEN,
@@ -120,9 +117,7 @@ library LibMaster {
         });
 
         // Create the first Fill
-        s.ma._positionFills[currentPositionId].push(
-            Fill(currentPositionId, rfq.side, filledAmountUnits, avgPriceUsd, block.timestamp)
-        );
+        createFill(currentPositionId, rfq.side, filledAmountUnits, avgPriceUsd);
 
         // Update global mappings
         s.ma._allPositionsMap[currentPositionId] = position;
@@ -160,15 +155,7 @@ library LibMaster {
         uint256 price = position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice;
 
         // Add the Fill
-        s.ma._positionFills[positionId].push(
-            Fill(
-                position.positionId,
-                position.side == Side.BUY ? Side.SELL : Side.BUY,
-                position.currentBalanceUnits,
-                price,
-                block.timestamp
-            )
-        );
+        createFill(positionId, position.side == Side.BUY ? Side.SELL : Side.BUY, position.currentBalanceUnits, price);
 
         // Calculate the PnL of PartyA
         (int256 pnlA, , ) = _calculateUPnLIsolated(
@@ -335,6 +322,18 @@ library LibMaster {
         s.ma._openPositionsCrossList[party].pop();
     }
 
+    function createFill(
+        uint256 positionId,
+        Side side,
+        uint256 amount,
+        uint256 price
+    ) internal {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        uint256 fillId = s.ma._positionFills[positionId].length;
+        Fill memory fill = Fill(fillId, positionId, side, amount, price, block.timestamp);
+        s.ma._positionFills[positionId].push(fill);
+    }
+
     // --------------------------------//
     //---- INTERNAL VIEW FUNCTIONS ----//
     // --------------------------------//
@@ -400,12 +399,12 @@ library LibMaster {
         return Decimal.from(notionalUsd).mul(C.getProtocolFee()).asUint256();
     }
 
-    function calculateLiquidationFeeAmount(uint256 lockedMargin) internal pure returns (uint256) {
-        return Decimal.from(lockedMargin).mul(C.getLiquidationFee()).asUint256();
+    function calculateLiquidationFeeAmount(uint256 notionalUsd) internal pure returns (uint256) {
+        return Decimal.from(notionalUsd).mul(C.getLiquidationFee()).asUint256();
     }
 
-    function calculateCVAAmount(uint256 lockedMargin) internal pure returns (uint256) {
-        return Decimal.from(lockedMargin).mul(C.getCVA()).asUint256();
+    function calculateCVAAmount(uint256 notionalSize) internal pure returns (uint256) {
+        return Decimal.from(notionalSize).mul(C.getCVA()).asUint256();
     }
 
     function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnLCross)
@@ -454,16 +453,6 @@ library LibMaster {
     function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) internal view returns (bool) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         return calculateCrossMarginHealth(s.ma._lockedMargin[party], uPnLCross).isZero();
-    }
-
-    function solvencySafeguardToRemoveLockedMargin(uint256 lockedMargin, int256 uPnLCross)
-        internal
-        pure
-        returns (bool)
-    {
-        Decimal.D256 memory ratio = calculateCrossMarginHealth(lockedMargin, uPnLCross);
-        Decimal.D256 memory threshold = C.getSolvencyThresholdToRemoveLockedMargin();
-        return ratio.greaterThanOrEqualTo(threshold);
     }
 
     // --------------------------------//

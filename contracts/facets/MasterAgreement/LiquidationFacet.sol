@@ -244,14 +244,11 @@ contract LiquidationFacet {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         // Add the Fill
-        s.ma._positionFills[position.positionId].push(
-            Fill(
-                position.positionId,
-                position.side == Side.BUY ? Side.SELL : Side.BUY,
-                position.currentBalanceUnits,
-                position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice,
-                block.timestamp
-            )
+        LibMaster.createFill(
+            position.positionId,
+            position.side == Side.BUY ? Side.SELL : Side.BUY,
+            position.currentBalanceUnits,
+            position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice
         );
 
         // Update the position state

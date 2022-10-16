@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, RequestForQuote, Position } from "../../libraries/LibAppStorage.sol";
+import { AppStorage, RequestForQuote, Position, Fill } from "../../libraries/LibAppStorage.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
 import { PositionPrice } from "../../libraries/LibOracle.sol";
@@ -65,6 +65,10 @@ contract MasterFacet {
         return s.ma._openPositionsCrossList[party];
     }
 
+    function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
+        return s.ma._positionFills[positionId];
+    }
+
     function calculateUPnLIsolated(
         uint256 positionId,
         uint256 bidPrice,
@@ -81,16 +85,16 @@ contract MasterFacet {
         return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 
-    function calculateProtocolFeeAmount(uint256 notionalUsd) external pure returns (uint256) {
-        return LibMaster.calculateProtocolFeeAmount(notionalUsd);
+    function calculateProtocolFeeAmount(uint256 notionalSize) external pure returns (uint256) {
+        return LibMaster.calculateProtocolFeeAmount(notionalSize);
     }
 
-    function calculateLiquidationFeeAmount(uint256 lockedMargin) external pure returns (uint256) {
-        return LibMaster.calculateLiquidationFeeAmount(lockedMargin);
+    function calculateLiquidationFeeAmount(uint256 notionalSize) external pure returns (uint256) {
+        return LibMaster.calculateLiquidationFeeAmount(notionalSize);
     }
 
-    function calculateCVAAmount(uint256 lockedMargin) external pure returns (uint256) {
-        return LibMaster.calculateCVAAmount(lockedMargin);
+    function calculateCVAAmount(uint256 notionalSize) external pure returns (uint256) {
+        return LibMaster.calculateCVAAmount(notionalSize);
     }
 
     function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnL)
@@ -119,13 +123,5 @@ contract MasterFacet {
 
     function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) external view returns (bool) {
         return LibMaster.partyShouldBeLiquidatedCross(party, uPnLCross);
-    }
-
-    function solvencySafeguardToRemoveLockedMargin(uint256 lockedMargin, int256 uPnLCross)
-        external
-        pure
-        returns (bool)
-    {
-        return LibMaster.solvencySafeguardToRemoveLockedMargin(lockedMargin, uPnLCross);
     }
 }

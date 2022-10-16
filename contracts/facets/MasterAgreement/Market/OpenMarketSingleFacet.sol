@@ -10,13 +10,20 @@ import "../../../libraries/LibEnums.sol";
 contract OpenMarketSingleFacet {
     AppStorage internal s;
 
+    event RequestOpenMarketSingle(address indexed partyA, uint256 indexed rfqId);
+    event CancelOpenMarketSingle(address indexed partyA, uint256 indexed rfqId);
+    event ForceCancelOpenMarketSingle(address indexed partyA, uint256 indexed rfqId);
+    event AcceptCancelOpenMarketSingle(address indexed partyB, uint256 indexed rfqId);
+    event RejectOpenMarketSingle(address indexed partyB, uint256 indexed rfqId);
+    event FillOpenMarketSingle(address indexed partyB, uint256 indexed rfqId, uint256 indexed positionId);
+
     function requestOpenMarketSingle(
         address partyB,
         uint256 marketId,
         PositionType positionType,
         Side side,
         uint256 usdAmountToSpend,
-        uint256 leverage,
+        uint16 leverage,
         uint256[2] memory expectedUnits
     ) external returns (RequestForQuote memory rfq) {
         require(msg.sender != partyB, "Parties can not be the same");
@@ -42,7 +49,7 @@ contract OpenMarketSingleFacet {
             expectedUnits[1]
         );
 
-        // TODO: emit event
+        emit RequestOpenMarketSingle(msg.sender, rfq.rfqId);
     }
 
     function cancelOpenMarketSingle(uint256 rfqId) external {
@@ -56,7 +63,7 @@ contract OpenMarketSingleFacet {
         rfq.state = RequestForQuoteState.CANCELATION_REQUESTED;
         rfq.mutableTimestamp = block.timestamp;
 
-        // TODO: emit the event
+        emit CancelOpenMarketSingle(msg.sender, rfqId);
     }
 
     function forceCancelOpenMarketSingle(uint256 rfqId) public {
@@ -80,7 +87,7 @@ contract OpenMarketSingleFacet {
         s.ma._lockedMarginReserved[msg.sender] -= reservedMargin;
         s.ma._marginBalances[msg.sender] += reservedMargin;
 
-        // TODO: emit event
+        emit ForceCancelOpenMarketSingle(msg.sender, rfqId);
     }
 
     function acceptCancelOpenMarketSingle(uint256 rfqId) external {
@@ -102,6 +109,8 @@ contract OpenMarketSingleFacet {
         uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
         s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
         s.ma._marginBalances[rfq.partyA] += reservedMargin;
+
+        emit AcceptCancelOpenMarketSingle(msg.sender, rfqId);
     }
 
     function rejectOpenMarketSingle(uint256 rfqId) external {
@@ -127,7 +136,7 @@ contract OpenMarketSingleFacet {
         s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
         s.ma._marginBalances[rfq.partyA] += reservedMargin;
 
-        // TODO: emit event
+        emit RejectOpenMarketSingle(msg.sender, rfqId);
     }
 
     function fillOpenMarketSingle(
@@ -143,6 +152,6 @@ contract OpenMarketSingleFacet {
 
         position = LibMaster.onFillOpenMarket(msg.sender, rfqId, filledAmountUnits, avgPriceUsd);
 
-        // TODO: emit event
+        emit FillOpenMarketSingle(msg.sender, rfqId, position.positionId);
     }
 }

@@ -14,6 +14,13 @@ import "../../../libraries/LibEnums.sol";
 contract CloseMarketFacet {
     AppStorage internal s;
 
+    event RequestCloseMarket(address indexed partyA, uint256 indexed positionId);
+    event CancelCloseMarket(address indexed partyA, uint256 indexed positionId);
+    event ForceCancelCloseMarket(address indexed partyA, uint256 indexed positionId);
+    event AcceptCancelCloseMarket(address indexed partyB, uint256 indexed positionId);
+    event RejectCloseMarket(address indexed partyB, uint256 indexed positionId);
+    event FillCloseMarket(address indexed partyB, uint256 indexed positionId);
+
     function requestCloseMarket(uint256 positionId) external {
         Position storage position = s.ma._allPositionsMap[positionId];
 
@@ -23,7 +30,7 @@ contract CloseMarketFacet {
         position.state = PositionState.MARKET_CLOSE_REQUESTED;
         position.mutableTimestamp = block.timestamp;
 
-        // TODO: emit event
+        emit RequestCloseMarket(msg.sender, positionId);
     }
 
     function cancelCloseMarket(uint256 positionId) external {
@@ -35,7 +42,7 @@ contract CloseMarketFacet {
         position.state = PositionState.MARKET_CLOSE_CANCELATION_REQUESTED;
         position.mutableTimestamp = block.timestamp;
 
-        // TODO: emit event
+        emit CancelCloseMarket(msg.sender, positionId);
     }
 
     function forceCancelCloseMarket(uint256 positionId) public {
@@ -48,7 +55,7 @@ contract CloseMarketFacet {
         position.state = PositionState.OPEN;
         position.mutableTimestamp = block.timestamp;
 
-        // TODO: emit event
+        emit ForceCancelCloseMarket(msg.sender, positionId);
     }
 
     function acceptCancelCloseMarket(uint256 positionId) external {
@@ -60,7 +67,7 @@ contract CloseMarketFacet {
         position.state = PositionState.OPEN;
         position.mutableTimestamp = block.timestamp;
 
-        // TODO: emit event
+        emit AcceptCancelCloseMarket(msg.sender, positionId);
     }
 
     function rejectCloseMarket(uint256 positionId) external {
@@ -72,7 +79,7 @@ contract CloseMarketFacet {
         position.state = PositionState.OPEN;
         position.mutableTimestamp = block.timestamp;
 
-        // TODO: emit event
+        emit RejectCloseMarket(msg.sender, positionId);
     }
 
     function fillCloseMarket(
@@ -93,6 +100,6 @@ contract CloseMarketFacet {
         // Handle the fill
         LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
 
-        // TODO: emit event
+        emit FillCloseMarket(msg.sender, positionId);
     }
 }

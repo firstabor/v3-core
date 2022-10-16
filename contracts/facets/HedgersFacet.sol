@@ -7,6 +7,10 @@ import { AppStorage, Hedger } from "../libraries/LibAppStorage.sol";
 contract HedgersFacet {
     AppStorage internal s;
 
+    event Enlist(address indexed hedger);
+    event UpdatePricingURLs(address indexed hedger, string[] pricingURLs);
+    event UpdateMarketsURLs(address indexed hedger, string[] marketsURLs);
+
     // --------------------------------//
     //----- PUBLIC WRITE FUNCTIONS ----//
     // --------------------------------//
@@ -27,7 +31,7 @@ contract HedgersFacet {
         s.hedgers._hedgerMap[msg.sender] = hedger;
         s.hedgers._hedgerList.push(hedger);
 
-        // TODO: emit event
+        emit Enlist(msg.sender);
     }
 
     function updatePricingWssURLs(string[] calldata _pricingWssURLs) external {
@@ -39,7 +43,7 @@ contract HedgersFacet {
 
         s.hedgers._hedgerMap[msg.sender].pricingWssURLs = _pricingWssURLs;
 
-        // TODO: emit event
+        emit UpdatePricingURLs(msg.sender, _pricingWssURLs);
     }
 
     function updateMarketsHttpsURLs(string[] calldata _marketsHttpsURLs) external {
@@ -51,7 +55,7 @@ contract HedgersFacet {
 
         s.hedgers._hedgerMap[msg.sender].marketsHttpsURLs = _marketsHttpsURLs;
 
-        // TODO: emit event
+        emit UpdateMarketsURLs(msg.sender, _marketsHttpsURLs);
     }
 
     // --------------------------------//

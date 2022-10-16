@@ -9,7 +9,7 @@ struct Hedger {
 }
 
 struct Market {
-    uint256 _marketId;
+    uint256 marketId;
     string identifier;
     MarketType marketType;
     TradingSession tradingSession;
@@ -32,7 +32,7 @@ struct RequestForQuote {
     uint256 marketId;
     Side side;
     uint256 notionalUsd;
-    uint256 leverageUsed;
+    uint16 leverageUsed;
     uint256 lockedMargin;
     uint256 protocolFee;
     uint256 liquidationFee;
@@ -44,6 +44,7 @@ struct RequestForQuote {
 }
 
 struct Fill {
+    uint256 fillId;
     uint256 positionId;
     Side side;
     uint256 filledAmountUnits;
@@ -58,7 +59,7 @@ struct Position {
     uint256 marketId;
     address partyA;
     address partyB;
-    uint256 leverageUsed;
+    uint16 leverageUsed;
     Side side;
     uint256 lockedMargin;
     uint256 protocolFeePaid;
