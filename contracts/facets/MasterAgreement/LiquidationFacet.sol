@@ -27,10 +27,11 @@ contract LiquidationFacet {
         uint256 bidPrice,
         uint256 askPrice,
         bytes calldata reqId,
+        uint256 timestamp_,
         SchnorrSign[] calldata sigs
     ) external {
         // Verify oracle signatures
-        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sigs);
+        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp_, sigs);
 
         // Check if the position should be liquidated
         (bool shouldBeLiquidated, int256 pnlA, ) = LibMaster.positionShouldBeLiquidatedIsolated(
@@ -67,13 +68,14 @@ contract LiquidationFacet {
         uint256[] calldata bidPrices,
         uint256[] calldata askPrices,
         bytes calldata reqId,
+        uint256 timestamp_,
         SchnorrSign[] calldata sigs
     ) external {
         // Verify oracle signatures
-        LibOracle.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, sigs);
+        LibOracle.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, timestamp_, sigs);
 
         // Check if all positionIds are provided by length
-        require(positionIds.length == s.ma._openPositionsCrossList[party].length, "Invalid positionIds length");
+        require(positionIds.length == s.ma._openPositionsCrossLength[party], "Invalid positionIds length");
 
         // Create structs for positionIds and prices
         PositionPrice[] memory positionPrices = LibOracle.createPositionPrices(positionIds, bidPrices, askPrices);
@@ -228,16 +230,16 @@ contract LiquidationFacet {
         Position memory position = s.ma._allPositionsMap[positionId];
 
         _updatePositionDataBase(positionId, positionPrice);
-        LibMaster.removeOpenPositionIsolated(position.partyA, position.positionId);
-        LibMaster.removeOpenPositionIsolated(position.partyB, position.positionId);
+        s.ma._openPositionsIsolatedLength[position.partyA]--;
+        s.ma._openPositionsIsolatedLength[position.partyB]--;
     }
 
     function _updatePositionDataCross(uint256 positionId, PositionPrice memory positionPrice) private {
         Position memory position = s.ma._allPositionsMap[positionId];
 
         _updatePositionDataBase(positionId, positionPrice);
-        LibMaster.removeOpenPositionCross(position.partyA, position.positionId);
-        LibMaster.removeOpenPositionIsolated(position.partyB, position.positionId);
+        s.ma._openPositionsCrossLength[position.partyA]--;
+        s.ma._openPositionsIsolatedLength[position.partyB]--;
     }
 
     function _updatePositionDataBase(uint256 positionId, PositionPrice memory positionPrice) private {

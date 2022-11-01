@@ -8,11 +8,11 @@ export function shouldBehaveLikeDiamond(): void {
   let selectors: string[] = [];
   let result: string[] = [];
 
-  it("should have 10 facets", async function () {
+  it("should have 11 facets", async function () {
     for (const address of await this.diamondLoupeFacet.facetAddresses()) {
       addresses.push(address);
     }
-    assert.equal(addresses.length, 10);
+    assert.equal(addresses.length, 11);
   });
 
   it("facets should have the right function selectors -- call to facetFunctionSelectors function", async function () {
@@ -26,52 +26,57 @@ export function shouldBehaveLikeDiamond(): void {
     result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[1]);
     assert.sameMembers(result, selectors);
 
+    // ConstantsFacet
+    selectors = getSelectors(this.constantsFacet).selectors;
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[2]);
+    assert.sameMembers(result, selectors);
+
     // OwnershipFacet
     selectors = getSelectors(this.ownershipFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[2]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[3]);
     assert.sameMembers(result, selectors);
 
     // AccountFacet
     selectors = getSelectors(this.accountFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[3]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[4]);
     assert.sameMembers(result, selectors);
 
     // HedgersFacet
     selectors = getSelectors(this.hedgersFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[4]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[5]);
     assert.sameMembers(result, selectors);
 
     // MarketsFacet
     selectors = getSelectors(this.marketsFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[5]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[6]);
     assert.sameMembers(result, selectors);
 
     // LiquidationFacet
     selectors = getSelectors(this.liquidationFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[6]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[7]);
 
     assert.sameMembers(result, selectors);
 
     // MasterFacet
     selectors = getSelectors(this.masterFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[7]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[8]);
     assert.sameMembers(result, selectors);
 
     // OpenMarketSingleFacet
     selectors = getSelectors(this.openMarketSingleFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[8]);
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[9]);
     assert.sameMembers(result, selectors);
 
     // CloseMarketSingleFacet
-    selectors = getSelectors(this.closeMarketSingleFacet).selectors;
-    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[9]);
+    selectors = getSelectors(this.closeMarketFacet).selectors;
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[10]);
     assert.sameMembers(result, selectors);
   });
 
   it("should remove a function from AccountFacet -- getAccountBalance()", async function () {
     const AccountFacet = await ethers.getContractFactory("AccountFacet");
     const selectors = getSelectors(AccountFacet).get(["getAccountBalance(address)"]);
-    const accountFacetAddress = addresses[3];
+    const accountFacetAddress = addresses[4];
 
     const tx = await this.diamondCutFacet.diamondCut(
       [
@@ -97,7 +102,7 @@ export function shouldBehaveLikeDiamond(): void {
 
   it("should add the getAccountBalance() function back", async function () {
     const AccountFacet = await ethers.getContractFactory("AccountFacet");
-    const accountFacetAddress = addresses[3];
+    const accountFacetAddress = addresses[4];
 
     const tx = await this.diamondCutFacet.diamondCut(
       [

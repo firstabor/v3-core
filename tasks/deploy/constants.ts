@@ -1,5 +1,6 @@
 export const FacetNames = [
   "DiamondLoupeFacet",
+  "ConstantsFacet",
   "OwnershipFacet",
   "AccountFacet",
   "HedgersFacet",

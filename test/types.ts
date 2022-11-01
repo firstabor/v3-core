@@ -5,13 +5,14 @@ import type {
   Diamond,
   DiamondLoupeFacet,
   DiamondCutFacet,
+  ConstantsFacet,
   OwnershipFacet,
   AccountFacet,
   MarketsFacet,
   HedgersFacet,
   MasterFacet,
   OpenMarketSingleFacet,
-  CloseMarketSingleFacet,
+  CloseMarketFacet,
   LiquidationFacet,
 } from "../src/types";
 
@@ -27,6 +28,7 @@ declare module "mocha" {
     diamond: Diamond;
     diamondLoupeFacet: DiamondLoupeFacet;
     diamondCutFacet: DiamondCutFacet;
+    constantsFacet: ConstantsFacet;
     ownershipFacet: OwnershipFacet;
     accountFacet: AccountFacet;
     hedgersFacet: HedgersFacet;
@@ -34,7 +36,7 @@ declare module "mocha" {
     liquidationFacet: LiquidationFacet;
     masterFacet: MasterFacet;
     openMarketSingleFacet: OpenMarketSingleFacet;
-    closeMarketSingleFacet: CloseMarketSingleFacet;
+    closeMarketFacet: CloseMarketFacet;
   }
 }
 

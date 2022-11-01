@@ -69,7 +69,6 @@ library LibMaster {
 
         s.ma._requestForQuotesMap[currentRfqId] = rfq;
         s.ma._requestForQuotesLength++;
-        s.ma._openRequestForQuotesList[partyA].push(currentRfqId);
     }
 
     function onFillOpenMarket(
@@ -91,9 +90,6 @@ library LibMaster {
         // Update the RFQ
         rfq.state = RequestForQuoteState.ACCEPTED;
         rfq.mutableTimestamp = block.timestamp;
-
-        // Update RFQ mapping.
-        LibMaster.removeOpenRequestForQuote(rfq.partyA, rfqId);
 
         // Create the Position
         uint256 currentPositionId = s.ma._allPositionsLength + 1;
@@ -136,11 +132,11 @@ library LibMaster {
         s.ma._accountBalances[LibDiamond.contractOwner()] += rfq.protocolFee;
 
         if (rfq.positionType == PositionType.ISOLATED) {
-            s.ma._openPositionsIsolatedList[rfq.partyA].push(currentPositionId);
-            s.ma._openPositionsIsolatedList[partyB].push(currentPositionId);
+            s.ma._openPositionsIsolatedLength[rfq.partyA]++;
+            s.ma._openPositionsIsolatedLength[partyB]++;
         } else {
-            s.ma._openPositionsCrossList[rfq.partyA].push(currentPositionId);
-            s.ma._openPositionsIsolatedList[partyB].push(currentPositionId);
+            s.ma._openPositionsCrossLength[rfq.partyA]++;
+            s.ma._openPositionsIsolatedLength[partyB]++;
 
             // Lock margins
             s.ma._lockedMargin[rfq.partyA] += rfq.lockedMargin;
@@ -184,11 +180,11 @@ library LibMaster {
 
         // Update mappings
         if (position.positionType == PositionType.ISOLATED) {
-            removeOpenPositionIsolated(position.partyA, positionId);
-            removeOpenPositionIsolated(position.partyB, positionId);
+            s.ma._openPositionsIsolatedLength[position.partyA]--;
+            s.ma._openPositionsIsolatedLength[position.partyB]--;
         } else {
-            removeOpenPositionCross(position.partyA, positionId);
-            removeOpenPositionIsolated(position.partyB, positionId);
+            s.ma._openPositionsCrossLength[position.partyA]--;
+            s.ma._openPositionsIsolatedLength[position.partyB]--;
         }
     }
 
@@ -260,68 +256,6 @@ library LibMaster {
         }
     }
 
-    function removeOpenRequestForQuote(address party, uint256 rfqId) internal {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-
-        RequestForQuote memory rfq = s.ma._requestForQuotesMap[rfqId];
-        require(
-            rfq.state == RequestForQuoteState.CANCELED ||
-                rfq.state == RequestForQuoteState.REJECTED ||
-                rfq.state == RequestForQuoteState.ACCEPTED,
-            "RFQ is still open"
-        );
-
-        int256 index = -1;
-        for (uint256 i = 0; i < s.ma._openRequestForQuotesList[party].length; i++) {
-            if (s.ma._openRequestForQuotesList[party][i] == rfqId) {
-                index = int256(i);
-                break;
-            }
-        }
-        require(index != -1, "RFQ not found");
-
-        s.ma._openRequestForQuotesList[party][uint256(index)] = s.ma._openRequestForQuotesList[party][
-            s.ma._openRequestForQuotesList[party].length - 1
-        ];
-        s.ma._openRequestForQuotesList[party].pop();
-    }
-
-    function removeOpenPositionIsolated(address party, uint256 positionId) internal {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-
-        int256 index = -1;
-        for (uint256 i = 0; i < s.ma._openPositionsIsolatedList[party].length; i++) {
-            if (s.ma._openPositionsIsolatedList[party][i] == positionId) {
-                index = int256(i);
-                break;
-            }
-        }
-        require(index != -1, "Position not found");
-
-        s.ma._openPositionsIsolatedList[party][uint256(index)] = s.ma._openPositionsIsolatedList[party][
-            s.ma._openPositionsIsolatedList[party].length - 1
-        ];
-        s.ma._openPositionsIsolatedList[party].pop();
-    }
-
-    function removeOpenPositionCross(address party, uint256 positionId) internal {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-
-        int256 index = -1;
-        for (uint256 i = 0; i < s.ma._openPositionsCrossList[party].length; i++) {
-            if (s.ma._openPositionsCrossList[party][i] == positionId) {
-                index = int256(i);
-                break;
-            }
-        }
-        require(index != -1, "Position not found");
-
-        s.ma._openPositionsCrossList[party][uint256(index)] = s.ma._openPositionsCrossList[party][
-            s.ma._openPositionsCrossList[party].length - 1
-        ];
-        s.ma._openPositionsCrossList[party].pop();
-    }
-
     function createFill(
         uint256 positionId,
         Side side,
@@ -337,26 +271,6 @@ library LibMaster {
     // --------------------------------//
     //---- INTERNAL VIEW FUNCTIONS ----//
     // --------------------------------//
-
-    function getOpenPositionsIsolated(address party) internal view returns (Position[] memory positions) {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-        uint256[] memory positionIds = s.ma._openPositionsIsolatedList[party];
-
-        positions = new Position[](positionIds.length);
-        for (uint256 i = 0; i < positionIds.length; i++) {
-            positions[i] = s.ma._allPositionsMap[positionIds[i]];
-        }
-    }
-
-    function getOpenPositionsCross(address party) internal view returns (Position[] memory positions) {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-        uint256[] memory positionIds = s.ma._openPositionsCrossList[party];
-
-        positions = new Position[](positionIds.length);
-        for (uint256 i = 0; i < positionIds.length; i++) {
-            positions[i] = s.ma._allPositionsMap[positionIds[i]];
-        }
-    }
 
     /**
      * @notice Returns the UPnL for a specific position.
@@ -395,15 +309,15 @@ library LibMaster {
         (uPnLCross, notionalCross) = _calculateUPnLCross(positionPrices, party);
     }
 
-    function calculateProtocolFeeAmount(uint256 notionalUsd) internal pure returns (uint256) {
+    function calculateProtocolFeeAmount(uint256 notionalUsd) internal view returns (uint256) {
         return Decimal.from(notionalUsd).mul(C.getProtocolFee()).asUint256();
     }
 
-    function calculateLiquidationFeeAmount(uint256 notionalUsd) internal pure returns (uint256) {
+    function calculateLiquidationFeeAmount(uint256 notionalUsd) internal view returns (uint256) {
         return Decimal.from(notionalUsd).mul(C.getLiquidationFee()).asUint256();
     }
 
-    function calculateCVAAmount(uint256 notionalSize) internal pure returns (uint256) {
+    function calculateCVAAmount(uint256 notionalSize) internal view returns (uint256) {
         return Decimal.from(notionalSize).mul(C.getCVA()).asUint256();
     }
 
@@ -498,7 +412,6 @@ library LibMaster {
     /**
      * @notice Returns the UPnL of a party across all his open positions.
      * @dev This is a naive function, inputs can NOT be trusted. Use cautiously.
-     *      Use Muon to verify inputs to prevent expensive computational costs.
      * @dev positionPrices can have an incorrect length.
      * @dev positionPrices can have an arbitrary order.
      * @dev positionPrices can contain forged duplicates.
@@ -509,9 +422,9 @@ library LibMaster {
         returns (int256 uPnLCross, int256 notionalCross)
     {
         AppStorage storage s = LibAppStorage.diamondStorage();
-        Position[] memory openPositions = getOpenPositionsCross(party);
+        uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[party];
 
-        if (openPositions.length == 0) {
+        if (numOpenPositionsCross == 0) {
             return (0, 0);
         }
 

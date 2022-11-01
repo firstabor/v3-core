@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { LibDiamond } from "./LibDiamond.sol";
 import { AppStorage, LibAppStorage, Hedger } from "../libraries/LibAppStorage.sol";
 
 library LibHedgers {

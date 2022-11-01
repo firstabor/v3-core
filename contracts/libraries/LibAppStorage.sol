@@ -71,6 +71,19 @@ struct Position {
     uint256 mutableTimestamp;
 }
 
+struct Constants {
+    address collateral;
+    address muon;
+    bytes32 muonAppId;
+    uint8 minimumRequiredSignatures;
+    uint256 protocolFee;
+    uint256 liquidationFee;
+    uint256 protocolLiquidationShare;
+    uint256 cva;
+    uint256 requestTimeout;
+    uint256 maxOpenPositionsCross;
+}
+
 struct HedgersState {
     mapping(address => Hedger) _hedgerMap;
     Hedger[] _hedgerList;
@@ -90,12 +103,11 @@ struct MAState {
     // RequestForQuotes
     mapping(uint256 => RequestForQuote) _requestForQuotesMap;
     uint256 _requestForQuotesLength;
-    mapping(address => uint256[]) _openRequestForQuotesList;
     // Positions
     mapping(uint256 => Position) _allPositionsMap;
     uint256 _allPositionsLength;
-    mapping(address => uint256[]) _openPositionsIsolatedList;
-    mapping(address => uint256[]) _openPositionsCrossList;
+    mapping(address => uint256) _openPositionsIsolatedLength;
+    mapping(address => uint256) _openPositionsCrossLength;
     mapping(uint256 => Fill[]) _positionFills;
 }
 
@@ -104,15 +116,16 @@ struct AppStorage {
     uint128 pausedAt;
     uint256 reentrantStatus;
     address ownerCandidate;
+    Constants constants;
     HedgersState hedgers;
     MarketsState markets;
     MAState ma;
 }
 
 library LibAppStorage {
-    function diamondStorage() internal pure returns (AppStorage storage ds) {
+    function diamondStorage() internal pure returns (AppStorage storage s) {
         assembly {
-            ds.slot := 0
+            s.slot := 0
         }
     }
 }

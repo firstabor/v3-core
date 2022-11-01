@@ -23,19 +23,6 @@ contract MasterFacet {
         }
     }
 
-    function getOpenRequestForQuoteIds(address party) external view returns (uint256[] memory rfqIds) {
-        return s.ma._openRequestForQuotesList[party];
-    }
-
-    function getOpenRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
-        uint256 len = s.ma._openRequestForQuotesList[party].length;
-        rfqs = new RequestForQuote[](len);
-
-        for (uint256 i = 0; i < len; i++) {
-            rfqs[i] = (s.ma._requestForQuotesMap[s.ma._openRequestForQuotesList[party][i]]);
-        }
-    }
-
     function getPosition(uint256 positionId) external view returns (Position memory position) {
         return s.ma._allPositionsMap[positionId];
     }
@@ -49,20 +36,12 @@ contract MasterFacet {
         }
     }
 
-    function getOpenPositionsIsolated(address party) external view returns (Position[] memory openPositionsIsolated) {
-        return LibMaster.getOpenPositionsIsolated(party);
+    function getOpenPositionsIsolatedLength(address party) external view returns (uint256) {
+        return s.ma._openPositionsIsolatedLength[party];
     }
 
-    function getOpenPositionsCross(address party) external view returns (Position[] memory openPositionsCross) {
-        return LibMaster.getOpenPositionsCross(party);
-    }
-
-    function getOpenPositionIdsIsolated(address party) external view returns (uint256[] memory positionIds) {
-        return s.ma._openPositionsIsolatedList[party];
-    }
-
-    function getOpenPositionIdsCross(address party) external view returns (uint256[] memory positionIds) {
-        return s.ma._openPositionsCrossList[party];
+    function getOpenPositionsCrossLength(address party) external view returns (uint256) {
+        return s.ma._openPositionsCrossLength[party];
     }
 
     function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
@@ -85,15 +64,15 @@ contract MasterFacet {
         return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 
-    function calculateProtocolFeeAmount(uint256 notionalSize) external pure returns (uint256) {
+    function calculateProtocolFeeAmount(uint256 notionalSize) external view returns (uint256) {
         return LibMaster.calculateProtocolFeeAmount(notionalSize);
     }
 
-    function calculateLiquidationFeeAmount(uint256 notionalSize) external pure returns (uint256) {
+    function calculateLiquidationFeeAmount(uint256 notionalSize) external view returns (uint256) {
         return LibMaster.calculateLiquidationFeeAmount(notionalSize);
     }
 
-    function calculateCVAAmount(uint256 notionalSize) external pure returns (uint256) {
+    function calculateCVAAmount(uint256 notionalSize) external view returns (uint256) {
         return LibMaster.calculateCVAAmount(notionalSize);
     }
 

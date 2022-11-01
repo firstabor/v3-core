@@ -4,13 +4,10 @@ import { ethers } from "hardhat";
 export function shouldBehaveLikeHedgersFacet(): void {
   it("should approve and mint", async function () {
     const hedger = this.signers.hedger.getAddress();
-
     // Approve collateral
     await this.collateral.connect(this.signers.hedger).approve(this.diamond.address, ethers.constants.MaxUint256);
     expect(await this.collateral.allowance(hedger, this.diamond.address)).to.equal(ethers.constants.MaxUint256);
-
     // Mint the hedger some USD
-    expect(await this.accountFacet.getAccountBalance(hedger)).to.equal("0");
     await this.collateral.mint(hedger, "5000");
     expect(await this.collateral.balanceOf(hedger)).to.equal("5000");
   });
@@ -19,7 +16,7 @@ export function shouldBehaveLikeHedgersFacet(): void {
     await expect(
       this.hedgersFacet
         .connect(this.signers.hedger)
-        .enlist(["wss://pricing.example.com"], ["https://markets.example.com"], false),
+        .enlist(["wss://pricing.example.com"], ["https://markets.example.com"]),
     ).to.not.reverted;
   });
 
@@ -27,7 +24,7 @@ export function shouldBehaveLikeHedgersFacet(): void {
     await expect(
       this.hedgersFacet
         .connect(this.signers.hedger)
-        .enlist(["wss://pricing.example.com"], ["https://markets.example.com"], false),
+        .enlist(["wss://pricing.example.com"], ["https://markets.example.com"]),
     ).to.be.revertedWith("Hedger already exists");
   });
 

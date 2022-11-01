@@ -31,7 +31,7 @@ contract OpenMarketSingleFacet {
         require(validHedger, "Invalid hedger");
 
         if (positionType == PositionType.CROSS) {
-            uint256 numOpenPositionsCross = s.ma._openPositionsCrossList[msg.sender].length;
+            uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[msg.sender];
             require(numOpenPositionsCross <= C.getMaxOpenPositionsCross(), "Max open positions cross reached");
         }
 
@@ -60,8 +60,7 @@ contract OpenMarketSingleFacet {
         require(rfq.orderType == OrderType.MARKET, "Invalid order type");
         require(rfq.state == RequestForQuoteState.ORPHAN, "Invalid RFQ state");
 
-        rfq.state = RequestForQuoteState.CANCELATION_REQUESTED;
-        rfq.mutableTimestamp = block.timestamp;
+        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELATION_REQUESTED);
 
         emit CancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -75,17 +74,8 @@ contract OpenMarketSingleFacet {
         require(rfq.state == RequestForQuoteState.CANCELATION_REQUESTED, "Invalid RFQ state");
         require(rfq.mutableTimestamp + C.getRequestTimeout() < block.timestamp, "Request Timeout");
 
-        // Update the RFQ state.
-        rfq.state = RequestForQuoteState.CANCELED;
-        rfq.mutableTimestamp = block.timestamp;
-
-        // Update RFQ mapping.
-        LibMaster.removeOpenRequestForQuote(rfq.partyA, rfqId);
-
-        // Return the collateral to partyA.
-        uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
-        s.ma._lockedMarginReserved[msg.sender] -= reservedMargin;
-        s.ma._marginBalances[msg.sender] += reservedMargin;
+        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
+        returnUserFunds(rfq);
 
         emit ForceCancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -98,17 +88,8 @@ contract OpenMarketSingleFacet {
         require(rfq.orderType == OrderType.MARKET, "Invalid order type");
         require(rfq.state == RequestForQuoteState.CANCELATION_REQUESTED, "Invalid RFQ state");
 
-        // Update the RFQ state.
-        rfq.state = RequestForQuoteState.CANCELED;
-        rfq.mutableTimestamp = block.timestamp;
-
-        // Update RFQ mapping.
-        LibMaster.removeOpenRequestForQuote(rfq.partyA, rfqId);
-
-        // Return the collateral to partyA.
-        uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
-        s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
-        s.ma._marginBalances[rfq.partyA] += reservedMargin;
+        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
+        returnUserFunds(rfq);
 
         emit AcceptCancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -124,17 +105,8 @@ contract OpenMarketSingleFacet {
             "Invalid RFQ state"
         );
 
-        // Update the RFQ
-        rfq.state = RequestForQuoteState.REJECTED;
-        rfq.mutableTimestamp = block.timestamp;
-
-        // Update RFQ mapping.
-        LibMaster.removeOpenRequestForQuote(rfq.partyA, rfqId);
-
-        // Return the collateral to partyA
-        uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
-        s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
-        s.ma._marginBalances[rfq.partyA] += reservedMargin;
+        updateRequestForQuoteState(rfq, RequestForQuoteState.REJECTED);
+        returnUserFunds(rfq);
 
         emit RejectOpenMarketSingle(msg.sender, rfqId);
     }
@@ -153,5 +125,16 @@ contract OpenMarketSingleFacet {
         position = LibMaster.onFillOpenMarket(msg.sender, rfqId, filledAmountUnits, avgPriceUsd);
 
         emit FillOpenMarketSingle(msg.sender, rfqId, position.positionId);
+    }
+
+    function updateRequestForQuoteState(RequestForQuote storage rfq, RequestForQuoteState state) private {
+        rfq.state = state;
+        rfq.mutableTimestamp = block.timestamp;
+    }
+
+    function returnUserFunds(RequestForQuote memory rfq) private {
+        uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
+        s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
+        s.ma._marginBalances[rfq.partyA] += reservedMargin;
     }
 }

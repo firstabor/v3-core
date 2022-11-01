@@ -101,7 +101,7 @@ contract AccountFacet is ReentrancyGuard {
     }
 
     function _removeFreeMargin(address party) private {
-        require(s.ma._openPositionsCrossList[party].length == 0, "Removal denied");
+        require(s.ma._openPositionsCrossLength[party] == 0, "Removal denied");
         require(s.ma._lockedMargin[party] > 0, "No locked margin");
 
         uint256 amount = s.ma._lockedMargin[party];

@@ -9,7 +9,7 @@ import "../../../libraries/LibEnums.sol";
 
 /**
  * Close a Position through a Market order.
- * @dev Can only be done via the original partyB (hedgerMode=Single).
+ * @dev Can only be done via the original partyB.
  */
 contract CloseMarketFacet {
     AppStorage internal s;
@@ -27,8 +27,7 @@ contract CloseMarketFacet {
         require(position.partyA == msg.sender, "Invalid party");
         require(position.state == PositionState.OPEN, "Invalid position state");
 
-        position.state = PositionState.MARKET_CLOSE_REQUESTED;
-        position.mutableTimestamp = block.timestamp;
+        updatePositionState(position, PositionState.MARKET_CLOSE_REQUESTED);
 
         emit RequestCloseMarket(msg.sender, positionId);
     }
@@ -39,8 +38,7 @@ contract CloseMarketFacet {
         require(position.partyA == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        position.state = PositionState.MARKET_CLOSE_CANCELATION_REQUESTED;
-        position.mutableTimestamp = block.timestamp;
+        updatePositionState(position, PositionState.MARKET_CLOSE_CANCELATION_REQUESTED);
 
         emit CancelCloseMarket(msg.sender, positionId);
     }
@@ -52,8 +50,7 @@ contract CloseMarketFacet {
         require(position.state == PositionState.MARKET_CLOSE_CANCELATION_REQUESTED, "Invalid position state");
         require(position.mutableTimestamp + C.getRequestTimeout() < block.timestamp, "Request Timeout");
 
-        position.state = PositionState.OPEN;
-        position.mutableTimestamp = block.timestamp;
+        updatePositionState(position, PositionState.OPEN);
 
         emit ForceCancelCloseMarket(msg.sender, positionId);
     }
@@ -64,8 +61,7 @@ contract CloseMarketFacet {
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_CANCELATION_REQUESTED, "Invalid position state");
 
-        position.state = PositionState.OPEN;
-        position.mutableTimestamp = block.timestamp;
+        updatePositionState(position, PositionState.OPEN);
 
         emit AcceptCancelCloseMarket(msg.sender, positionId);
     }
@@ -76,8 +72,7 @@ contract CloseMarketFacet {
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        position.state = PositionState.OPEN;
-        position.mutableTimestamp = block.timestamp;
+        updatePositionState(position, PositionState.OPEN);
 
         emit RejectCloseMarket(msg.sender, positionId);
     }
@@ -87,6 +82,7 @@ contract CloseMarketFacet {
         uint256 bidPrice,
         uint256 askPrice,
         bytes calldata reqId,
+        uint256 timestamp_,
         SchnorrSign[] calldata sigs
     ) external {
         Position storage position = s.ma._allPositionsMap[positionId];
@@ -95,11 +91,16 @@ contract CloseMarketFacet {
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
         // Verify oracle signatures
-        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sigs);
+        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp_, sigs);
 
         // Handle the fill
         LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
 
         emit FillCloseMarket(msg.sender, positionId);
+    }
+
+    function updatePositionState(Position storage position, PositionState state) private {
+        position.state = state;
+        position.mutableTimestamp = block.timestamp;
     }
 }

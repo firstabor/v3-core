@@ -26,6 +26,16 @@ if (!ftmscanAPIKey) {
   throw new Error("Please set your ftmscanAPIKey in a .env file");
 }
 
+const arbitrumRpcURL: string | undefined = process.env.ARBITRUM_RPC_URL;
+if (!arbitrumRpcURL) {
+  throw new Error("Please set your arbitrumRpcURL in a .env file");
+}
+
+const arbiscanAPIKey: string | undefined = process.env.ARBISCAN_API_KEY;
+if (!arbiscanAPIKey) {
+  throw new Error("Please set your arbiscanAPIKey in a .env file");
+}
+
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   gasReporter: {
@@ -45,10 +55,15 @@ const config: HardhatUserConfig = {
       url: fantomRpcURL,
       accounts: [privateKey],
     },
+    arbitrum: {
+      url: arbitrumRpcURL,
+      accounts: [privateKey],
+    },
   },
   etherscan: {
     apiKey: {
       opera: ftmscanAPIKey,
+      arbitrumOne: arbiscanAPIKey,
     },
   },
   paths: {
