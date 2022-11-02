@@ -83,8 +83,10 @@ contract LiquidationFacet {
             s.ma._crossLockedMargin[position.partyA] += amount;
         }
 
-        // Reward the liquidator
-        s.ma._marginBalances[msg.sender] += position.liquidationFee;
+        // Reward the liquidator + protocol
+        uint256 protocolShare = Decimal.mul(C.getProtocolLiquidationShare(), position.liquidationFee).asUint256();
+        s.ma._accountBalances[msg.sender] += (position.liquidationFee - protocolShare);
+        s.ma._accountBalances[LibDiamond.contractOwner()] += protocolShare;
 
         // Update mappings
         _updatePositionDataIsolated(position, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
