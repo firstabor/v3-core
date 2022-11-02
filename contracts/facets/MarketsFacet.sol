@@ -60,6 +60,15 @@ contract MarketsFacet is Ownable {
         return s.markets._marketList;
     }
 
+    function getMarketsInRange(uint256 start, uint256 end) external view returns (Market[] memory markets) {
+        uint256 length = end - start;
+        markets = new Market[](length);
+
+        for (uint256 i = 0; i < length; i++) {
+            markets[i] = s.markets._marketList[start + i];
+        }
+    }
+
     function getMarketsLength() external view returns (uint256 length) {
         return s.markets._marketList.length;
     }

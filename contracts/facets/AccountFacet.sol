@@ -95,17 +95,17 @@ contract AccountFacet is ReentrancyGuard {
     function _addFreeMargin(address party, uint256 amount) private {
         require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
         s.ma._marginBalances[party] -= amount;
-        s.ma._lockedMargin[party] += amount;
+        s.ma._crossLockedMargin[party] += amount;
 
         emit AddFreeMargin(party, amount);
     }
 
     function _removeFreeMargin(address party) private {
         require(s.ma._openPositionsCrossLength[party] == 0, "Removal denied");
-        require(s.ma._lockedMargin[party] > 0, "No locked margin");
+        require(s.ma._crossLockedMargin[party] > 0, "No locked margin");
 
-        uint256 amount = s.ma._lockedMargin[party];
-        s.ma._lockedMargin[party] = 0;
+        uint256 amount = s.ma._crossLockedMargin[party];
+        s.ma._crossLockedMargin[party] = 0;
         s.ma._marginBalances[party] += amount;
 
         emit RemoveFreeMargin(party, amount);
@@ -124,10 +124,10 @@ contract AccountFacet is ReentrancyGuard {
     }
 
     function getLockedMargin(address party) external view returns (uint256) {
-        return s.ma._lockedMargin[party];
+        return s.ma._crossLockedMargin[party];
     }
 
     function getLockedMarginReserved(address party) external view returns (uint256) {
-        return s.ma._lockedMarginReserved[party];
+        return s.ma._crossLockedMarginReserved[party];
     }
 }

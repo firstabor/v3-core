@@ -82,7 +82,7 @@ contract CloseMarketFacet {
         uint256 bidPrice,
         uint256 askPrice,
         bytes calldata reqId,
-        uint256 timestamp_,
+        uint256 timestamp,
         SchnorrSign[] calldata sigs
     ) external {
         Position storage position = s.ma._allPositionsMap[positionId];
@@ -91,7 +91,7 @@ contract CloseMarketFacet {
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
         // Verify oracle signatures
-        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp_, sigs);
+        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp, sigs);
 
         // Handle the fill
         LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));

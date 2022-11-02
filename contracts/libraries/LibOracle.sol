@@ -22,12 +22,12 @@ library LibOracle {
         uint256 bidPrice,
         uint256 askPrice,
         bytes calldata reqId,
-        uint256 timestamp_,
+        uint256 timestamp,
         SchnorrSign[] calldata sigs
     ) internal {
         require(sigs.length >= C.getMinimumRequiredSignatures(), "Insufficient signatures");
 
-        bytes32 hash = keccak256(abi.encodePacked(C.getMuonAppId(), reqId, positionId, bidPrice, askPrice, timestamp_));
+        bytes32 hash = keccak256(abi.encodePacked(C.getMuonAppId(), reqId, positionId, bidPrice, askPrice, timestamp));
         IMuonV03 _muon = IMuonV03(C.getMuon());
 
         bool verified = _muon.verify(reqId, uint256(hash), sigs);
@@ -44,13 +44,13 @@ library LibOracle {
         uint256[] memory bidPrices,
         uint256[] memory askPrices,
         bytes calldata reqId,
-        uint256 timestamp_,
+        uint256 timestamp,
         SchnorrSign[] calldata sigs
     ) internal {
         require(sigs.length >= C.getMinimumRequiredSignatures(), "Insufficient signatures");
 
         bytes32 hash = keccak256(
-            abi.encodePacked(C.getMuonAppId(), reqId, positionIds, bidPrices, askPrices, timestamp_)
+            abi.encodePacked(C.getMuonAppId(), reqId, positionIds, bidPrices, askPrices, timestamp)
         );
         IMuonV03 _muon = IMuonV03(C.getMuon());
 

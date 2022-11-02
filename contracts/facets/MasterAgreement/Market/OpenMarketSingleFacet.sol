@@ -30,11 +30,6 @@ contract OpenMarketSingleFacet {
         (bool validHedger, ) = LibHedgers.isValidHedger(partyB);
         require(validHedger, "Invalid hedger");
 
-        if (positionType == PositionType.CROSS) {
-            uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[msg.sender];
-            require(numOpenPositionsCross <= C.getMaxOpenPositionsCross(), "Max open positions cross reached");
-        }
-
         rfq = LibMaster.onRequestForQuote(
             msg.sender,
             partyB,
@@ -133,8 +128,8 @@ contract OpenMarketSingleFacet {
     }
 
     function returnUserFunds(RequestForQuote memory rfq) private {
-        uint256 reservedMargin = rfq.lockedMargin + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
-        s.ma._lockedMarginReserved[rfq.partyA] -= reservedMargin;
+        uint256 reservedMargin = rfq.lockedMarginA + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
+        s.ma._crossLockedMarginReserved[rfq.partyA] -= reservedMargin;
         s.ma._marginBalances[rfq.partyA] += reservedMargin;
     }
 }

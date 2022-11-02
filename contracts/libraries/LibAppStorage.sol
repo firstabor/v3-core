@@ -33,7 +33,7 @@ struct RequestForQuote {
     Side side;
     uint256 notionalUsd;
     uint16 leverageUsed;
-    uint256 lockedMargin;
+    uint256 lockedMarginA;
     uint256 protocolFee;
     uint256 liquidationFee;
     uint256 cva;
@@ -61,7 +61,8 @@ struct Position {
     address partyB;
     uint16 leverageUsed;
     Side side;
-    uint256 lockedMargin;
+    uint256 lockedMarginA;
+    uint256 lockedMarginB;
     uint256 protocolFeePaid;
     uint256 liquidationFee;
     uint256 cva;
@@ -98,8 +99,8 @@ struct MAState {
     // Balances
     mapping(address => uint256) _accountBalances;
     mapping(address => uint256) _marginBalances;
-    mapping(address => uint256) _lockedMargin;
-    mapping(address => uint256) _lockedMarginReserved;
+    mapping(address => uint256) _crossLockedMargin;
+    mapping(address => uint256) _crossLockedMarginReserved;
     // RequestForQuotes
     mapping(uint256 => RequestForQuote) _requestForQuotesMap;
     uint256 _requestForQuotesLength;

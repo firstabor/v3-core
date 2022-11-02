@@ -40,8 +40,8 @@ contract MasterFacet {
         return s.ma._openPositionsIsolatedLength[party];
     }
 
-    function getOpenPositionsCrossLength(address party) external view returns (uint256) {
-        return s.ma._openPositionsCrossLength[party];
+    function getOpenPositionsCrossLength(address partyA) external view returns (uint256) {
+        return s.ma._openPositionsCrossLength[partyA];
     }
 
     function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
@@ -92,9 +92,9 @@ contract MasterFacet {
         external
         view
         returns (
-            bool shouldLiquidated,
-            int256 pnlA,
-            int256 pnlB
+            bool shouldBeLiquidated,
+            int256 uPnLA,
+            int256 uPnLB
         )
     {
         return LibMaster.positionShouldBeLiquidatedIsolated(positionId, bidPrice, askPrice);
