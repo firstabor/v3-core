@@ -104,6 +104,7 @@ struct MAState {
     // RequestForQuotes
     mapping(uint256 => RequestForQuote) _requestForQuotesMap;
     uint256 _requestForQuotesLength;
+    mapping(address => uint256) _crossRequestForQuotesLength;
     // Positions
     mapping(uint256 => Position) _allPositionsMap;
     uint256 _allPositionsLength;

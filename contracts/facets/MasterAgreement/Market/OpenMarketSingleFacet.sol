@@ -55,7 +55,7 @@ contract OpenMarketSingleFacet {
         require(rfq.orderType == OrderType.MARKET, "Invalid order type");
         require(rfq.state == RequestForQuoteState.ORPHAN, "Invalid RFQ state");
 
-        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELATION_REQUESTED);
+        _updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELATION_REQUESTED);
 
         emit CancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -69,8 +69,8 @@ contract OpenMarketSingleFacet {
         require(rfq.state == RequestForQuoteState.CANCELATION_REQUESTED, "Invalid RFQ state");
         require(rfq.mutableTimestamp + C.getRequestTimeout() < block.timestamp, "Request Timeout");
 
-        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
-        returnUserFunds(rfq);
+        _updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
+        _onInvalidRequestForQuote(rfq);
 
         emit ForceCancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -83,8 +83,8 @@ contract OpenMarketSingleFacet {
         require(rfq.orderType == OrderType.MARKET, "Invalid order type");
         require(rfq.state == RequestForQuoteState.CANCELATION_REQUESTED, "Invalid RFQ state");
 
-        updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
-        returnUserFunds(rfq);
+        _updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
+        _onInvalidRequestForQuote(rfq);
 
         emit AcceptCancelOpenMarketSingle(msg.sender, rfqId);
     }
@@ -100,8 +100,8 @@ contract OpenMarketSingleFacet {
             "Invalid RFQ state"
         );
 
-        updateRequestForQuoteState(rfq, RequestForQuoteState.REJECTED);
-        returnUserFunds(rfq);
+        _updateRequestForQuoteState(rfq, RequestForQuoteState.REJECTED);
+        _onInvalidRequestForQuote(rfq);
 
         emit RejectOpenMarketSingle(msg.sender, rfqId);
     }
@@ -122,14 +122,20 @@ contract OpenMarketSingleFacet {
         emit FillOpenMarketSingle(msg.sender, rfqId, position.positionId);
     }
 
-    function updateRequestForQuoteState(RequestForQuote storage rfq, RequestForQuoteState state) private {
+    function _updateRequestForQuoteState(RequestForQuote storage rfq, RequestForQuoteState state) private {
         rfq.state = state;
         rfq.mutableTimestamp = block.timestamp;
     }
 
-    function returnUserFunds(RequestForQuote memory rfq) private {
+    function _onInvalidRequestForQuote(RequestForQuote memory rfq) private {
+        // Return user funds
         uint256 reservedMargin = rfq.lockedMarginA + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
         s.ma._crossLockedMarginReserved[rfq.partyA] -= reservedMargin;
         s.ma._marginBalances[rfq.partyA] += reservedMargin;
+
+        // Decrease the number of active RFQs
+        if (rfq.positionType == PositionType.CROSS) {
+            s.ma._crossRequestForQuotesLength[rfq.partyA]--;
+        }
     }
 }

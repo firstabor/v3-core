@@ -35,7 +35,10 @@ library LibMaster {
 
         if (positionType == PositionType.CROSS) {
             uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[partyA];
-            require(numOpenPositionsCross <= C.getMaxOpenPositionsCross(), "Max open positions cross reached");
+            require(
+                numOpenPositionsCross + s.ma._crossRequestForQuotesLength[partyA] <= C.getMaxOpenPositionsCross(),
+                "Max open positions cross reached"
+            );
         }
 
         uint256 notionalUsd = usdAmountToSpend * leverage;
@@ -74,6 +77,11 @@ library LibMaster {
 
         s.ma._requestForQuotesMap[currentRfqId] = rfq;
         s.ma._requestForQuotesLength++;
+
+        // Increase the number of active RFQs
+        if (positionType == PositionType.CROSS) {
+            s.ma._crossRequestForQuotesLength[partyA]++;
+        }
     }
 
     function onFillOpenMarket(
@@ -150,6 +158,9 @@ library LibMaster {
             // Lock margins
             s.ma._crossLockedMargin[rfq.partyA] += rfq.lockedMarginA;
             s.ma._crossLockedMargin[partyB] += lockedMarginB;
+
+            // Decrease the number of active RFQs
+            s.ma._crossRequestForQuotesLength[rfq.partyA]--;
         }
     }
 
