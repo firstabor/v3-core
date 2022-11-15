@@ -10,15 +10,14 @@ struct Hedger {
 
 struct Market {
     uint256 marketId;
-    string identifier;
+    bytes32 identifier;
     MarketType marketType;
-    TradingSession tradingSession;
     bool active;
-    string baseCurrency;
-    string quoteCurrency;
-    string symbol;
-    // TODO: bytes32 muonPriceFeedID;
-    // TODO: bytes32 muonFundingRateFeedID;
+    bytes16 baseCurrency;
+    bytes16 quoteCurrency;
+    bytes32 symbol;
+    bytes32 muonPriceFeedId;
+    bytes32 fundingRateId;
 }
 
 struct RequestForQuote {

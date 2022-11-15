@@ -10,31 +10,36 @@ contract MarketsFacet is Ownable {
     AppStorage internal s;
 
     event CreateMarket(uint256 indexed marketId);
-    event UpdateMarketStatus(uint256 indexed marketId, bool oldStatus, bool newStatus);
+    event UpdateMarketIdentifier(uint256 indexed marketId, bytes32 oldIdentifier, bytes32 newIdentifier);
+    event UpdateMarketActive(uint256 indexed marketId, bool oldStatus, bool newStatus);
+    event UpdateMarketMuonPriceFeedId(uint256 indexed marketId, bytes32 oldMuonPriceFeedId, bytes32 newMuonPriceFeedId);
+    event UpdateMarketFundingRateId(uint256 indexed marketId, bytes32 oldFundingRateId, bytes32 newFundingRateId);
 
     // --------------------------------//
     //----- PUBLIC WRITE FUNCTIONS ----//
     // --------------------------------//
 
     function createMarket(
-        string memory identifier,
+        bytes32 identifier,
         MarketType marketType,
-        TradingSession tradingSession,
         bool active,
-        string memory baseCurrency,
-        string memory quoteCurrency,
-        string memory symbol
+        bytes16 baseCurrency,
+        bytes16 quoteCurrency,
+        bytes32 symbol,
+        bytes32 muonPriceFeedId,
+        bytes32 fundingRateId
     ) external onlyOwner returns (Market memory market) {
         uint256 currentMarketId = s.markets._marketList.length + 1;
         market = Market(
             currentMarketId,
             identifier,
             marketType,
-            tradingSession,
             active,
             baseCurrency,
             quoteCurrency,
-            symbol
+            symbol,
+            muonPriceFeedId,
+            fundingRateId
         );
 
         s.markets._marketMap[currentMarketId] = market;
@@ -43,21 +48,47 @@ contract MarketsFacet is Ownable {
         emit CreateMarket(currentMarketId);
     }
 
-    function updateMarketStatus(uint256 marketId, bool status) external onlyOwner {
-        s.markets._marketMap[marketId].active = status;
-        emit UpdateMarketStatus(marketId, !status, status);
+    function updateMarketIdentifier(uint256 marketId, bytes32 identifier) external onlyOwner {
+        bytes32 oldIdentifier = s.markets._marketMap[marketId].identifier;
+        s.markets._marketMap[marketId].identifier = identifier;
+        emit UpdateMarketIdentifier(marketId, oldIdentifier, identifier);
+    }
+
+    function updateMarketActive(uint256 marketId, bool active) external onlyOwner {
+        bool oldStatus = s.markets._marketMap[marketId].active;
+        s.markets._marketMap[marketId].active = active;
+        emit UpdateMarketActive(marketId, oldStatus, active);
+    }
+
+    function updateMarketMuonPriceFeedId(uint256 marketId, bytes32 muonPriceFeedId) external onlyOwner {
+        bytes32 oldMuonPriceFeedId = s.markets._marketMap[marketId].muonPriceFeedId;
+        s.markets._marketMap[marketId].muonPriceFeedId = muonPriceFeedId;
+        emit UpdateMarketMuonPriceFeedId(marketId, oldMuonPriceFeedId, muonPriceFeedId);
+    }
+
+    function updateMarketFundingRateId(uint256 marketId, bytes32 fundingRateId) external onlyOwner {
+        bytes32 oldFundingRateId = s.markets._marketMap[marketId].fundingRateId;
+        s.markets._marketMap[marketId].fundingRateId = fundingRateId;
+        emit UpdateMarketFundingRateId(marketId, oldFundingRateId, fundingRateId);
     }
 
     // --------------------------------//
     //----- PUBLIC VIEW FUNCTIONS -----//
     // --------------------------------//
 
+    function getMarkets() external view returns (Market[] memory markets) {
+        return s.markets._marketList;
+    }
+
     function getMarketById(uint256 marketId) external view returns (Market memory market) {
         return s.markets._marketMap[marketId];
     }
 
-    function getMarkets() external view returns (Market[] memory markets) {
-        return s.markets._marketList;
+    function getMarketsByIds(uint256[] memory marketIds) external view returns (Market[] memory markets) {
+        markets = new Market[](marketIds.length);
+        for (uint256 i = 0; i < marketIds.length; i++) {
+            markets[i] = s.markets._marketMap[marketIds[i]];
+        }
     }
 
     function getMarketsInRange(uint256 start, uint256 end) external view returns (Market[] memory markets) {

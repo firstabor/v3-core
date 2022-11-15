@@ -3,13 +3,14 @@ pragma solidity >=0.8.16;
 
 enum MarketType {
     FOREX,
-    CRYPTO,
-    STOCK
-}
-
-enum TradingSession {
-    _24_7,
-    _24_5
+    METALS,
+    ENERGIES,
+    INDICES,
+    STOCKS,
+    COMMODITIES,
+    BONDS,
+    ETFS,
+    CRYPTO
 }
 
 enum Side {
