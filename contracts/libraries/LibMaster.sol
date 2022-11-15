@@ -31,7 +31,8 @@ library LibMaster {
     ) internal returns (RequestForQuote memory rfq) {
         AppStorage storage s = LibAppStorage.diamondStorage();
 
-        require(LibMarkets.isValidMarketId(marketId), "Invalid market");
+        // This inherently validates the existence of a market as well.
+        require(LibMarkets.isActiveMarket(marketId), "Market not active");
 
         if (positionType == PositionType.CROSS) {
             uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[partyA];
