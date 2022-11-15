@@ -7,6 +7,7 @@ import { C } from "../C.sol";
 import { LibHedgers } from "../libraries/LibHedgers.sol";
 import { LibOracle, PositionPrice } from "../libraries/LibOracle.sol";
 import { LibMaster } from "../libraries/LibMaster.sol";
+import { Position } from "../libraries/LibAppStorage.sol";
 import { SchnorrSign } from "../interfaces/IMuonV03.sol";
 
 contract AccountFacet is ReentrancyGuard {
@@ -14,8 +15,9 @@ contract AccountFacet is ReentrancyGuard {
     event Withdraw(address indexed party, uint256 amount);
     event Allocate(address indexed party, uint256 amount);
     event Deallocate(address indexed party, uint256 amount);
-    event AddFreeMargin(address indexed party, uint256 amount);
-    event RemoveFreeMargin(address indexed party, uint256 amount);
+    event AddFreeMarginIsolated(address indexed party, uint256 amount, uint256 indexed positionId);
+    event AddFreeMarginCross(address indexed party, uint256 amount);
+    event RemoveFreeMarginCross(address indexed party, uint256 amount);
 
     // --------------------------------//
     //----- PUBLIC WRITE FUNCTIONS ----//
@@ -47,12 +49,16 @@ contract AccountFacet is ReentrancyGuard {
         _withdraw(msg.sender, amount);
     }
 
-    function addFreeMargin(uint256 amount) external {
-        _addFreeMargin(msg.sender, amount);
+    function addFreeMarginIsolated(uint256 amount, uint256 positionId) external {
+        _addFreeMarginIsolated(msg.sender, amount, positionId);
     }
 
-    function removeFreeMargin() external {
-        _removeFreeMargin(msg.sender);
+    function addFreeMarginCross(uint256 amount) external {
+        _addFreeMarginCross(msg.sender, amount);
+    }
+
+    function removeFreeMarginCross() external {
+        _removeFreeMarginCross(msg.sender);
     }
 
     // --------------------------------//
@@ -92,15 +98,30 @@ contract AccountFacet is ReentrancyGuard {
         emit Deallocate(party, amount);
     }
 
-    function _addFreeMargin(address party, uint256 amount) private {
+    function _addFreeMarginIsolated(
+        address party,
+        uint256 amount,
+        uint256 positionId
+    ) private {
+        Position storage position = s.ma._allPositionsMap[positionId];
+        require(position.partyB == party, "Not partyB");
+
+        require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
+        s.ma._marginBalances[party] -= amount;
+        position.lockedMarginB += amount;
+
+        emit AddFreeMarginIsolated(party, amount, positionId);
+    }
+
+    function _addFreeMarginCross(address party, uint256 amount) private {
         require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
         s.ma._marginBalances[party] -= amount;
         s.ma._crossLockedMargin[party] += amount;
 
-        emit AddFreeMargin(party, amount);
+        emit AddFreeMarginCross(party, amount);
     }
 
-    function _removeFreeMargin(address party) private {
+    function _removeFreeMarginCross(address party) private {
         require(s.ma._openPositionsCrossLength[party] == 0, "Removal denied");
         require(s.ma._crossLockedMargin[party] > 0, "No locked margin");
 
@@ -108,7 +129,7 @@ contract AccountFacet is ReentrancyGuard {
         s.ma._crossLockedMargin[party] = 0;
         s.ma._marginBalances[party] += amount;
 
-        emit RemoveFreeMargin(party, amount);
+        emit RemoveFreeMarginCross(party, amount);
     }
 
     // --------------------------------//
