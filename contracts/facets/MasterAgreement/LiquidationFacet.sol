@@ -155,12 +155,12 @@ contract LiquidationFacet {
         }
 
         /**
-         * Debit vs. Credit is basically the same as PnL vs LockedMargin.
-         * If we're owed less than what we're about to receive then
+         * Debit vs. Credit is basically the same as PnLA.
+         * If we owe less than what we should receive then
          * technically the party should not be liquidated.
          * */
         require(credit >= debit, "PartyA should have more credit");
-        uint256 deficit = credit - debit;
+        uint256 deficit = credit - debit - s.ma._crossLockedMargin[partyA];
 
         /**
          * We have a deficit that needs to be covered:
