@@ -346,13 +346,19 @@ library LibMaster {
         return Decimal.from(notionalSize).mul(C.getCVA()).asUint256();
     }
 
-    function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnLCross)
+    function calculateCrossMarginHealth(address party, int256 uPnLCross)
         internal
-        pure
+        view
         returns (Decimal.D256 memory ratio)
     {
-        if (lockedMargin == 0) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        uint256 lockedMargin = s.ma._crossLockedMargin[party];
+        uint256 openPositions = s.ma._openPositionsCrossLength[party];
+
+        if (lockedMargin == 0 && openPositions == 0) {
             return Decimal.ratio(1, 1);
+        } else if (lockedMargin == 0) {
+            return Decimal.zero();
         }
 
         if (uPnLCross >= 0) {
@@ -390,8 +396,8 @@ library LibMaster {
     }
 
     function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) internal view returns (bool) {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-        return calculateCrossMarginHealth(s.ma._crossLockedMargin[party], uPnLCross).isZero();
+        Decimal.D256 memory ratio = calculateCrossMarginHealth(party, uPnLCross);
+        return ratio.isZero();
     }
 
     // --------------------------------//

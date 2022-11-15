@@ -76,12 +76,12 @@ contract MasterFacet {
         return LibMaster.calculateCVAAmount(notionalSize);
     }
 
-    function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnL)
+    function calculateCrossMarginHealth(address party, int256 uPnLCross)
         external
-        pure
+        view
         returns (Decimal.D256 memory ratio)
     {
-        return LibMaster.calculateCrossMarginHealth(lockedMargin, uPnL);
+        return LibMaster.calculateCrossMarginHealth(party, uPnLCross);
     }
 
     function positionShouldBeLiquidatedIsolated(
