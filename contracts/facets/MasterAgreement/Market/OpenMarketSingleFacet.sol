@@ -109,7 +109,8 @@ contract OpenMarketSingleFacet {
     function fillOpenMarketSingle(
         uint256 rfqId,
         uint256 filledAmountUnits,
-        uint256 avgPriceUsd
+        uint256 avgPriceUsd,
+        bytes32 uuid
     ) external returns (Position memory position) {
         RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
 
@@ -117,7 +118,7 @@ contract OpenMarketSingleFacet {
         require(rfq.hedgerMode == HedgerMode.SINGLE, "Invalid hedger mode");
         require(rfq.orderType == OrderType.MARKET, "Invalid order type");
 
-        position = LibMaster.onFillOpenMarket(msg.sender, rfqId, filledAmountUnits, avgPriceUsd);
+        position = LibMaster.onFillOpenMarket(msg.sender, rfqId, filledAmountUnits, avgPriceUsd, uuid);
 
         emit FillOpenMarketSingle(msg.sender, rfqId, position.positionId);
     }

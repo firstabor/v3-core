@@ -54,6 +54,7 @@ struct Fill {
 
 struct Position {
     uint256 positionId;
+    bytes32 uuid;
     PositionState state;
     PositionType positionType;
     uint256 marketId;

@@ -88,7 +88,8 @@ library LibMaster {
         address partyB,
         uint256 rfqId,
         uint256 filledAmountUnits,
-        uint256 avgPriceUsd
+        uint256 avgPriceUsd,
+        bytes32 uuid
     ) internal returns (Position memory position) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
@@ -111,6 +112,7 @@ library LibMaster {
         uint256 currentPositionId = s.ma._allPositionsLength + 1;
         position = Position({
             positionId: currentPositionId,
+            uuid: uuid,
             state: PositionState.OPEN,
             positionType: rfq.positionType,
             marketId: rfq.marketId,
