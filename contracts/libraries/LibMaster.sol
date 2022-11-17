@@ -12,7 +12,7 @@ import "../libraries/LibEnums.sol";
 library LibMaster {
     using Decimal for Decimal.D256;
 
-    event Fill(uint256 indexed marketId, Side side, uint256 amount, uint256 price);
+    event Fill(uint256 indexed positionId, Side side, uint256 amount, uint256 price);
 
     /*--------------------------*
      * INTERNAL WRITE FUNCTIONS *
