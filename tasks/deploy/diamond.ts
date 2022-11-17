@@ -5,6 +5,7 @@ import { task, types } from "hardhat/config";
 import { FacetCutAction, getSelectors } from "../utils/diamondCut";
 import { readData, writeData } from "../utils/fs";
 import { generateGasReport } from "../utils/gas";
+import { generateABI } from "../utils/generateABI";
 import { FacetNames } from "./constants";
 import { initializeMarkets } from "./markets";
 
@@ -30,8 +31,9 @@ task("deploy:diamond", "Deploys the Diamond contract")
   .addParam("collateral", "The address of the collateral")
   .addParam("muon", "The address of the muon gateway")
   .addParam("logData", "Write the deployed addresses to a data file", true, types.boolean)
+  .addParam("genABI", "Generate the ABI for the diamond", true, types.boolean)
   .addParam("reportGas", "Report gas consumption and costs", true, types.boolean)
-  .setAction(async ({ collateral, muon, logData, reportGas }, { ethers }) => {
+  .setAction(async ({ collateral, muon, logData, genABI, reportGas }, { ethers, run }) => {
     const signers: SignerWithAddress[] = await ethers.getSigners();
     const owner: SignerWithAddress = signers[0];
     let totalGasUsed = ethers.BigNumber.from(0);
@@ -142,6 +144,10 @@ task("deploy:diamond", "Deploys the Diamond contract")
         })),
       ]);
       console.log("Deployed addresses written to json file");
+    }
+
+    if (genABI) {
+      generateABI();
     }
 
     return diamond;
