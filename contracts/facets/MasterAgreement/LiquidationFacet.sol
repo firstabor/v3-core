@@ -118,7 +118,7 @@ contract LiquidationFacet {
          * The below checks whether the party should be liquidated. We can do that based
          * on malicious inputs. If malicious then the next `for` loop will revert it regardless.
          */
-        (int256 uPnLCross, ) = LibMaster.calculateUPnLCross(positionPrices, partyA);
+        int256 uPnLCross = LibMaster.calculateUPnLCross(positionPrices, partyA);
         bool shouldBeLiquidated = LibMaster.partyShouldBeLiquidatedCross(partyA, uPnLCross);
         require(shouldBeLiquidated, "Not liquidatable");
 

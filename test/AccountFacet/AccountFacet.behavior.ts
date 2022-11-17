@@ -60,8 +60,6 @@ export function shouldBehaveLikeAccountFacet(): void {
   });
 
   it("should fail to add free margin isolated - not partyB", async function () {
-    const user = this.signers.user.getAddress();
-
     const addFreeMargin = this.accountFacet.connect(this.signers.user).addFreeMarginIsolated("100", 0);
     await expect(addFreeMargin).to.be.revertedWith("Not partyB");
   });

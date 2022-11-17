@@ -61,6 +61,10 @@ contract MasterFacet {
         return s.ma._openPositionsCrossLength[partyA];
     }
 
+    function getCrossRequestForQuotesLength(address party) external view returns (uint256) {
+        return s.ma._crossRequestForQuotesLength[party];
+    }
+
     function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
         return s.ma._positionFills[positionId];
     }
@@ -76,7 +80,7 @@ contract MasterFacet {
     function calculateUPnLCross(
         PositionPrice[] calldata positionPrices,
         address party
-    ) external view returns (int256 uPnLCross, int256 notionalCross) {
+    ) external view returns (int256 uPnLCross) {
         return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 

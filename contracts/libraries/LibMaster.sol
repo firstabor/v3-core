@@ -36,8 +36,9 @@ library LibMaster {
 
         if (positionType == PositionType.CROSS) {
             uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[partyA];
+            uint256 numOpenRfqsCross = s.ma._crossRequestForQuotesLength[partyA];
             require(
-                numOpenPositionsCross + s.ma._crossRequestForQuotesLength[partyA] <= C.getMaxOpenPositionsCross(),
+                numOpenPositionsCross + numOpenRfqsCross < C.getMaxOpenPositionsCross(),
                 "Max open positions cross reached"
             );
         }
@@ -177,7 +178,7 @@ library LibMaster {
         createFill(positionId, position.side == Side.BUY ? Side.SELL : Side.BUY, position.currentBalanceUnits, price);
 
         // Calculate the PnL of PartyA
-        (int256 uPnLA, , ) = _calculateUPnLIsolated(
+        (int256 uPnLA, ) = _calculateUPnLIsolated(
             position.side,
             position.currentBalanceUnits,
             position.initialNotionalUsd,
@@ -307,7 +308,7 @@ library LibMaster {
         AppStorage storage s = LibAppStorage.diamondStorage();
         Position memory position = s.ma._allPositionsMap[positionId];
 
-        (uPnLA, uPnLB, ) = _calculateUPnLIsolated(
+        (uPnLA, uPnLB) = _calculateUPnLIsolated(
             position.side,
             position.currentBalanceUnits,
             position.initialNotionalUsd,
@@ -327,8 +328,8 @@ library LibMaster {
     function calculateUPnLCross(
         PositionPrice[] memory positionPrices,
         address party
-    ) internal view returns (int256 uPnLCross, int256 notionalCross) {
-        (uPnLCross, notionalCross) = _calculateUPnLCross(positionPrices, party);
+    ) internal view returns (int256 uPnLCross) {
+        return _calculateUPnLCross(positionPrices, party);
     }
 
     function calculateProtocolFeeAmount(uint256 notionalUsd) internal view returns (uint256) {
@@ -402,23 +403,23 @@ library LibMaster {
         uint256 initialNotionalUsd,
         uint256 bidPrice,
         uint256 askPrice
-    ) private pure returns (int256 uPnLA, int256 uPnLB, int256 notionalIsolatedA) {
-        if (currentBalanceUnits == 0) return (0, 0, 0);
+    ) private pure returns (int256 uPnLA, int256 uPnLB) {
+        if (currentBalanceUnits == 0) return (0, 0);
 
         uint256 precision = C.getPrecision();
 
         // Note: it's safe to typecast notional values to int256 because they cannot be <= 0.
         if (side == Side.BUY) {
             require(bidPrice != 0, "Oracle bidPrice is invalid");
-            notionalIsolatedA = int256((currentBalanceUnits * bidPrice) / precision);
+            int256 notionalIsolatedA = int256((currentBalanceUnits * bidPrice) / precision);
             uPnLA = notionalIsolatedA - int256(initialNotionalUsd);
         } else {
             require(askPrice != 0, "Oracle askPrice is invalid");
-            notionalIsolatedA = int256((currentBalanceUnits * askPrice) / precision);
+            int256 notionalIsolatedA = int256((currentBalanceUnits * askPrice) / precision);
             uPnLA = int256(initialNotionalUsd) - notionalIsolatedA;
         }
 
-        return (uPnLA, -uPnLA, notionalIsolatedA);
+        return (uPnLA, -uPnLA);
     }
 
     /**
@@ -431,7 +432,7 @@ library LibMaster {
     function _calculateUPnLCross(
         PositionPrice[] memory positionPrices,
         address party
-    ) private view returns (int256 uPnLCrossA, int256 notionalCrossA) {
+    ) private view returns (int256 uPnLCrossA) {
         AppStorage storage s = LibAppStorage.diamondStorage();
 
         for (uint256 i = 0; i < positionPrices.length; i++) {
@@ -442,7 +443,7 @@ library LibMaster {
             Position memory position = s.ma._allPositionsMap[positionId];
             require(position.partyA == party, "PositionId mismatch");
 
-            (int256 _uPnLIsolatedA, , int256 _notionalIsolatedA) = _calculateUPnLIsolated(
+            (int256 _uPnLIsolatedA, ) = _calculateUPnLIsolated(
                 position.side,
                 position.currentBalanceUnits,
                 position.initialNotionalUsd,
@@ -451,7 +452,6 @@ library LibMaster {
             );
 
             uPnLCrossA += _uPnLIsolatedA;
-            notionalCrossA += _notionalIsolatedA;
         }
     }
 }

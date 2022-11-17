@@ -222,4 +222,109 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
         ),
     ).to.be.revertedWith("Invalid RFQ state");
   });
+
+  it("should open a cross position - long", async function () {
+    await expect(
+      this.openMarketSingleFacet
+        .connect(this.signers.user)
+        .requestOpenMarketSingle(
+          this.signers.hedger.getAddress(),
+          marketId,
+          PositionType.CROSS,
+          Side.BUY,
+          new BigNumber(100_000).times(PRECISION).toFixed(),
+          1,
+          [new BigNumber(100_000).times(PRECISION).toFixed(), new BigNumber(100_000).times(PRECISION).toFixed()],
+        ),
+    ).to.not.reverted;
+
+    const previousRfqId = 3; // above will generate this rfqid
+    await expect(
+      this.openMarketSingleFacet
+        .connect(this.signers.hedger)
+        .fillOpenMarketSingle(
+          previousRfqId,
+          new BigNumber(100_000).times(PRECISION).toFixed(),
+          new BigNumber(1).times(PRECISION).toFixed(),
+          bytes16,
+        ),
+    ).to.not.reverted;
+
+    // will generate positionId = 2
+  });
+
+  it("should open a cross position - short", async function () {
+    await expect(
+      this.openMarketSingleFacet
+        .connect(this.signers.user)
+        .requestOpenMarketSingle(
+          this.signers.hedger.getAddress(),
+          marketId,
+          PositionType.CROSS,
+          Side.SELL,
+          new BigNumber(50_000).times(PRECISION).toFixed(),
+          1,
+          [new BigNumber(50_000).times(PRECISION).toFixed(), new BigNumber(50_000).times(PRECISION).toFixed()],
+        ),
+    ).to.not.reverted;
+
+    const previousRfqId = 4; // above will generate this rfqid
+    await expect(
+      this.openMarketSingleFacet
+        .connect(this.signers.hedger)
+        .fillOpenMarketSingle(
+          previousRfqId,
+          new BigNumber(50_000).times(PRECISION).toFixed(),
+          new BigNumber(1).times(PRECISION).toFixed(),
+          bytes16,
+        ),
+    ).to.not.reverted;
+
+    // will generate positionId = 3
+  });
+
+  it("should open more cross rfqs -- and revert at the maximum", async function () {
+    const user = await this.signers.user.getAddress();
+    let numberOpenPositions = await this.masterFacet.getOpenPositionsCrossLength(user);
+    let numberRfqs = await this.masterFacet.getCrossRequestForQuotesLength(user);
+    let max = await this.constantsFacet.getMaxOpenPositionsCross();
+
+    // We have 1 isolated and 2 cross positions, and 0 open rfqs, generate 8 more rfqs
+    for (let i = 1; i <= 8; i++) {
+      await expect(
+        this.openMarketSingleFacet
+          .connect(this.signers.user)
+          .requestOpenMarketSingle(
+            this.signers.hedger.getAddress(),
+            marketId,
+            PositionType.CROSS,
+            Side.BUY,
+            new BigNumber(1_000).times(PRECISION).toFixed(),
+            1,
+            [new BigNumber(1_000).times(PRECISION).toFixed(), new BigNumber(1_000).times(1_000).toFixed()],
+          ),
+      ).to.not.reverted;
+    }
+
+    numberOpenPositions = await this.masterFacet.getOpenPositionsCrossLength(user);
+    numberRfqs = await this.masterFacet.getCrossRequestForQuotesLength(user);
+
+    const total = new BigNumber(numberOpenPositions.toString()).plus(numberRfqs.toString());
+    expect(total.toString()).to.equal(max.toString());
+
+    // The 11th rfq/position should fail
+    await expect(
+      this.openMarketSingleFacet
+        .connect(this.signers.user)
+        .requestOpenMarketSingle(
+          this.signers.hedger.getAddress(),
+          marketId,
+          PositionType.CROSS,
+          Side.BUY,
+          new BigNumber(1_000).times(PRECISION).toFixed(),
+          1,
+          [new BigNumber(1_000).times(PRECISION).toFixed(), new BigNumber(1_000).times(1_000).toFixed()],
+        ),
+    ).to.be.revertedWith("Max open positions cross reached");
+  });
 }

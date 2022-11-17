@@ -4,10 +4,10 @@ import { ethers } from "hardhat";
 
 import { shouldBehaveLikeAccountFacet } from "./AccountFacet/AccountFacet.behavior";
 import { shouldBehaveLikeCloseMarketFacet } from "./CloseMarketFacet/CloseMarketFacet.behavior";
-import { deployFakeStablecoin } from "./Collateral/Collateral.fixture";
 import { shouldBehaveLikeDiamond } from "./Diamond/Diamond.behavior";
 import { deployDiamondFixture } from "./Diamond/Diamond.fixture";
 import { shouldBehaveLikeHedgersFacet } from "./HedgersFacet/HedgersFacet.behavior";
+import { shouldBehaveLikeLiquidationFacet } from "./LiquidationFacet/LiquidationFacet.behavior";
 import { shouldBehaveLikeMarketsFacet } from "./MarketsFacet/MarketsFacet.behavior";
 import { shouldBehaveLikeMasterFacet } from "./MasterFacet/MasterFacet.behavior";
 import { shouldBehaveLikeOpenMarketSingleFacet } from "./OpenMarketSingleFacet/OpenMarketSingleFacet.behavior";
@@ -61,11 +61,15 @@ describe("Unit Test", function () {
     shouldBehaveLikeOpenMarketSingleFacet();
   });
 
+  describe("MasterFacet", function () {
+    shouldBehaveLikeMasterFacet();
+  });
+
   describe("CloseMarketFacet", function () {
     shouldBehaveLikeCloseMarketFacet();
   });
 
-  // describe("MasterFacet", function () {
-  //   shouldBehaveLikeMasterFacet();
-  // });
+  describe("LiquidationFacet", function () {
+    shouldBehaveLikeLiquidationFacet();
+  });
 });
