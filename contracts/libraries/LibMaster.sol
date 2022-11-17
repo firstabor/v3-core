@@ -2,296 +2,457 @@
 pragma solidity >=0.8.16;
 
 import { AppStorage, LibAppStorage, RequestForQuote, Position, Fill } from "../libraries/LibAppStorage.sol";
+import { LibDiamond } from "../libraries/LibDiamond.sol";
+import { LibMarkets } from "../libraries/LibMarkets.sol";
+import { PositionPrice } from "../libraries/LibOracle.sol";
 import { Decimal } from "../libraries/LibDecimal.sol";
-import { SchnorrSign } from "../interfaces/IMuonV02.sol";
-import { LibOracle } from "../libraries/LibOracle.sol";
-import { MarketPrice } from "../interfaces/IOracle.sol";
 import { C } from "../C.sol";
 import "../libraries/LibEnums.sol";
 
 library LibMaster {
     using Decimal for Decimal.D256;
 
-    // --------------------------------//
-    //---- INTERNAL WRITE FUNCTIONS ---//
-    // --------------------------------//
+    /*--------------------------*
+     * INTERNAL WRITE FUNCTIONS *
+     *--------------------------*/
 
     function onRequestForQuote(
         address partyA,
         address partyB,
         uint256 marketId,
+        PositionType positionType,
         OrderType orderType,
         HedgerMode hedgerMode,
         Side side,
-        uint256 usdAmount,
+        uint256 usdAmountToSpend,
         uint16 leverage,
-        uint8 marginRequiredPercentage,
-        MarketPrice[] calldata marketPrices,
-        bytes calldata reqId,
-        SchnorrSign[] calldata sigs
+        uint256 minExpectedUnits,
+        uint256 maxExpectedUnits,
+        address affiliate
     ) internal returns (RequestForQuote memory rfq) {
         AppStorage storage s = LibAppStorage.diamondStorage();
 
-        uint256 lockedMarginA = calculateLockedMargin(usdAmount * leverage, marginRequiredPercentage, false);
-        uint256 lockedMarginB = calculateLockedMargin(usdAmount * leverage, marginRequiredPercentage, true);
-        require(lockedMarginA <= s.ma._marginBalances[partyA], "Insufficient margin balance");
+        // This inherently validates the existence of a market as well.
+        require(LibMarkets.isActiveMarket(marketId), "Market not active");
 
-        // Validate raw oracle signatures. Can be bypassed if a user has no open positions.
-        if (s.ma._openPositionsList[partyA].length > 0) {
-            bool valid = LibOracle.isValidMarketPrices(marketPrices, reqId, sigs);
-            require(valid, "Invalid oracle inputs");
+        if (positionType == PositionType.CROSS) {
+            uint256 numOpenPositionsCross = s.ma._openPositionsCrossLength[partyA];
+            uint256 numOpenRfqsCross = s.ma._crossRequestForQuotesLength[partyA];
+            require(
+                numOpenPositionsCross + numOpenRfqsCross < C.getMaxOpenPositionsCross(),
+                "Max open positions cross reached"
+            );
         }
-        /**
-         * Note: We don't have to guesstimate the solvency post-trade,
-         * because the isolated marginHealth will be 100% at T=0. Thus,
-         * it will have no effect on the cross margin health.
-         */
-        (int256 uPnLCrossA, ) = LibMaster.calculateUPnLCross(marketPrices, partyA);
-        require(
-            LibMaster.solvencySafeguardToTrade(s.ma._lockedMargin[partyA], uPnLCrossA, false),
-            "PartyA fails solvency safeguard"
-        );
 
-        uint256 currentRfqId = s.ma._requestForQuotesLength[partyA];
+        uint256 notionalUsd = usdAmountToSpend * leverage;
+        uint256 protocolFee = calculateProtocolFeeAmount(notionalUsd);
+        uint256 liquidationFee = calculateLiquidationFeeAmount(notionalUsd);
+        uint256 cva = calculateCVAAmount(notionalUsd);
+        uint256 amount = usdAmountToSpend + protocolFee + liquidationFee + cva;
 
-        rfq = RequestForQuote(
-            currentRfqId,
-            RequestForQuoteState.ORPHAN,
-            orderType,
-            partyA,
-            partyB,
-            hedgerMode,
-            marketId,
-            side,
-            usdAmount * leverage,
-            leverage,
-            marginRequiredPercentage,
-            lockedMarginA,
-            lockedMarginB,
-            block.timestamp,
-            block.timestamp
-        );
+        require(amount <= s.ma._marginBalances[partyA], "Insufficient margin balance");
+        s.ma._marginBalances[partyA] -= amount;
+        s.ma._crossLockedMarginReserved[partyA] += amount;
 
-        s.ma._requestForQuoteMap[partyA][currentRfqId] = rfq;
-        s.ma._requestForQuotesLength[partyA]++;
+        // Create the RFQ
+        uint256 currentRfqId = s.ma._requestForQuotesLength + 1;
+        rfq = RequestForQuote({
+            creationTimestamp: block.timestamp,
+            mutableTimestamp: block.timestamp,
+            rfqId: currentRfqId,
+            state: RequestForQuoteState.ORPHAN,
+            positionType: positionType,
+            orderType: orderType,
+            partyA: partyA,
+            partyB: partyB,
+            hedgerMode: hedgerMode,
+            marketId: marketId,
+            side: side,
+            notionalUsd: notionalUsd,
+            lockedMarginA: usdAmountToSpend,
+            protocolFee: protocolFee,
+            liquidationFee: liquidationFee,
+            cva: cva,
+            minExpectedUnits: minExpectedUnits,
+            maxExpectedUnits: maxExpectedUnits,
+            affiliate: affiliate
+        });
 
-        /// @notice We will only lock partyB's margin once he accepts the RFQ.
-        s.ma._marginBalances[partyA] -= lockedMarginA;
-        s.ma._lockedMarginReserved[partyA] += lockedMarginA;
+        s.ma._requestForQuotesMap[currentRfqId] = rfq;
+        s.ma._requestForQuotesLength++;
+
+        // Increase the number of active RFQs
+        if (positionType == PositionType.CROSS) {
+            s.ma._crossRequestForQuotesLength[partyA]++;
+        }
     }
 
-    function createFill(
-        Side side,
-        uint256 amountUnits,
-        uint256 avgPriceUsd
-    ) internal view returns (Fill memory fill) {
-        fill = Fill(side == Side.BUY ? Side.SELL : Side.BUY, amountUnits, avgPriceUsd, block.timestamp);
-    }
-
-    function distributePnL(
-        address partyA,
+    function onFillOpenMarket(
         address partyB,
-        int256 pnlA
-    ) internal {
+        uint256 rfqId,
+        uint256 filledAmountUnits,
+        uint256 avgPriceUsd,
+        bytes16 uuid
+    ) internal returns (Position memory position) {
         AppStorage storage s = LibAppStorage.diamondStorage();
+        RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
+
+        require(
+            rfq.state == RequestForQuoteState.ORPHAN || rfq.state == RequestForQuoteState.CANCELATION_REQUESTED,
+            "Invalid RFQ state"
+        );
+        require(rfq.minExpectedUnits <= filledAmountUnits, "Invalid min filled amount");
+        require(rfq.maxExpectedUnits >= filledAmountUnits, "Invalid max filled amount");
+
+        // Update the RFQ
+        rfq.state = RequestForQuoteState.ACCEPTED;
+        rfq.mutableTimestamp = block.timestamp;
+
+        // TODO: allow hedger to set his own locked margin amount
+        uint256 lockedMarginB = rfq.lockedMarginA;
+
+        // Create the Position
+        uint256 currentPositionId = s.ma._allPositionsLength + 1;
+        position = Position({
+            creationTimestamp: block.timestamp,
+            mutableTimestamp: block.timestamp,
+            positionId: currentPositionId,
+            uuid: uuid,
+            state: PositionState.OPEN,
+            positionType: rfq.positionType,
+            marketId: rfq.marketId,
+            partyA: rfq.partyA,
+            partyB: rfq.partyB,
+            side: rfq.side,
+            lockedMarginA: rfq.lockedMarginA,
+            lockedMarginB: lockedMarginB,
+            protocolFeePaid: rfq.protocolFee,
+            liquidationFee: rfq.liquidationFee,
+            cva: rfq.cva,
+            currentBalanceUnits: filledAmountUnits,
+            initialNotionalUsd: rfq.notionalUsd,
+            affiliate: rfq.affiliate
+        });
+
+        // Create the first Fill
+        createFill(currentPositionId, rfq.side, filledAmountUnits, avgPriceUsd);
+
+        // Update global mappings
+        s.ma._allPositionsMap[currentPositionId] = position;
+        s.ma._allPositionsLength++;
+
+        // Transfer partyA's collateral
+        uint256 deductableMarginA = rfq.lockedMarginA + rfq.protocolFee + rfq.liquidationFee + rfq.cva;
+        s.ma._crossLockedMarginReserved[rfq.partyA] -= deductableMarginA;
+
+        // Transfer partyB's collateral
+        uint256 deductableMarginB = lockedMarginB + rfq.liquidationFee + rfq.cva; // hedger doesn't pay protocolFee
+        require(deductableMarginB <= s.ma._marginBalances[partyB], "Insufficient margin balance");
+        s.ma._marginBalances[partyB] -= deductableMarginB;
+
+        // Distribute the fee paid by partyA
+        s.ma._accountBalances[LibDiamond.contractOwner()] += rfq.protocolFee;
+
+        if (rfq.positionType == PositionType.ISOLATED) {
+            s.ma._openPositionsIsolatedLength[rfq.partyA]++;
+            s.ma._openPositionsIsolatedLength[partyB]++;
+        } else {
+            s.ma._openPositionsCrossLength[rfq.partyA]++;
+            s.ma._openPositionsIsolatedLength[partyB]++;
+
+            // Lock margins
+            s.ma._crossLockedMargin[rfq.partyA] += rfq.lockedMarginA;
+            s.ma._crossLockedMargin[partyB] += lockedMarginB;
+
+            // Decrease the number of active RFQs
+            s.ma._crossRequestForQuotesLength[rfq.partyA]--;
+        }
+    }
+
+    function onFillCloseMarket(uint256 positionId, PositionPrice memory positionPrice) internal {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        Position storage position = s.ma._allPositionsMap[positionId];
+
+        uint256 price = position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice;
+
+        // Add the Fill
+        createFill(positionId, position.side == Side.BUY ? Side.SELL : Side.BUY, position.currentBalanceUnits, price);
+
+        // Calculate the PnL of PartyA
+        (int256 uPnLA, ) = _calculateUPnLIsolated(
+            position.side,
+            position.currentBalanceUnits,
+            position.initialNotionalUsd,
+            positionPrice.bidPrice,
+            positionPrice.askPrice
+        );
+
+        // Distribute the PnL accordingly
+        if (position.positionType == PositionType.ISOLATED) {
+            distributePnLIsolated(position.positionId, uPnLA);
+        } else {
+            distributePnLCross(position.positionId, uPnLA);
+        }
+
+        // Return parties their reserved liquidation fees
+        s.ma._marginBalances[position.partyA] += (position.liquidationFee + position.cva);
+        s.ma._marginBalances[position.partyB] += (position.liquidationFee + position.cva);
+
+        // Update Position
+        position.state = PositionState.CLOSED;
+        position.currentBalanceUnits = 0;
+        position.mutableTimestamp = block.timestamp;
+
+        // Update mappings
+        if (position.positionType == PositionType.ISOLATED) {
+            s.ma._openPositionsIsolatedLength[position.partyA]--;
+            s.ma._openPositionsIsolatedLength[position.partyB]--;
+        } else {
+            s.ma._openPositionsCrossLength[position.partyA]--;
+            s.ma._openPositionsIsolatedLength[position.partyB]--;
+        }
+    }
+
+    function distributePnLIsolated(uint256 positionId, int256 uPnLA) internal {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        Position memory position = s.ma._allPositionsMap[positionId];
+        require(position.positionType == PositionType.ISOLATED, "Invalid position type");
 
         /**
          * Winning party receives the PNL.
-         * Losing party pays for the PNL using his lockedMargin.
-         *
-         * Note: the winning party will NOT receive his lockedMargin back,
-         * he'll have to withdraw it manually. This has to do with the
-         * risk of liquidation + the fact that his initially lockedMargin
-         * could be greater than what he currently has locked.
+         * Losing party pays for the PNL using isolated margin.
          */
-        if (pnlA >= 0) {
-            s.ma._marginBalances[partyA] += uint256(pnlA);
-            s.ma._lockedMargin[partyB] -= uint256(pnlA);
+
+        if (uPnLA >= 0) {
+            uint256 amount = uint256(uPnLA);
+            if (amount >= position.lockedMarginB) {
+                // Technically this represents a liquidation.
+                s.ma._marginBalances[position.partyA] += (position.lockedMarginA + position.lockedMarginB);
+            } else {
+                s.ma._marginBalances[position.partyA] += (position.lockedMarginA + amount);
+                s.ma._marginBalances[position.partyB] += (position.lockedMarginB - amount);
+            }
         } else {
-            s.ma._marginBalances[partyB] += uint256(pnlA);
-            s.ma._lockedMargin[partyA] -= uint256(pnlA);
-        }
-    }
-
-    function removeOpenPosition(address party, uint256 positionId) internal {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-
-        int256 index = -1;
-        for (uint256 i = 0; i < s.ma._openPositionsList[party].length; i++) {
-            if (s.ma._openPositionsList[party][i] == positionId) {
-                index = int256(i);
-                break;
+            uint256 amount = uint256(-uPnLA);
+            if (amount >= position.lockedMarginA) {
+                // Technically this represents a liquidation.
+                s.ma._marginBalances[position.partyB] += (position.lockedMarginA + position.lockedMarginB);
+            } else {
+                s.ma._marginBalances[position.partyB] += (position.lockedMarginB + amount);
+                s.ma._marginBalances[position.partyA] += (position.lockedMarginA - amount);
             }
         }
-        require(index != -1, "Position not found");
-
-        s.ma._openPositionsList[party][uint256(index)] = s.ma._openPositionsList[party][
-            s.ma._openPositionsList[party].length - 1
-        ];
-        s.ma._openPositionsList[party].pop();
     }
 
-    // --------------------------------//
-    //---- INTERNAL VIEW FUNCTIONS ----//
-    // --------------------------------//
-
-    function getOpenPositions(address party) internal view returns (Position[] memory positions) {
+    function distributePnLCross(uint256 positionId, int256 uPnLA) internal {
         AppStorage storage s = LibAppStorage.diamondStorage();
-        uint256[] memory positionIds = s.ma._openPositionsList[party];
+        Position memory position = s.ma._allPositionsMap[positionId];
+        require(position.positionType == PositionType.CROSS, "Invalid position type");
 
-        positions = new Position[](positionIds.length);
-        for (uint256 i = 0; i < positionIds.length; i++) {
-            positions[i] = s.ma._allPositionsMap[positionIds[i]];
+        /**
+         * Winning party receives the PNL.
+         * Losing party pays for the PNL using his globally lockedMargin (Cross).
+         */
+        address partyA = position.partyA;
+        address partyB = position.partyB;
+
+        if (uPnLA >= 0) {
+            /**
+             * PartyA will NOT receive his lockedMargin back,
+             * he'll have to withdraw it manually. This has to do with the
+             * risk of liquidation + the fact that his initially lockedMargin
+             * could be greater than what he currently has locked.
+             */
+            uint256 amount = uint256(uPnLA);
+            if (amount >= position.lockedMarginB) {
+                // Technically this represents a liquidation.
+                s.ma._marginBalances[position.partyA] += position.lockedMarginB;
+                // We don't have to reset the lockedMargin of PartyB because he's Isolated.
+            } else {
+                s.ma._marginBalances[position.partyA] += amount;
+                s.ma._marginBalances[position.partyB] += (position.lockedMarginB - amount);
+            }
+        } else {
+            uint256 amount = uint256(-uPnLA);
+            // PartyB is Isolated by nature.
+            if (amount >= s.ma._crossLockedMargin[partyA]) {
+                // Technically this represents a liquidation.
+                s.ma._marginBalances[partyB] += (s.ma._crossLockedMargin[partyA] + position.lockedMarginB);
+                s.ma._crossLockedMargin[partyA] = 0;
+            } else {
+                s.ma._marginBalances[partyB] += (position.lockedMarginB + amount);
+                s.ma._crossLockedMargin[partyA] -= amount;
+            }
         }
     }
 
-    // TODO: upgrade to new 'realLeverage' system
-    function calculateLockedMargin(
-        uint256 notionalUsd,
-        uint8 marginRequiredPercentage,
-        bool isHedger // TODO: give this meaning
-    ) internal pure returns (uint256) {
-        Decimal.D256 memory multiplier = Decimal.one().add(C.getMarginOverhead()).add(C.getLiquidationFee());
-        return Decimal.from(notionalUsd).mul(Decimal.ratio(marginRequiredPercentage, 100)).mul(multiplier).asUint256();
+    function createFill(uint256 positionId, Side side, uint256 amount, uint256 price) internal {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        uint256 fillId = s.ma._positionFills[positionId].length;
+        Fill memory fill = Fill(fillId, positionId, side, amount, price, block.timestamp);
+        s.ma._positionFills[positionId].push(fill);
     }
 
-    function calculateUPnLCross(MarketPrice[] memory marketPrices, address party)
-        internal
-        view
-        returns (int256 uPnLCross, int256 notionalCross)
-    {
-        (uPnLCross, notionalCross) = _calculateUPnLCross(marketPrices, getOpenPositions(party));
+    /*-------------------------*
+     * INTERNAL VIEW FUNCTIONS *
+     *-------------------------*/
+
+    /**
+     * @notice Returns the UPnL for a specific position.
+     * @dev This is a naive function, inputs can not be trusted. Use cautiously.
+     */
+    function calculateUPnLIsolated(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice
+    ) internal view returns (int256 uPnLA, int256 uPnLB) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        Position memory position = s.ma._allPositionsMap[positionId];
+
+        (uPnLA, uPnLB) = _calculateUPnLIsolated(
+            position.side,
+            position.currentBalanceUnits,
+            position.initialNotionalUsd,
+            bidPrice,
+            askPrice
+        );
     }
 
     /**
-        Initial Units: 2
-        Initial Price: 5
-        Initial Notional: 2 * 5 = 10
-        Current Price: 6
+     * @notice Returns the UPnL of a party across all his open positions.
+     * @dev This is a naive function, inputs can NOT be trusted. Use cautiously.
+     *      Use Muon to verify inputs to prevent expensive computational costs.
+     * @dev positionPrices can have an incorrect length.
+     * @dev positionPrices can have an arbitrary order.
+     * @dev positionPrices can contain forged duplicates.
+     */
+    function calculateUPnLCross(
+        PositionPrice[] memory positionPrices,
+        address party
+    ) internal view returns (int256 uPnLCross) {
+        return _calculateUPnLCross(positionPrices, party);
+    }
 
-        Long: 
-            Current Notional: 2 * 6 = 12
-            PNL = CurrentNotional - InitialNotional 
-                = 12 - 10 = +2 PROFIT
-        Short:
-            TEMP Current notional: 2 * 6 = 12
-            PNL = InitialNotional - CurrentNotional
-                = 10 - 12 = -2 LOSS
-            Current Notional: VirtualNotional + (PNL * 2)
-                = 12 + (-2 * 2) = 8
-    */
-    function calculateUPnLIsolated(
+    function calculateProtocolFeeAmount(uint256 notionalUsd) internal view returns (uint256) {
+        return Decimal.from(notionalUsd).mul(C.getProtocolFee()).asUint256();
+    }
+
+    function calculateLiquidationFeeAmount(uint256 notionalUsd) internal view returns (uint256) {
+        return Decimal.from(notionalUsd).mul(C.getLiquidationFee()).asUint256();
+    }
+
+    function calculateCVAAmount(uint256 notionalSize) internal view returns (uint256) {
+        return Decimal.from(notionalSize).mul(C.getCVA()).asUint256();
+    }
+
+    function calculateCrossMarginHealth(
+        address party,
+        int256 uPnLCross
+    ) internal view returns (Decimal.D256 memory ratio) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        uint256 lockedMargin = s.ma._crossLockedMargin[party];
+        uint256 openPositions = s.ma._openPositionsCrossLength[party];
+
+        if (lockedMargin == 0 && openPositions == 0) {
+            return Decimal.ratio(1, 1);
+        } else if (lockedMargin == 0) {
+            return Decimal.zero();
+        }
+
+        if (uPnLCross >= 0) {
+            return Decimal.ratio(lockedMargin + uint256(uPnLCross), lockedMargin);
+        }
+
+        uint256 pnl = uint256(-uPnLCross);
+        if (pnl >= lockedMargin) {
+            return Decimal.zero();
+        }
+
+        ratio = Decimal.ratio(lockedMargin - pnl, lockedMargin);
+    }
+
+    function positionShouldBeLiquidatedIsolated(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice
+    ) internal view returns (bool shouldBeLiquidated, int256 uPnLA, int256 uPnLB) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        Position memory position = s.ma._allPositionsMap[positionId];
+
+        (uPnLA, uPnLB) = calculateUPnLIsolated(positionId, bidPrice, askPrice);
+        shouldBeLiquidated = uPnLA <= 0
+            ? uint256(uPnLB) >= position.lockedMarginA
+            : uint256(uPnLA) >= position.lockedMarginB;
+    }
+
+    function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) internal view returns (bool) {
+        Decimal.D256 memory ratio = calculateCrossMarginHealth(party, uPnLCross);
+        return ratio.isZero();
+    }
+
+    /*------------------------*
+     * PRIVATE VIEW FUNCTIONS *
+     *------------------------*/
+
+    /**
+     * @notice Returns the UPnL for a specific position.
+     * @dev This is a naive function, inputs can not be trusted. Use cautiously.
+     */
+    function _calculateUPnLIsolated(
         Side side,
         uint256 currentBalanceUnits,
         uint256 initialNotionalUsd,
         uint256 bidPrice,
         uint256 askPrice
-    ) internal pure returns (int256 uPnL, int256 notionalIsolated) {
+    ) private pure returns (int256 uPnLA, int256 uPnLB) {
         if (currentBalanceUnits == 0) return (0, 0);
 
         uint256 precision = C.getPrecision();
 
+        // Note: it's safe to typecast notional values to int256 because they cannot be <= 0.
         if (side == Side.BUY) {
             require(bidPrice != 0, "Oracle bidPrice is invalid");
-            notionalIsolated = int256((currentBalanceUnits * bidPrice) / precision);
-            uPnL = notionalIsolated - int256(initialNotionalUsd);
+            int256 notionalIsolatedA = int256((currentBalanceUnits * bidPrice) / precision);
+            uPnLA = notionalIsolatedA - int256(initialNotionalUsd);
         } else {
             require(askPrice != 0, "Oracle askPrice is invalid");
-            int256 tempNotionalIsolated = int256((currentBalanceUnits * askPrice) / precision);
-            uPnL = int256(initialNotionalUsd) - tempNotionalIsolated;
-            notionalIsolated = tempNotionalIsolated + (uPnL * 2);
-        }
-    }
-
-    function calculateCrossMarginHealth(uint256 _lockedMargin, int256 uPnLCross)
-        internal
-        pure
-        returns (Decimal.D256 memory ratio)
-    {
-        int256 lockedMargin = int256(_lockedMargin);
-
-        if (lockedMargin == 0) {
-            return Decimal.ratio(1, 1);
-        } else if (lockedMargin + uPnLCross <= 0) {
-            return Decimal.zero();
+            int256 notionalIsolatedA = int256((currentBalanceUnits * askPrice) / precision);
+            uPnLA = int256(initialNotionalUsd) - notionalIsolatedA;
         }
 
-        ratio = Decimal.ratio(uint256(lockedMargin + uPnLCross), uint256(lockedMargin));
+        return (uPnLA, -uPnLA);
     }
 
     /**
-     * A party (user and/or hedger) isn't allowed to open a trade if he's near insolvency.
-     * This restriction is put in place to protect the hedger against concurrency
-     * problematics. Instead, the party is encouraged to top-up his locked margin via addFreeMargin.
+     * @notice Returns the UPnL of a party across all his open positions.
+     * @dev This is a naive function, inputs can NOT be trusted. Use cautiously.
+     * @dev positionPrices can have an incorrect length.
+     * @dev positionPrices can have an arbitrary order.
+     * @dev positionPrices can contain forged duplicates.
      */
-    function solvencySafeguardToTrade(
-        uint256 lockedMargin,
-        int256 uPnLCross,
-        bool isHedger
-    ) internal pure returns (bool) {
-        Decimal.D256 memory ratio = calculateCrossMarginHealth(lockedMargin, uPnLCross);
-        Decimal.D256 memory threshold = C.getSolvencyThresholdToTrade(isHedger);
-        return ratio.greaterThanOrEqualTo(threshold);
-    }
+    function _calculateUPnLCross(
+        PositionPrice[] memory positionPrices,
+        address party
+    ) private view returns (int256 uPnLCrossA) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
 
-    function solvencySafeguardToRemoveLockedMargin(
-        uint256 lockedMargin,
-        int256 uPnLCross,
-        bool isHedger
-    ) internal pure returns (bool) {
-        Decimal.D256 memory ratio = calculateCrossMarginHealth(lockedMargin, uPnLCross);
-        Decimal.D256 memory threshold = C.getSolvencyThresholdToRemoveLockedMargin(isHedger);
-        return ratio.greaterThanOrEqualTo(threshold);
-    }
+        for (uint256 i = 0; i < positionPrices.length; i++) {
+            uint256 positionId = positionPrices[i].positionId;
+            uint256 bidPrice = positionPrices[i].bidPrice;
+            uint256 askPrice = positionPrices[i].askPrice;
 
-    function isValidLeverage(uint16 leverage) internal pure returns (bool) {
-        return leverage > 0 && leverage <= C.getMaxLeverage();
-    }
+            Position memory position = s.ma._allPositionsMap[positionId];
+            require(position.partyA == party, "PositionId mismatch");
 
-    // --------------------------------//
-    //----- PRIVATE VIEW FUNCTIONS ----//
-    // --------------------------------//
+            (int256 _uPnLIsolatedA, ) = _calculateUPnLIsolated(
+                position.side,
+                position.currentBalanceUnits,
+                position.initialNotionalUsd,
+                bidPrice,
+                askPrice
+            );
 
-    /**
-     * Returns the UPnL of a party across all his open positions.
-     *
-     * @notice This function consumes a lot of gas, so make sure to limit `marketPrices`
-     * strictly to the markets that the party has open positions with.
-     *
-     * @dev We assume the signature of `marketPrices` is already validated by parent caller.
-     */
-    function _calculateUPnLCross(MarketPrice[] memory marketPrices, Position[] memory positions)
-        private
-        pure
-        returns (int256 uPnLCross, int256 notionalCross)
-    {
-        require(marketPrices.length <= positions.length, "Redundant marketPrices");
-        if (positions.length == 0) {
-            return (0, 0);
+            uPnLCrossA += _uPnLIsolatedA;
         }
-
-        uint256 count;
-        for (uint256 i = 0; i < marketPrices.length; i++) {
-            uint256 marketId = marketPrices[i].marketId;
-            uint256 bidPrice = marketPrices[i].bidPrice;
-            uint256 askPrice = marketPrices[i].askPrice;
-
-            for (uint256 j = 0; j < positions.length; j++) {
-                if (positions[j].marketId == marketId) {
-                    (int256 _uPnLIsolated, int256 _notionalIsolated) = calculateUPnLIsolated(
-                        positions[j].side,
-                        positions[j].currentBalanceUnits,
-                        positions[j].initialNotionalUsd,
-                        bidPrice,
-                        askPrice
-                    );
-                    uPnLCross += _uPnLIsolated;
-                    notionalCross += _notionalIsolated;
-                    count++;
-                }
-            }
-        }
-
-        require(count == positions.length, "Incomplete price feeds");
     }
 }

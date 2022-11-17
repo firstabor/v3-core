@@ -1,26 +1,23 @@
 [
-  { "name": "DiamondCut", "address": "0x3B14F26CDC1b25DB455a311f9aA7d63815815F4C", "constructorArguments": [] },
+  { "name": "DiamondCut", "address": "0x3fF2cfC6A29c35cd74C9e7dc53d3b05F31d7d7E2", "constructorArguments": [] },
   {
     "name": "Diamond",
-    "address": "0x1a61bfA6Fd6FBB1D0d66213d72c200b10c39c332",
-    "constructorArguments": ["0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF", "0x3B14F26CDC1b25DB455a311f9aA7d63815815F4C"]
+    "address": "0xF78B5C36b37CF03fB30E1C5fE0eD75002B93a466",
+    "constructorArguments": ["0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF", "0x3fF2cfC6A29c35cd74C9e7dc53d3b05F31d7d7E2"]
   },
-  { "name": "DiamondInit", "address": "0x7a68d8Ef1BF29b400eb0cDf5a4d036A78faAb6CB", "constructorArguments": [] },
-  { "name": "DiamondLoupeFacet", "address": "0x237eCFD6a9CBf4695311a3dFEdd78810Be5f29e8", "constructorArguments": [] },
-  { "name": "OwnershipFacet", "address": "0xB70E55460d31655854A0eFC5d31a2971efE9b5d5", "constructorArguments": [] },
-  { "name": "AccountFacet", "address": "0x9Ac654D2B3b04a9845891385d9c75C3C41Bfa3c2", "constructorArguments": [] },
-  { "name": "HedgersFacet", "address": "0xB6Ec5030e985E2027066618daC9e48aba79Cd4dF", "constructorArguments": [] },
-  { "name": "MarketsFacet", "address": "0xe085380450b3D19Ae6D79DF9a2D81B38dE9A6641", "constructorArguments": [] },
-  { "name": "LiquidationFacet", "address": "0x178B9885457aCd87B6587926F556DADC5CbcD65D", "constructorArguments": [] },
-  { "name": "MasterFacet", "address": "0x24b369De48c41260FF7f4c457593d9a52035b482", "constructorArguments": [] },
+  { "name": "DiamondInit", "address": "0xeB2B8a05F33624Affb09ac223b9A86D1F1FC7f0A", "constructorArguments": [] },
+  { "name": "DiamondLoupeFacet", "address": "0x3477EC544847f7d64CcEa2fD422a971352917B04", "constructorArguments": [] },
+  { "name": "ConstantsFacet", "address": "0x8CbE9b0aB13B000aa494474aeE7BB58788d05FC2", "constructorArguments": [] },
+  { "name": "OwnershipFacet", "address": "0x7DC594c49a9c9194b5b0164f79C02A6C70408328", "constructorArguments": [] },
+  { "name": "AccountFacet", "address": "0xC9bDaF01cbF4eb60E3915bD63A8c1ED0e06c5D14", "constructorArguments": [] },
+  { "name": "HedgersFacet", "address": "0xb2EC84Bed171dF4D53E3a760aC0e2F551c5e9b35", "constructorArguments": [] },
+  { "name": "MarketsFacet", "address": "0x7cb260e019C54138574a8B88f9Cd8a7eB40e7F60", "constructorArguments": [] },
+  { "name": "LiquidationFacet", "address": "0x730ebcF5c6e97CF98067df10cD506f84A1f1ad37", "constructorArguments": [] },
+  { "name": "MasterFacet", "address": "0x6fdc3eC0df5c096de18404b575E17e55aad9eE3B", "constructorArguments": [] },
   {
     "name": "OpenMarketSingleFacet",
-    "address": "0x64611f1e0BDBEBDC7bE1A4f0D7755B9b7F7cB768",
+    "address": "0xfe865041d77C2EebC70625f86CFF6d4e814C6E5f",
     "constructorArguments": []
   },
-  {
-    "name": "CloseMarketSingleFacet",
-    "address": "0xed37458Dca7cA137d218F15f94DE464f8601D016",
-    "constructorArguments": []
-  }
+  { "name": "CloseMarketFacet", "address": "0x313ab87DeA8eF0dE33bd3Bd893fcB8BA57501753", "constructorArguments": [] }
 ]

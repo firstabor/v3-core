@@ -1,71 +1,117 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, RequestForQuote, Position } from "../../libraries/LibAppStorage.sol";
+import { AppStorage, RequestForQuote, Position, Fill } from "../../libraries/LibAppStorage.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
-import { MarketPrice } from "../../interfaces/IOracle.sol";
+import { PositionPrice } from "../../libraries/LibOracle.sol";
 import "../../libraries/LibEnums.sol";
 
 contract MasterFacet {
     AppStorage internal s;
 
-    function getRequestForQuotes(address party) external view returns (RequestForQuote[] memory rfqs) {
-        uint256 len = s.ma._requestForQuotesLength[party];
+    event UpdateUuid(uint256 indexed positionId, bytes16 oldUuid, bytes16 newUuid);
+
+    /*-------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *-------------------------*/
+    function updateUuid(uint256 positionId, bytes16 uuid) external {
+        Position storage position = s.ma._allPositionsMap[positionId];
+        require(position.partyB == msg.sender, "Not partyB");
+        bytes16 oldUuid = position.uuid;
+        position.uuid = uuid;
+        emit UpdateUuid(positionId, oldUuid, uuid);
+    }
+
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
+
+    function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory rfq) {
+        return s.ma._requestForQuotesMap[rfqId];
+    }
+
+    function getRequestForQuotes(uint256[] calldata rfqIds) external view returns (RequestForQuote[] memory rfqs) {
+        uint256 len = rfqIds.length;
         rfqs = new RequestForQuote[](len);
 
         for (uint256 i = 0; i < len; i++) {
-            rfqs[i] = (s.ma._requestForQuoteMap[party][i]);
+            rfqs[i] = (s.ma._requestForQuotesMap[rfqIds[i]]);
         }
     }
 
-    function getRequestForQuote(address party, uint256 rfqId) external view returns (RequestForQuote memory) {
-        return s.ma._requestForQuoteMap[party][rfqId];
+    function getPosition(uint256 positionId) external view returns (Position memory position) {
+        return s.ma._allPositionsMap[positionId];
     }
 
-    function getOpenPositions(address partyA) external view returns (Position[] memory) {
-        return LibMaster.getOpenPositions(partyA);
+    function getPositions(uint256[] calldata positionIds) external view returns (Position[] memory positions) {
+        uint256 len = positionIds.length;
+        positions = new Position[](len);
+
+        for (uint256 i = 0; i < len; i++) {
+            positions[i] = (s.ma._allPositionsMap[positionIds[i]]);
+        }
     }
 
-    function calculateLockedMargin(
-        uint256 notionalUsd,
-        uint8 marginRequiredPercentage,
-        bool isHedger
-    ) external pure returns (uint256) {
-        return LibMaster.calculateLockedMargin(notionalUsd, marginRequiredPercentage, isHedger);
+    function getOpenPositionsIsolatedLength(address party) external view returns (uint256) {
+        return s.ma._openPositionsIsolatedLength[party];
     }
 
-    function calculateUPnLCross(MarketPrice[] memory marketPrices, address party)
-        external
-        view
-        returns (int256 uPnLCross, int256 notionalCross)
-    {
-        return LibMaster.calculateUPnLCross(marketPrices, party);
+    function getOpenPositionsCrossLength(address partyA) external view returns (uint256) {
+        return s.ma._openPositionsCrossLength[partyA];
+    }
+
+    function getCrossRequestForQuotesLength(address party) external view returns (uint256) {
+        return s.ma._crossRequestForQuotesLength[party];
+    }
+
+    function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
+        return s.ma._positionFills[positionId];
     }
 
     function calculateUPnLIsolated(
-        Side side,
-        uint256 currentBalanceUnits,
-        uint256 initialNotionalUsd,
+        uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice
-    ) external pure returns (int256 uPnL, int256 notionalIsolated) {
-        return LibMaster.calculateUPnLIsolated(side, currentBalanceUnits, initialNotionalUsd, bidPrice, askPrice);
+    ) external view returns (int256 uPnLA, int256 uPnLB) {
+        return LibMaster.calculateUPnLIsolated(positionId, bidPrice, askPrice);
     }
 
-    function calculateCrossMarginHealth(uint256 lockedMargin, int256 uPnLCross)
-        external
-        pure
-        returns (Decimal.D256 memory ratio)
-    {
-        return LibMaster.calculateCrossMarginHealth(lockedMargin, uPnLCross);
+    function calculateUPnLCross(
+        PositionPrice[] calldata positionPrices,
+        address party
+    ) external view returns (int256 uPnLCross) {
+        return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 
-    function solvencySafeguardToTrade(
-        uint256 lockedMargin,
-        int256 uPnLCross,
-        bool isHedger
-    ) external pure returns (bool) {
-        return LibMaster.solvencySafeguardToTrade(lockedMargin, uPnLCross, isHedger);
+    function calculateProtocolFeeAmount(uint256 notionalSize) external view returns (uint256) {
+        return LibMaster.calculateProtocolFeeAmount(notionalSize);
+    }
+
+    function calculateLiquidationFeeAmount(uint256 notionalSize) external view returns (uint256) {
+        return LibMaster.calculateLiquidationFeeAmount(notionalSize);
+    }
+
+    function calculateCVAAmount(uint256 notionalSize) external view returns (uint256) {
+        return LibMaster.calculateCVAAmount(notionalSize);
+    }
+
+    function calculateCrossMarginHealth(
+        address party,
+        int256 uPnLCross
+    ) external view returns (Decimal.D256 memory ratio) {
+        return LibMaster.calculateCrossMarginHealth(party, uPnLCross);
+    }
+
+    function positionShouldBeLiquidatedIsolated(
+        uint256 positionId,
+        uint256 bidPrice,
+        uint256 askPrice
+    ) external view returns (bool shouldBeLiquidated, int256 uPnLA, int256 uPnLB) {
+        return LibMaster.positionShouldBeLiquidatedIsolated(positionId, bidPrice, askPrice);
+    }
+
+    function partyShouldBeLiquidatedCross(address party, int256 uPnLCross) external view returns (bool) {
+        return LibMaster.partyShouldBeLiquidatedCross(party, uPnLCross);
     }
 }

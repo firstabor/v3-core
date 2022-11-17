@@ -5,14 +5,16 @@ import type {
   Diamond,
   DiamondLoupeFacet,
   DiamondCutFacet,
+  ConstantsFacet,
   OwnershipFacet,
   AccountFacet,
   MarketsFacet,
   HedgersFacet,
   MasterFacet,
   OpenMarketSingleFacet,
-  CloseMarketSingleFacet,
+  CloseMarketFacet,
   LiquidationFacet,
+  PauseFacet,
 } from "../src/types";
 
 type Fixture<T> = () => Promise<T>;
@@ -27,14 +29,16 @@ declare module "mocha" {
     diamond: Diamond;
     diamondLoupeFacet: DiamondLoupeFacet;
     diamondCutFacet: DiamondCutFacet;
+    constantsFacet: ConstantsFacet;
     ownershipFacet: OwnershipFacet;
+    pauseFacet: PauseFacet;
     accountFacet: AccountFacet;
     hedgersFacet: HedgersFacet;
     marketsFacet: MarketsFacet;
     liquidationFacet: LiquidationFacet;
     masterFacet: MasterFacet;
     openMarketSingleFacet: OpenMarketSingleFacet;
-    closeMarketSingleFacet: CloseMarketSingleFacet;
+    closeMarketFacet: CloseMarketFacet;
   }
 }
 
@@ -46,16 +50,27 @@ export interface Signers {
 
 export enum MarketType {
   FOREX,
+  METALS,
+  ENERGIES,
+  INDICES,
+  STOCKS,
+  COMMODITIES,
+  BONDS,
+  ETFS,
   CRYPTO,
-  STOCK,
-}
-
-export enum TradingSession {
-  _24_7,
-  _24_5,
 }
 
 export enum Side {
   BUY,
   SELL,
+}
+
+export enum OrderType {
+  LIMIT,
+  MARKET,
+}
+
+export enum PositionType {
+  ISOLATED,
+  CROSS,
 }

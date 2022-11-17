@@ -5,6 +5,7 @@ import type { HardhatUserConfig } from "hardhat/config";
 import { resolve } from "path";
 
 import "./tasks/deploy";
+import "./tasks/upgrade";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
@@ -23,6 +24,16 @@ if (!fantomRpcURL) {
 const ftmscanAPIKey: string | undefined = process.env.FTMSCAN_API_KEY;
 if (!ftmscanAPIKey) {
   throw new Error("Please set your ftmscanAPIKey in a .env file");
+}
+
+const arbitrumRpcURL: string | undefined = process.env.ARBITRUM_RPC_URL;
+if (!arbitrumRpcURL) {
+  throw new Error("Please set your arbitrumRpcURL in a .env file");
+}
+
+const arbiscanAPIKey: string | undefined = process.env.ARBISCAN_API_KEY;
+if (!arbiscanAPIKey) {
+  throw new Error("Please set your arbiscanAPIKey in a .env file");
 }
 
 const config: HardhatUserConfig = {
@@ -44,10 +55,15 @@ const config: HardhatUserConfig = {
       url: fantomRpcURL,
       accounts: [privateKey],
     },
+    arbitrum: {
+      url: arbitrumRpcURL,
+      accounts: [privateKey],
+    },
   },
   etherscan: {
     apiKey: {
       opera: ftmscanAPIKey,
+      arbitrumOne: arbiscanAPIKey,
     },
   },
   paths: {

@@ -5,15 +5,23 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ReentrancyGuard } from "../utils/ReentrancyGuard.sol";
 import { C } from "../C.sol";
 import { LibHedgers } from "../libraries/LibHedgers.sol";
-import { LibOracle } from "../libraries/LibOracle.sol";
+import { LibOracle, PositionPrice } from "../libraries/LibOracle.sol";
 import { LibMaster } from "../libraries/LibMaster.sol";
-import { SchnorrSign } from "../interfaces/IMuonV02.sol";
-import { MarketPrice } from "../interfaces/IOracle.sol";
+import { Position } from "../libraries/LibAppStorage.sol";
+import { SchnorrSign } from "../interfaces/IMuonV03.sol";
 
 contract AccountFacet is ReentrancyGuard {
-    // --------------------------------//
-    //----- PUBLIC WRITE FUNCTIONS ----//
-    // --------------------------------//
+    event Deposit(address indexed party, uint256 amount);
+    event Withdraw(address indexed party, uint256 amount);
+    event Allocate(address indexed party, uint256 amount);
+    event Deallocate(address indexed party, uint256 amount);
+    event AddFreeMarginIsolated(address indexed party, uint256 amount, uint256 indexed positionId);
+    event AddFreeMarginCross(address indexed party, uint256 amount);
+    event RemoveFreeMarginCross(address indexed party, uint256 amount);
+
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
 
     function deposit(uint256 amount) external {
         _deposit(msg.sender, amount);
@@ -41,93 +49,88 @@ contract AccountFacet is ReentrancyGuard {
         _withdraw(msg.sender, amount);
     }
 
-    function addFreeMargin(uint256 amount) external {
-        _addFreeMargin(msg.sender, amount);
+    function addFreeMarginIsolated(uint256 amount, uint256 positionId) external {
+        _addFreeMarginIsolated(msg.sender, amount, positionId);
     }
 
-    function dangerouslyRemoveLockedMargin(
-        uint256 amount,
-        MarketPrice[] calldata marketPrices,
-        bytes calldata reqId,
-        SchnorrSign[] calldata sigs
-    ) external {
-        _dangerouslyRemoveLockedMargin(msg.sender, amount, marketPrices, reqId, sigs);
+    function addFreeMarginCross(uint256 amount) external {
+        _addFreeMarginCross(msg.sender, amount);
     }
 
-    // --------------------------------//
-    //----- PRIVATE WRITE FUNCTIONS ---//
-    // --------------------------------//
+    function removeFreeMarginCross() external {
+        _removeFreeMarginCross(msg.sender);
+    }
+
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
 
     function _deposit(address party, uint256 amount) private nonReentrant {
         bool success = IERC20(C.getCollateral()).transferFrom(party, address(this), amount);
         require(success, "Failed to deposit collateral");
         s.ma._accountBalances[party] += amount;
-        // TODO: emit event
+
+        emit Deposit(party, amount);
     }
 
     function _withdraw(address party, uint256 amount) private nonReentrant {
         require(s.ma._accountBalances[party] >= amount, "Insufficient account balance");
         s.ma._accountBalances[party] -= amount;
-
         bool success = IERC20(C.getCollateral()).transfer(party, amount);
         require(success, "Failed to withdraw collateral");
-        // TODO: emit event
+
+        emit Withdraw(party, amount);
     }
 
     function _allocate(address party, uint256 amount) private nonReentrant {
         require(s.ma._accountBalances[party] >= amount, "Insufficient account balance");
-
         s.ma._accountBalances[party] -= amount;
         s.ma._marginBalances[party] += amount;
-        // TODO: emit event
+
+        emit Allocate(party, amount);
     }
 
     function _deallocate(address party, uint256 amount) private nonReentrant {
         require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
-
         s.ma._marginBalances[party] -= amount;
         s.ma._accountBalances[party] += amount;
-        // TODO: emit event
+
+        emit Deallocate(party, amount);
     }
 
-    function _addFreeMargin(address party, uint256 amount) private {
+    function _addFreeMarginIsolated(address party, uint256 amount, uint256 positionId) private nonReentrant {
+        Position storage position = s.ma._allPositionsMap[positionId];
+        require(position.partyB == party, "Not partyB");
+
         require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
-
         s.ma._marginBalances[party] -= amount;
-        s.ma._lockedMargin[party] += amount;
+        position.lockedMarginB += amount;
 
-        // TODO: emit event
+        emit AddFreeMarginIsolated(party, amount, positionId);
     }
 
-    function _dangerouslyRemoveLockedMargin(
-        address party,
-        uint256 amount,
-        MarketPrice[] calldata marketPrices,
-        bytes calldata reqId,
-        SchnorrSign[] calldata sigs
-    ) private {
-        require(s.ma._lockedMargin[party] >= amount, "Insufficient lockedMargin balance");
+    function _addFreeMarginCross(address party, uint256 amount) private nonReentrant {
+        require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
+        s.ma._marginBalances[party] -= amount;
+        s.ma._crossLockedMargin[party] += amount;
 
-        // Validate raw oracle signatures. Can be bypassed if a user has no open positions.
-        if (s.ma._openPositionsList[party].length > 0) {
-            bool valid = LibOracle.isValidMarketPrices(marketPrices, reqId, sigs);
-            require(valid, "Invalid oracle inputs");
-        }
+        emit AddFreeMarginCross(party, amount);
+    }
 
-        (int256 uPnLCross, ) = LibMaster.calculateUPnLCross(marketPrices, party);
-        (bool isHedger, ) = LibHedgers.isValidHedger(party);
-        require(
-            LibMaster.solvencySafeguardToRemoveLockedMargin(s.ma._lockedMargin[party] - amount, uPnLCross, isHedger),
-            "Party fails solvency safeguard"
-        );
+    function _removeFreeMarginCross(address party) private nonReentrant {
+        require(s.ma._openPositionsCrossLength[party] == 0, "Removal denied");
+        require(s.ma._crossLockedMargin[party] > 0, "No locked margin");
 
-        s.ma._lockedMargin[party] -= amount;
+        uint256 amount = s.ma._crossLockedMargin[party];
+        s.ma._crossLockedMargin[party] = 0;
         s.ma._marginBalances[party] += amount;
+
+        emit RemoveFreeMarginCross(party, amount);
     }
 
-    // --------------------------------//
-    //----- PUBLIC VIEW FUNCTIONS -----//
-    // --------------------------------//
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
 
     function getAccountBalance(address party) external view returns (uint256) {
         return s.ma._accountBalances[party];
@@ -138,10 +141,10 @@ contract AccountFacet is ReentrancyGuard {
     }
 
     function getLockedMargin(address party) external view returns (uint256) {
-        return s.ma._lockedMargin[party];
+        return s.ma._crossLockedMargin[party];
     }
 
     function getLockedMarginReserved(address party) external view returns (uint256) {
-        return s.ma._lockedMarginReserved[party];
+        return s.ma._crossLockedMarginReserved[party];
     }
 }

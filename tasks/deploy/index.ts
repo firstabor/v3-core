@@ -1,1 +1,2 @@
 import "./diamond";
+import "./stablecoin";
