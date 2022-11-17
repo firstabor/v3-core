@@ -48,19 +48,26 @@ export function shouldBehaveLikeAccountFacet(): void {
     expect(await this.accountFacet.getMarginBalance(user)).to.equal("50");
   });
 
-  it("should add free margin", async function () {
+  it("should add free margin cross", async function () {
     const user = this.signers.user.getAddress();
 
-    const addFreeMargin = this.accountFacet.connect(this.signers.user).addFreeMargin("100");
+    const addFreeMargin = this.accountFacet.connect(this.signers.user).addFreeMarginCross("100");
     await expect(addFreeMargin).to.be.revertedWith("Insufficient margin balance");
 
-    await this.accountFacet.connect(this.signers.user).addFreeMargin("50");
+    await this.accountFacet.connect(this.signers.user).addFreeMarginCross("50");
     expect(await this.accountFacet.getMarginBalance(user)).to.equal("0");
     expect(await this.accountFacet.getLockedMargin(user)).to.equal("50");
   });
 
+  it("should fail to add free margin isolated - not partyB", async function () {
+    const user = this.signers.user.getAddress();
+
+    const addFreeMargin = this.accountFacet.connect(this.signers.user).addFreeMarginIsolated("100", 0);
+    await expect(addFreeMargin).to.be.revertedWith("Not partyB");
+  });
+
   it("should reset the state", async function () {
-    await this.accountFacet.connect(this.signers.user).removeFreeMargin();
+    await this.accountFacet.connect(this.signers.user).removeFreeMarginCross();
     await this.accountFacet.connect(this.signers.user).deallocate("50");
     await this.accountFacet.connect(this.signers.user).withdraw("250");
     await this.collateral.connect(this.signers.user).transfer(this.diamond.address, "500");

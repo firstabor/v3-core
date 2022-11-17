@@ -10,6 +10,23 @@ import "../../libraries/LibEnums.sol";
 contract MasterFacet {
     AppStorage internal s;
 
+    event UpdateUuid(uint256 indexed positionId, bytes16 oldUuid, bytes16 newUuid);
+
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
+    function updateUuid(uint256 positionId, bytes16 uuid) external {
+        Position storage position = s.ma._allPositionsMap[positionId];
+        require(position.partyB == msg.sender, "Not partyB");
+        bytes16 oldUuid = position.uuid;
+        position.uuid = uuid;
+        emit UpdateUuid(positionId, oldUuid, uuid);
+    }
+
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
+
     function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory rfq) {
         return s.ma._requestForQuotesMap[rfqId];
     }
@@ -56,11 +73,10 @@ contract MasterFacet {
         return LibMaster.calculateUPnLIsolated(positionId, bidPrice, askPrice);
     }
 
-    function calculateUPnLCross(PositionPrice[] calldata positionPrices, address party)
-        external
-        view
-        returns (int256 uPnLCross, int256 notionalCross)
-    {
+    function calculateUPnLCross(
+        PositionPrice[] calldata positionPrices,
+        address party
+    ) external view returns (int256 uPnLCross, int256 notionalCross) {
         return LibMaster.calculateUPnLCross(positionPrices, party);
     }
 
@@ -76,11 +92,10 @@ contract MasterFacet {
         return LibMaster.calculateCVAAmount(notionalSize);
     }
 
-    function calculateCrossMarginHealth(address party, int256 uPnLCross)
-        external
-        view
-        returns (Decimal.D256 memory ratio)
-    {
+    function calculateCrossMarginHealth(
+        address party,
+        int256 uPnLCross
+    ) external view returns (Decimal.D256 memory ratio) {
         return LibMaster.calculateCrossMarginHealth(party, uPnLCross);
     }
 
@@ -88,15 +103,7 @@ contract MasterFacet {
         uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice
-    )
-        external
-        view
-        returns (
-            bool shouldBeLiquidated,
-            int256 uPnLA,
-            int256 uPnLB
-        )
-    {
+    ) external view returns (bool shouldBeLiquidated, int256 uPnLA, int256 uPnLB) {
         return LibMaster.positionShouldBeLiquidatedIsolated(positionId, bidPrice, askPrice);
     }
 

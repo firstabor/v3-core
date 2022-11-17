@@ -1,59 +1,57 @@
 import BigNumber from "bignumber.js";
 import { expect } from "chai";
-import { ethers, network } from "hardhat";
 
 import { PRECISION } from "../constants";
-import { Side } from "../types";
 
 export function shouldBehaveLikeCloseMarketFacet(): void {
-  const positionId = 0;
+  const positionId = 1;
   let oldMarginBalanceA = new BigNumber(0);
-  let oldLockedMarginB = new BigNumber(0);
+  let oldMarginBalanceB = new BigNumber(0);
+  const avgPriceUsd = new BigNumber(1.01).times(PRECISION).toFixed();
+  const pnl = new BigNumber(1_000).times(PRECISION).toFixed();
 
-  // it("should check if positionId exists", async function () {
-  //   const userPositions = await this.masterFacet.getOpenPositionsCross(this.signers.user.getAddress());
-  //   const hedgerPositions = await this.masterFacet.getOpenPositions(this.signers.hedger.getAddress());
-  //   expect(userPositions.length).to.equal(1);
-  //   expect(hedgerPositions.length).to.equal(1);
+  it("should check if positionId exists -- positionId #1", async function () {
+    const user = await this.signers.user.getAddress();
+    const hedger = await this.signers.hedger.getAddress();
 
-  //   const position = userPositions[0];
-  //   expect(position.positionId.toNumber()).to.equal(positionId);
-  //   expect(position.positionId.toNumber()).to.equal(hedgerPositions[0].positionId.toNumber());
-  // });
+    const position = await this.masterFacet.getPosition(positionId);
+    expect(position.partyA).to.equal(user);
+    expect(position.partyB).to.equal(hedger);
+  });
 
-  // it("should request to close position", async function () {
-  //   await expect(this.closeMarketSingleFacet.connect(this.signers.user).requestCloseMarket(positionId)).to.not.reverted;
-  // });
+  it("should request to close position", async function () {
+    await expect(this.closeMarketFacet.connect(this.signers.user).requestCloseMarket(positionId)).to.not.reverted;
+  });
 
-  // it("hedger fills the close request -- 110$ a piece", async function () {
-  //   const marginBalanceA = await this.accountFacet.getMarginBalance(this.signers.user.getAddress());
-  //   const lockedMarginB = await this.accountFacet.getLockedMargin(this.signers.hedger.getAddress());
+  it("should have a PNL at 1.01$ worth 1000$", async function () {
+    const upnl = await this.masterFacet.calculateUPnLIsolated(positionId, avgPriceUsd, avgPriceUsd);
+    expect(upnl[0].toString()).to.equal(pnl);
+  });
 
-  //   oldMarginBalanceA = new BigNumber(marginBalanceA.toString());
-  //   oldLockedMarginB = new BigNumber(lockedMarginB.toString());
+  it("hedger fills the close request -- 1.01$ a piece", async function () {
+    const marginBalanceA = await this.accountFacet.getMarginBalance(this.signers.user.getAddress());
+    const marginBalanceB = await this.accountFacet.getMarginBalance(this.signers.hedger.getAddress());
 
-  //   await expect(
-  //     this.closeMarketSingleFacet
-  //       .connect(this.signers.hedger)
-  //       .fillCloseMarket(positionId, new BigNumber(110).times(PRECISION).toFixed()),
-  //   ).to.not.reverted;
-  // });
+    oldMarginBalanceA = new BigNumber(marginBalanceA.toString());
+    oldMarginBalanceB = new BigNumber(marginBalanceB.toString());
 
-  // it("should have distributed the PNL properly", async function () {
-  //   const pnl = new BigNumber(10_000).times(PRECISION);
-  //   const marginBalanceA = await this.accountFacet.getMarginBalance(this.signers.user.getAddress());
-  //   const lockedMarginB = await this.accountFacet.getLockedMargin(this.signers.hedger.getAddress());
+    await expect(this.closeMarketFacet.connect(this.signers.hedger).fillCloseMarket(positionId, avgPriceUsd)).to.not
+      .reverted;
+  });
 
-  //   const expectedMarginBalanceA = oldMarginBalanceA.plus(pnl);
-  //   const expectedLockedMarginB = oldLockedMarginB.minus(pnl);
-  //   expect(expectedMarginBalanceA.toFixed()).to.equal(marginBalanceA.toString());
-  //   expect(expectedLockedMarginB.toFixed()).to.equal(lockedMarginB.toString());
-  // });
+  it("should have distributed the PNL + margins properly", async function () {
+    const marginBalanceA = await this.accountFacet.getMarginBalance(this.signers.user.getAddress());
+    const marginBalanceB = await this.accountFacet.getMarginBalance(this.signers.hedger.getAddress());
 
-  // it("should have removed the open positions", async function () {
-  //   const userPositions = await this.masterFacet.getOpenPositions(this.signers.user.getAddress());
-  //   const hedgerPositions = await this.masterFacet.getOpenPositions(this.signers.hedger.getAddress());
-  //   expect(userPositions.length).to.equal(0);
-  //   expect(hedgerPositions.length).to.equal(0);
-  // });
+    const position = await this.masterFacet.getPosition(positionId);
+    const lockedMarginA = new BigNumber(position.lockedMarginA.toString());
+    const lockedMarginB = new BigNumber(position.lockedMarginB.toString());
+    const liquidationFee = new BigNumber(position.liquidationFee.toString());
+    const cva = new BigNumber(position.cva.toString());
+
+    const expectedMarginBalanceA = oldMarginBalanceA.plus(pnl).plus(lockedMarginA).plus(liquidationFee).plus(cva);
+    const expectedMarginBalanceB = oldMarginBalanceB.minus(pnl).plus(lockedMarginB).plus(liquidationFee).plus(cva);
+    expect(expectedMarginBalanceA.toFixed()).to.equal(marginBalanceA.toString());
+    expect(expectedMarginBalanceB.toFixed()).to.equal(marginBalanceB.toString());
+  });
 }

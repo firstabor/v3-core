@@ -10,22 +10,22 @@ contract MarketsFacet is Ownable {
     AppStorage internal s;
 
     event CreateMarket(uint256 indexed marketId);
-    event UpdateMarketIdentifier(uint256 indexed marketId, bytes32 oldIdentifier, bytes32 newIdentifier);
+    event UpdateMarketIdentifier(uint256 indexed marketId, string oldIdentifier, string newIdentifier);
     event UpdateMarketActive(uint256 indexed marketId, bool oldStatus, bool newStatus);
     event UpdateMarketMuonPriceFeedId(uint256 indexed marketId, bytes32 oldMuonPriceFeedId, bytes32 newMuonPriceFeedId);
     event UpdateMarketFundingRateId(uint256 indexed marketId, bytes32 oldFundingRateId, bytes32 newFundingRateId);
 
-    // --------------------------------//
-    //----- PUBLIC WRITE FUNCTIONS ----//
-    // --------------------------------//
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
 
     function createMarket(
-        bytes32 identifier,
+        string calldata identifier,
         MarketType marketType,
         bool active,
-        bytes16 baseCurrency,
-        bytes16 quoteCurrency,
-        bytes32 symbol,
+        string calldata baseCurrency,
+        string calldata quoteCurrency,
+        string calldata symbol,
         bytes32 muonPriceFeedId,
         bytes32 fundingRateId
     ) external onlyOwner returns (Market memory market) {
@@ -48,8 +48,8 @@ contract MarketsFacet is Ownable {
         emit CreateMarket(currentMarketId);
     }
 
-    function updateMarketIdentifier(uint256 marketId, bytes32 identifier) external onlyOwner {
-        bytes32 oldIdentifier = s.markets._marketMap[marketId].identifier;
+    function updateMarketIdentifier(uint256 marketId, string calldata identifier) external onlyOwner {
+        string memory oldIdentifier = s.markets._marketMap[marketId].identifier;
         s.markets._marketMap[marketId].identifier = identifier;
         emit UpdateMarketIdentifier(marketId, oldIdentifier, identifier);
     }
@@ -72,9 +72,9 @@ contract MarketsFacet is Ownable {
         emit UpdateMarketFundingRateId(marketId, oldFundingRateId, fundingRateId);
     }
 
-    // --------------------------------//
-    //----- PUBLIC VIEW FUNCTIONS -----//
-    // --------------------------------//
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
 
     function getMarkets() external view returns (Market[] memory markets) {
         return s.markets._marketList;

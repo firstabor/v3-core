@@ -8,9 +8,5 @@ struct SchnorrSign {
 }
 
 interface IMuonV03 {
-    function verify(
-        bytes calldata reqId,
-        uint256 hash,
-        SchnorrSign[] calldata _sigs
-    ) external returns (bool);
+    function verify(bytes calldata reqId, uint256 hash, SchnorrSign[] calldata _sigs) external returns (bool);
 }

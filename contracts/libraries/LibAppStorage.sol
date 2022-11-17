@@ -10,12 +10,12 @@ struct Hedger {
 
 struct Market {
     uint256 marketId;
-    bytes32 identifier;
+    string identifier;
     MarketType marketType;
     bool active;
-    bytes16 baseCurrency;
-    bytes16 quoteCurrency;
-    bytes32 symbol;
+    string baseCurrency;
+    string quoteCurrency;
+    string symbol;
     bytes32 muonPriceFeedId;
     bytes32 fundingRateId;
 }
@@ -53,7 +53,7 @@ struct Fill {
 
 struct Position {
     uint256 positionId;
-    bytes32 uuid;
+    bytes16 uuid;
     PositionState state;
     PositionType positionType;
     uint256 marketId;

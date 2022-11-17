@@ -49,23 +49,23 @@ describe("Unit Test", function () {
     shouldBehaveLikeAccountFacet();
   });
 
-  // describe("MasterFacet", function () {
-  //   shouldBehaveLikeMasterFacet();
-  // });
+  describe("MarketsFacet", function () {
+    shouldBehaveLikeMarketsFacet();
+  });
 
   describe("HedgersFacet", function () {
     shouldBehaveLikeHedgersFacet();
   });
 
-  // describe("MarketsFacet", function () {
-  //   shouldBehaveLikeMarketsFacet();
-  // });
+  describe("OpenMarketSingleFacet", function () {
+    shouldBehaveLikeOpenMarketSingleFacet();
+  });
 
-  // describe("OpenMarketSingleFacet", function () {
-  //   shouldBehaveLikeOpenMarketSingleFacet();
-  // });
+  describe("CloseMarketFacet", function () {
+    shouldBehaveLikeCloseMarketFacet();
+  });
 
-  // describe("CloseMarketFacet", function () {
-  //   shouldBehaveLikeCloseMarketFacet();
+  // describe("MasterFacet", function () {
+  //   shouldBehaveLikeMasterFacet();
   // });
 });

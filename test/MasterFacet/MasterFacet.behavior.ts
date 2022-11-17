@@ -1,8 +1,6 @@
 import BigNumber from "bignumber.js";
 import { expect } from "chai";
 
-import { MARGIN_OVERHEAD, LIQUIDATION_FEE, PRECISION } from "../constants";
-
 export function shouldBehaveLikeMasterFacet(): void {
   // it("should calculate locked margin", async function () {
   //   const notionalUSD = new BigNumber(10_000).times(PRECISION);

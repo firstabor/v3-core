@@ -17,6 +17,10 @@ contract OpenMarketSingleFacet {
     event RejectOpenMarketSingle(address indexed partyB, uint256 indexed rfqId);
     event FillOpenMarketSingle(address indexed partyB, uint256 indexed rfqId, uint256 indexed positionId);
 
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
+
     function requestOpenMarketSingle(
         address partyB,
         uint256 marketId,
@@ -60,7 +64,7 @@ contract OpenMarketSingleFacet {
         emit CancelOpenMarketSingle(msg.sender, rfqId);
     }
 
-    function forceCancelOpenMarketSingle(uint256 rfqId) public {
+    function forceCancelOpenMarketSingle(uint256 rfqId) external {
         RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
 
         require(rfq.partyA == msg.sender, "Invalid party");
@@ -110,7 +114,7 @@ contract OpenMarketSingleFacet {
         uint256 rfqId,
         uint256 filledAmountUnits,
         uint256 avgPriceUsd,
-        bytes32 uuid
+        bytes16 uuid
     ) external returns (Position memory position) {
         RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
 
@@ -122,6 +126,10 @@ contract OpenMarketSingleFacet {
 
         emit FillOpenMarketSingle(msg.sender, rfqId, position.positionId);
     }
+
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
 
     function _updateRequestForQuoteState(RequestForQuote storage rfq, RequestForQuoteState state) private {
         rfq.state = state;

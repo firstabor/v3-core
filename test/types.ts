@@ -48,16 +48,27 @@ export interface Signers {
 
 export enum MarketType {
   FOREX,
+  METALS,
+  ENERGIES,
+  INDICES,
+  STOCKS,
+  COMMODITIES,
+  BONDS,
+  ETFS,
   CRYPTO,
-  STOCK,
-}
-
-export enum TradingSession {
-  _24_7,
-  _24_5,
 }
 
 export enum Side {
   BUY,
   SELL,
+}
+
+export enum OrderType {
+  LIMIT,
+  MARKET,
+}
+
+export enum PositionType {
+  ISOLATED,
+  CROSS,
 }

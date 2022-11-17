@@ -8,6 +8,10 @@ import { C } from "../C.sol";
 contract ConstantsFacet is Ownable {
     AppStorage internal s;
 
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
+
     function setCollateral(address _collateral) external onlyOwner {
         s.constants.collateral = _collateral;
     }
@@ -48,7 +52,10 @@ contract ConstantsFacet is Ownable {
         s.constants.maxOpenPositionsCross = _maxOpenPositionsCross;
     }
 
-    //--- READ FUNCTIONS ---\\
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
+
     function getPrecision() external pure returns (uint256) {
         return C.getPrecision();
     }

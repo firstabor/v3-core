@@ -14,7 +14,7 @@ library Decimal {
 
     // ============ Constants ============
 
-    uint256 constant BASE = 10**18;
+    uint256 constant BASE = 10 ** 18;
 
     // ============ Structs ============
 
@@ -50,11 +50,7 @@ library Decimal {
         return D256({ value: self.value.sub(b.mul(BASE)) });
     }
 
-    function sub(
-        D256 memory self,
-        uint256 b,
-        string memory reason
-    ) internal pure returns (D256 memory) {
+    function sub(D256 memory self, uint256 b, string memory reason) internal pure returns (D256 memory) {
         return D256({ value: self.value.sub(b.mul(BASE), reason) });
     }
 
@@ -87,11 +83,7 @@ library Decimal {
         return D256({ value: self.value.sub(b.value) });
     }
 
-    function sub(
-        D256 memory self,
-        D256 memory b,
-        string memory reason
-    ) internal pure returns (D256 memory) {
+    function sub(D256 memory self, D256 memory b, string memory reason) internal pure returns (D256 memory) {
         return D256({ value: self.value.sub(b.value, reason) });
     }
 
@@ -133,11 +125,7 @@ library Decimal {
 
     // ============ Core Methods ============
 
-    function getPartial(
-        uint256 target,
-        uint256 numerator,
-        uint256 denominator
-    ) private pure returns (uint256) {
+    function getPartial(uint256 target, uint256 numerator, uint256 denominator) private pure returns (uint256) {
         return target.mul(numerator).div(denominator);
     }
 

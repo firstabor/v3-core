@@ -12,9 +12,9 @@ import "../libraries/LibEnums.sol";
 library LibMaster {
     using Decimal for Decimal.D256;
 
-    // --------------------------------//
-    //---- INTERNAL WRITE FUNCTIONS ---//
-    // --------------------------------//
+    /*--------------------------*
+     * INTERNAL WRITE FUNCTIONS *
+     *--------------------------*/
 
     function onRequestForQuote(
         address partyA,
@@ -90,7 +90,7 @@ library LibMaster {
         uint256 rfqId,
         uint256 filledAmountUnits,
         uint256 avgPriceUsd,
-        bytes32 uuid
+        bytes16 uuid
     ) internal returns (Position memory position) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         RequestForQuote storage rfq = s.ma._requestForQuotesMap[rfqId];
@@ -284,21 +284,16 @@ library LibMaster {
         }
     }
 
-    function createFill(
-        uint256 positionId,
-        Side side,
-        uint256 amount,
-        uint256 price
-    ) internal {
+    function createFill(uint256 positionId, Side side, uint256 amount, uint256 price) internal {
         AppStorage storage s = LibAppStorage.diamondStorage();
         uint256 fillId = s.ma._positionFills[positionId].length;
         Fill memory fill = Fill(fillId, positionId, side, amount, price, block.timestamp);
         s.ma._positionFills[positionId].push(fill);
     }
 
-    // --------------------------------//
-    //---- INTERNAL VIEW FUNCTIONS ----//
-    // --------------------------------//
+    /*-------------------------*
+     * INTERNAL VIEW FUNCTIONS *
+     *-------------------------*/
 
     /**
      * @notice Returns the UPnL for a specific position.
@@ -329,11 +324,10 @@ library LibMaster {
      * @dev positionPrices can have an arbitrary order.
      * @dev positionPrices can contain forged duplicates.
      */
-    function calculateUPnLCross(PositionPrice[] memory positionPrices, address party)
-        internal
-        view
-        returns (int256 uPnLCross, int256 notionalCross)
-    {
+    function calculateUPnLCross(
+        PositionPrice[] memory positionPrices,
+        address party
+    ) internal view returns (int256 uPnLCross, int256 notionalCross) {
         (uPnLCross, notionalCross) = _calculateUPnLCross(positionPrices, party);
     }
 
@@ -349,11 +343,10 @@ library LibMaster {
         return Decimal.from(notionalSize).mul(C.getCVA()).asUint256();
     }
 
-    function calculateCrossMarginHealth(address party, int256 uPnLCross)
-        internal
-        view
-        returns (Decimal.D256 memory ratio)
-    {
+    function calculateCrossMarginHealth(
+        address party,
+        int256 uPnLCross
+    ) internal view returns (Decimal.D256 memory ratio) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         uint256 lockedMargin = s.ma._crossLockedMargin[party];
         uint256 openPositions = s.ma._openPositionsCrossLength[party];
@@ -380,15 +373,7 @@ library LibMaster {
         uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice
-    )
-        internal
-        view
-        returns (
-            bool shouldBeLiquidated,
-            int256 uPnLA,
-            int256 uPnLB
-        )
-    {
+    ) internal view returns (bool shouldBeLiquidated, int256 uPnLA, int256 uPnLB) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         Position memory position = s.ma._allPositionsMap[positionId];
 
@@ -403,9 +388,9 @@ library LibMaster {
         return ratio.isZero();
     }
 
-    // --------------------------------//
-    //----- PRIVATE VIEW FUNCTIONS ----//
-    // --------------------------------//
+    /*------------------------*
+     * PRIVATE VIEW FUNCTIONS *
+     *------------------------*/
 
     /**
      * @notice Returns the UPnL for a specific position.
@@ -417,15 +402,7 @@ library LibMaster {
         uint256 initialNotionalUsd,
         uint256 bidPrice,
         uint256 askPrice
-    )
-        private
-        pure
-        returns (
-            int256 uPnLA,
-            int256 uPnLB,
-            int256 notionalIsolatedA
-        )
-    {
+    ) private pure returns (int256 uPnLA, int256 uPnLB, int256 notionalIsolatedA) {
         if (currentBalanceUnits == 0) return (0, 0, 0);
 
         uint256 precision = C.getPrecision();
@@ -451,11 +428,10 @@ library LibMaster {
      * @dev positionPrices can have an arbitrary order.
      * @dev positionPrices can contain forged duplicates.
      */
-    function _calculateUPnLCross(PositionPrice[] memory positionPrices, address party)
-        private
-        view
-        returns (int256 uPnLCrossA, int256 notionalCrossA)
-    {
+    function _calculateUPnLCross(
+        PositionPrice[] memory positionPrices,
+        address party
+    ) private view returns (int256 uPnLCrossA, int256 notionalCrossA) {
         AppStorage storage s = LibAppStorage.diamondStorage();
 
         for (uint256 i = 0; i < positionPrices.length; i++) {

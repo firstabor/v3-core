@@ -19,9 +19,9 @@ contract AccountFacet is ReentrancyGuard {
     event AddFreeMarginCross(address indexed party, uint256 amount);
     event RemoveFreeMarginCross(address indexed party, uint256 amount);
 
-    // --------------------------------//
-    //----- PUBLIC WRITE FUNCTIONS ----//
-    // --------------------------------//
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
 
     function deposit(uint256 amount) external {
         _deposit(msg.sender, amount);
@@ -61,9 +61,9 @@ contract AccountFacet is ReentrancyGuard {
         _removeFreeMarginCross(msg.sender);
     }
 
-    // --------------------------------//
-    //----- PRIVATE WRITE FUNCTIONS ---//
-    // --------------------------------//
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
 
     function _deposit(address party, uint256 amount) private nonReentrant {
         bool success = IERC20(C.getCollateral()).transferFrom(party, address(this), amount);
@@ -98,11 +98,7 @@ contract AccountFacet is ReentrancyGuard {
         emit Deallocate(party, amount);
     }
 
-    function _addFreeMarginIsolated(
-        address party,
-        uint256 amount,
-        uint256 positionId
-    ) private {
+    function _addFreeMarginIsolated(address party, uint256 amount, uint256 positionId) private nonReentrant {
         Position storage position = s.ma._allPositionsMap[positionId];
         require(position.partyB == party, "Not partyB");
 
@@ -113,7 +109,7 @@ contract AccountFacet is ReentrancyGuard {
         emit AddFreeMarginIsolated(party, amount, positionId);
     }
 
-    function _addFreeMarginCross(address party, uint256 amount) private {
+    function _addFreeMarginCross(address party, uint256 amount) private nonReentrant {
         require(s.ma._marginBalances[party] >= amount, "Insufficient margin balance");
         s.ma._marginBalances[party] -= amount;
         s.ma._crossLockedMargin[party] += amount;
@@ -121,7 +117,7 @@ contract AccountFacet is ReentrancyGuard {
         emit AddFreeMarginCross(party, amount);
     }
 
-    function _removeFreeMarginCross(address party) private {
+    function _removeFreeMarginCross(address party) private nonReentrant {
         require(s.ma._openPositionsCrossLength[party] == 0, "Removal denied");
         require(s.ma._crossLockedMargin[party] > 0, "No locked margin");
 
@@ -132,9 +128,9 @@ contract AccountFacet is ReentrancyGuard {
         emit RemoveFreeMarginCross(party, amount);
     }
 
-    // --------------------------------//
-    //----- PUBLIC VIEW FUNCTIONS -----//
-    // --------------------------------//
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
 
     function getAccountBalance(address party) external view returns (uint256) {
         return s.ma._accountBalances[party];

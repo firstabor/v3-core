@@ -11,21 +11,21 @@ contract HedgersFacet {
     event UpdatePricingURLs(address indexed hedger, string[] pricingURLs);
     event UpdateMarketsURLs(address indexed hedger, string[] marketsURLs);
 
-    // --------------------------------//
-    //----- PUBLIC WRITE FUNCTIONS ----//
-    // --------------------------------//
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
 
-    function enlist(string[] calldata pricingWssURLs, string[] calldata marketsHttpsURLs)
-        external
-        returns (Hedger memory hedger)
-    {
+    function enlist(
+        string[] calldata pricingWssURLs,
+        string[] calldata marketsHttpsURLs
+    ) external returns (Hedger memory hedger) {
         require(msg.sender != address(0), "Invalid address");
         require(s.hedgers._hedgerMap[msg.sender].addr != msg.sender, "Hedger already exists");
 
         require(pricingWssURLs.length > 0, "pricingWebsocketURLs must be non-empty");
         require(marketsHttpsURLs.length > 0, "pricingWebsocketURLs must be non-empty");
-        mustBeHTTPSOrThrow(marketsHttpsURLs);
-        mustBeWSSOrThrow(pricingWssURLs);
+        _mustBeHTTPSOrThrow(marketsHttpsURLs);
+        _mustBeWSSOrThrow(pricingWssURLs);
 
         hedger = Hedger(msg.sender, pricingWssURLs, marketsHttpsURLs);
         s.hedgers._hedgerMap[msg.sender] = hedger;
@@ -39,7 +39,7 @@ contract HedgersFacet {
 
         require(hedger.addr == msg.sender, "Access Denied");
         require(_pricingWssURLs.length > 0, "pricingWssURLs must be non-empty");
-        mustBeWSSOrThrow(_pricingWssURLs);
+        _mustBeWSSOrThrow(_pricingWssURLs);
 
         s.hedgers._hedgerMap[msg.sender].pricingWssURLs = _pricingWssURLs;
 
@@ -51,16 +51,16 @@ contract HedgersFacet {
 
         require(hedger.addr == msg.sender, "Access Denied");
         require(_marketsHttpsURLs.length > 0, "marketsHttpsURLs must be non-empty");
-        mustBeHTTPSOrThrow(_marketsHttpsURLs);
+        _mustBeHTTPSOrThrow(_marketsHttpsURLs);
 
         s.hedgers._hedgerMap[msg.sender].marketsHttpsURLs = _marketsHttpsURLs;
 
         emit UpdateMarketsURLs(msg.sender, _marketsHttpsURLs);
     }
 
-    // --------------------------------//
-    //----- PUBLIC VIEW FUNCTIONS -----//
-    // --------------------------------//
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
 
     function getHedgerByAddress(address addr) external view returns (bool success, Hedger memory hedger) {
         hedger = s.hedgers._hedgerMap[addr];
@@ -75,11 +75,11 @@ contract HedgersFacet {
         return s.hedgers._hedgerList.length;
     }
 
-    // --------------------------------//
-    //----- PRIVATE VIEW FUNCTIONS ----//
-    // --------------------------------//
+    /*------------------------*
+     * PRIVATE VIEW FUNCTIONS *
+     *------------------------*/
 
-    function substringASCII(
+    function _substringASCII(
         string memory str,
         uint256 startIndex,
         uint256 endIndex
@@ -92,19 +92,19 @@ contract HedgersFacet {
         return string(result);
     }
 
-    function compareStrings(string memory a, string memory b) private pure returns (bool) {
+    function _compareStrings(string memory a, string memory b) private pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
-    function mustBeWSSOrThrow(string[] calldata urls) private pure {
+    function _mustBeWSSOrThrow(string[] calldata urls) private pure {
         for (uint256 i = 0; i < urls.length; i++) {
-            require(compareStrings(substringASCII(urls[i], 0, 6), "wss://"), "websocketURLs must be secure");
+            require(_compareStrings(_substringASCII(urls[i], 0, 6), "wss://"), "websocketURLs must be secure");
         }
     }
 
-    function mustBeHTTPSOrThrow(string[] calldata urls) private pure {
+    function _mustBeHTTPSOrThrow(string[] calldata urls) private pure {
         for (uint256 i = 0; i < urls.length; i++) {
-            require(compareStrings(substringASCII(urls[i], 0, 8), "https://"), "httpsURLs must be secure");
+            require(_compareStrings(_substringASCII(urls[i], 0, 8), "https://"), "httpsURLs must be secure");
         }
     }
 }

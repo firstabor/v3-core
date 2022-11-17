@@ -21,13 +21,17 @@ contract CloseMarketFacet {
     event RejectCloseMarket(address indexed partyB, uint256 indexed positionId);
     event FillCloseMarket(address indexed partyB, uint256 indexed positionId);
 
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
+
     function requestCloseMarket(uint256 positionId) external {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         require(position.partyA == msg.sender, "Invalid party");
         require(position.state == PositionState.OPEN, "Invalid position state");
 
-        updatePositionState(position, PositionState.MARKET_CLOSE_REQUESTED);
+        _updatePositionState(position, PositionState.MARKET_CLOSE_REQUESTED);
 
         emit RequestCloseMarket(msg.sender, positionId);
     }
@@ -38,19 +42,19 @@ contract CloseMarketFacet {
         require(position.partyA == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        updatePositionState(position, PositionState.MARKET_CLOSE_CANCELATION_REQUESTED);
+        _updatePositionState(position, PositionState.MARKET_CLOSE_CANCELATION_REQUESTED);
 
         emit CancelCloseMarket(msg.sender, positionId);
     }
 
-    function forceCancelCloseMarket(uint256 positionId) public {
+    function forceCancelCloseMarket(uint256 positionId) external {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         require(position.partyA == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_CANCELATION_REQUESTED, "Invalid position state");
         require(position.mutableTimestamp + C.getRequestTimeout() < block.timestamp, "Request Timeout");
 
-        updatePositionState(position, PositionState.OPEN);
+        _updatePositionState(position, PositionState.OPEN);
 
         emit ForceCancelCloseMarket(msg.sender, positionId);
     }
@@ -61,7 +65,7 @@ contract CloseMarketFacet {
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_CANCELATION_REQUESTED, "Invalid position state");
 
-        updatePositionState(position, PositionState.OPEN);
+        _updatePositionState(position, PositionState.OPEN);
 
         emit AcceptCancelCloseMarket(msg.sender, positionId);
     }
@@ -72,34 +76,51 @@ contract CloseMarketFacet {
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        updatePositionState(position, PositionState.OPEN);
+        _updatePositionState(position, PositionState.OPEN);
 
         emit RejectCloseMarket(msg.sender, positionId);
     }
 
-    function fillCloseMarket(
-        uint256 positionId,
-        uint256 bidPrice,
-        uint256 askPrice,
-        bytes calldata reqId,
-        uint256 timestamp,
-        SchnorrSign[] calldata sigs
-    ) external {
+    /// @dev TODO: upgrade this to use oracle signatures
+    function fillCloseMarket(uint256 positionId, uint256 avgPriceUsd) external {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        // Verify oracle signatures
-        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp, sigs);
-
-        // Handle the fill
-        LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
+        // Handle the fill --
+        LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, avgPriceUsd, avgPriceUsd));
 
         emit FillCloseMarket(msg.sender, positionId);
     }
 
-    function updatePositionState(Position storage position, PositionState state) private {
+    // function fillCloseMarket(
+    //     uint256 positionId,
+    //     uint256 bidPrice,
+    //     uint256 askPrice,
+    //     bytes calldata reqId,
+    //     uint256 timestamp,
+    //     SchnorrSign[] calldata sigs
+    // ) external {
+    //     Position storage position = s.ma._allPositionsMap[positionId];
+
+    //     require(position.partyB == msg.sender, "Invalid party");
+    //     require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
+
+    //     // Verify oracle signatures
+    //     LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp, sigs);
+
+    //     // Handle the fill
+    //     LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, bidPrice, askPrice));
+
+    //     emit FillCloseMarket(msg.sender, positionId);
+    // }
+
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
+
+    function _updatePositionState(Position storage position, PositionState state) private {
         position.state = state;
         position.mutableTimestamp = block.timestamp;
     }

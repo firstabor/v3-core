@@ -15,6 +15,10 @@ contract LiquidationFacet {
 
     AppStorage internal s;
 
+    /*------------------------*
+     * PUBLIC WRITE FUNCTIONS *
+     *------------------------*/
+
     /**
      * @dev Unlike a cross liquidation, we don't check for major deficits here.
      *      Counterparties should put limit sell orders at the liquidation price
@@ -195,67 +199,14 @@ contract LiquidationFacet {
         s.ma._accountBalances[LibDiamond.contractOwner()] += protocolShare;
     }
 
-    /**
-     * @dev Calculates the realized distribution for a single position to uncover deficits.
-     * @dev Strictly limited to Cross positions.
-     * @dev Strictly targetting partyA (the liquidated party).
-     */
-    function _calculateRealizedDistribution(address partyA, PositionPrice memory positionPrice)
-        private
-        view
-        returns (
-            int256 uPnLA,
-            uint256 debit,
-            uint256 credit,
-            uint256 singleLiquidationFee,
-            uint256 doubleCVA
-        )
-    {
-        Position memory position = s.ma._allPositionsMap[positionPrice.positionId];
+    /*-------------------------*
+     * PRIVATE WRITE FUNCTIONS *
+     *-------------------------*/
 
-        require(
-            position.state != PositionState.LIQUIDATED && position.state != PositionState.CLOSED,
-            "Position already closed"
-        );
-        require(position.partyA == partyA, "Invalid party");
-        require(position.positionType == PositionType.CROSS, "Invalid position type");
-
-        // Calculate the PnL of PartyA
-        (uPnLA, ) = LibMaster.calculateUPnLIsolated(
-            position.positionId,
-            positionPrice.bidPrice,
-            positionPrice.askPrice
-        );
-
-        /**
-         * Note: 'single' implies the half that PartyA locked into
-         * the position, which he will now lose.
-         *
-         * His half + the other half (together 'double') will be:
-         * - used for the global deficit (CVA)
-         * - used to reward the liquidator (LiquidationFee)
-         * - returned to PartyB
-         **/
-        singleLiquidationFee = position.liquidationFee;
-        doubleCVA = position.cva * 2;
-
-        if (uPnLA >= 0) {
-            // PartyA receives the PNL.
-            uint256 amount = uint256(uPnLA);
-            debit = amount >= position.lockedMarginB
-                ? position.lockedMarginB // PartyB should've been liquidated here already.
-                : amount;
-            credit = 0;
-        } else {
-            // PartyA has to pay PartyB.
-            debit = 0;
-            credit = uint256(-uPnLA);
-        }
-    }
-
-    function _distributePnLDeficitThroughCVA(PositionPrice memory positionPrice, Decimal.D256 memory doubleCVARatio)
-        private
-    {
+    function _distributePnLDeficitThroughCVA(
+        PositionPrice memory positionPrice,
+        Decimal.D256 memory doubleCVARatio
+    ) private {
         Position memory position = s.ma._allPositionsMap[positionPrice.positionId];
 
         // Calculate the PnL of PartyA.
@@ -280,9 +231,10 @@ contract LiquidationFacet {
         }
     }
 
-    function _distributePnLDeficitThroughCredit(PositionPrice memory positionPrice, Decimal.D256 memory creditRatio)
-        private
-    {
+    function _distributePnLDeficitThroughCredit(
+        PositionPrice memory positionPrice,
+        Decimal.D256 memory creditRatio
+    ) private {
         Position memory position = s.ma._allPositionsMap[positionPrice.positionId];
 
         // Calculate the PnL of PartyA.
@@ -335,5 +287,64 @@ contract LiquidationFacet {
         position.state = PositionState.LIQUIDATED;
         position.currentBalanceUnits = 0;
         position.mutableTimestamp = block.timestamp;
+    }
+
+    /*------------------------*
+     * PRIVATE VIEW FUNCTIONS *
+     *------------------------*/
+
+    /**
+     * @dev Calculates the realized distribution for a single position to uncover deficits.
+     * @dev Strictly limited to Cross positions.
+     * @dev Strictly targetting partyA (the liquidated party).
+     */
+    function _calculateRealizedDistribution(
+        address partyA,
+        PositionPrice memory positionPrice
+    )
+        private
+        view
+        returns (int256 uPnLA, uint256 debit, uint256 credit, uint256 singleLiquidationFee, uint256 doubleCVA)
+    {
+        Position memory position = s.ma._allPositionsMap[positionPrice.positionId];
+
+        require(
+            position.state != PositionState.LIQUIDATED && position.state != PositionState.CLOSED,
+            "Position already closed"
+        );
+        require(position.partyA == partyA, "Invalid party");
+        require(position.positionType == PositionType.CROSS, "Invalid position type");
+
+        // Calculate the PnL of PartyA
+        (uPnLA, ) = LibMaster.calculateUPnLIsolated(
+            position.positionId,
+            positionPrice.bidPrice,
+            positionPrice.askPrice
+        );
+
+        /**
+         * Note: 'single' implies the half that PartyA locked into
+         * the position, which he will now lose.
+         *
+         * His half + the other half (together 'double') will be:
+         * - used for the global deficit (CVA)
+         * - used to reward the liquidator (LiquidationFee)
+         * - returned to PartyB
+         **/
+        singleLiquidationFee = position.liquidationFee;
+        doubleCVA = position.cva * 2;
+
+        if (uPnLA >= 0) {
+            // PartyA receives the PNL.
+            uint256 amount = uint256(uPnLA);
+            debit = amount >= position.lockedMarginB
+                ? position.lockedMarginB // PartyB should've been liquidated here already.
+                : amount;
+            credit = 0;
+        } else {
+            // PartyA has to pay PartyB.
+            debit = 0;
+            credit = uint256(-uPnLA);
+        }
     }
 }
