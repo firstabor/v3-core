@@ -32,6 +32,7 @@ describe("Unit Test", function () {
     this.diamondLoupeFacet = await ethers.getContractAt("DiamondLoupeFacet", diamond.address);
     this.constantsFacet = await ethers.getContractAt("ConstantsFacet", diamond.address);
     this.ownershipFacet = await ethers.getContractAt("OwnershipFacet", diamond.address);
+    this.pauseFacet = await ethers.getContractAt("PauseFacet", diamond.address);
     this.accountFacet = await ethers.getContractAt("AccountFacet", diamond.address);
     this.hedgersFacet = await ethers.getContractAt("HedgersFacet", diamond.address);
     this.marketsFacet = await ethers.getContractAt("MarketsFacet", diamond.address);

@@ -28,7 +28,8 @@ contract OpenMarketSingleFacet {
         Side side,
         uint256 usdAmountToSpend,
         uint16 leverage,
-        uint256[2] memory expectedUnits
+        uint256[2] memory expectedUnits,
+        address affiliate
     ) external returns (RequestForQuote memory rfq) {
         require(msg.sender != partyB, "Parties can not be the same");
         (bool validHedger, ) = LibHedgers.isValidHedger(partyB);
@@ -45,7 +46,8 @@ contract OpenMarketSingleFacet {
             usdAmountToSpend,
             leverage,
             expectedUnits[0],
-            expectedUnits[1]
+            expectedUnits[1],
+            affiliate
         );
 
         emit RequestOpenMarketSingle(msg.sender, rfq.rfqId);

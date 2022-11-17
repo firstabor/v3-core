@@ -14,6 +14,7 @@ import type {
   OpenMarketSingleFacet,
   CloseMarketFacet,
   LiquidationFacet,
+  PauseFacet,
 } from "../src/types";
 
 type Fixture<T> = () => Promise<T>;
@@ -30,6 +31,7 @@ declare module "mocha" {
     diamondCutFacet: DiamondCutFacet;
     constantsFacet: ConstantsFacet;
     ownershipFacet: OwnershipFacet;
+    pauseFacet: PauseFacet;
     accountFacet: AccountFacet;
     hedgersFacet: HedgersFacet;
     marketsFacet: MarketsFacet;

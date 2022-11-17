@@ -27,7 +27,8 @@ library LibMaster {
         uint256 usdAmountToSpend,
         uint16 leverage,
         uint256 minExpectedUnits,
-        uint256 maxExpectedUnits
+        uint256 maxExpectedUnits,
+        address affiliate
     ) internal returns (RequestForQuote memory rfq) {
         AppStorage storage s = LibAppStorage.diamondStorage();
 
@@ -56,6 +57,8 @@ library LibMaster {
         // Create the RFQ
         uint256 currentRfqId = s.ma._requestForQuotesLength + 1;
         rfq = RequestForQuote({
+            creationTimestamp: block.timestamp,
+            mutableTimestamp: block.timestamp,
             rfqId: currentRfqId,
             state: RequestForQuoteState.ORPHAN,
             positionType: positionType,
@@ -66,15 +69,13 @@ library LibMaster {
             marketId: marketId,
             side: side,
             notionalUsd: notionalUsd,
-            leverageUsed: leverage,
             lockedMarginA: usdAmountToSpend,
             protocolFee: protocolFee,
             liquidationFee: liquidationFee,
             cva: cva,
             minExpectedUnits: minExpectedUnits,
             maxExpectedUnits: maxExpectedUnits,
-            creationTimestamp: block.timestamp,
-            mutableTimestamp: block.timestamp
+            affiliate: affiliate
         });
 
         s.ma._requestForQuotesMap[currentRfqId] = rfq;
@@ -113,6 +114,8 @@ library LibMaster {
         // Create the Position
         uint256 currentPositionId = s.ma._allPositionsLength + 1;
         position = Position({
+            creationTimestamp: block.timestamp,
+            mutableTimestamp: block.timestamp,
             positionId: currentPositionId,
             uuid: uuid,
             state: PositionState.OPEN,
@@ -120,7 +123,6 @@ library LibMaster {
             marketId: rfq.marketId,
             partyA: rfq.partyA,
             partyB: rfq.partyB,
-            leverageUsed: rfq.leverageUsed,
             side: rfq.side,
             lockedMarginA: rfq.lockedMarginA,
             lockedMarginB: lockedMarginB,
@@ -129,8 +131,7 @@ library LibMaster {
             cva: rfq.cva,
             currentBalanceUnits: filledAmountUnits,
             initialNotionalUsd: rfq.notionalUsd,
-            creationTimestamp: block.timestamp,
-            mutableTimestamp: block.timestamp
+            affiliate: rfq.affiliate
         });
 
         // Create the first Fill

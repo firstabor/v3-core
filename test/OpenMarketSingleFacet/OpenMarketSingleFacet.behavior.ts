@@ -42,6 +42,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(10_000).times(PRECISION).toFixed(),
           10,
           [new BigNumber(100_000).times(PRECISION).toFixed(), new BigNumber(100_000).times(PRECISION).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.not.reverted;
 
@@ -158,6 +159,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(1_000_000).times(PRECISION).toFixed(),
           10,
           [new BigNumber(100_000).times(PRECISION).toFixed(), new BigNumber(100_000).times(PRECISION).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.be.revertedWith("Insufficient margin balance");
   });
@@ -174,6 +176,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(100_000).times(PRECISION).toFixed(),
           10,
           [new BigNumber(100_000).times(PRECISION).toFixed(), new BigNumber(100_000).times(PRECISION).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.not.reverted;
 
@@ -235,6 +238,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(100_000).times(PRECISION).toFixed(),
           1,
           [new BigNumber(100_000).times(PRECISION).toFixed(), new BigNumber(100_000).times(PRECISION).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.not.reverted;
 
@@ -265,6 +269,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(50_000).times(PRECISION).toFixed(),
           1,
           [new BigNumber(50_000).times(PRECISION).toFixed(), new BigNumber(50_000).times(PRECISION).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.not.reverted;
 
@@ -302,6 +307,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
             new BigNumber(1_000).times(PRECISION).toFixed(),
             1,
             [new BigNumber(1_000).times(PRECISION).toFixed(), new BigNumber(1_000).times(1_000).toFixed()],
+            ethers.constants.AddressZero,
           ),
       ).to.not.reverted;
     }
@@ -324,6 +330,7 @@ export function shouldBehaveLikeOpenMarketSingleFacet(): void {
           new BigNumber(1_000).times(PRECISION).toFixed(),
           1,
           [new BigNumber(1_000).times(PRECISION).toFixed(), new BigNumber(1_000).times(1_000).toFixed()],
+          ethers.constants.AddressZero,
         ),
     ).to.be.revertedWith("Max open positions cross reached");
   });

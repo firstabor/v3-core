@@ -21,6 +21,8 @@ struct Market {
 }
 
 struct RequestForQuote {
+    uint256 creationTimestamp;
+    uint256 mutableTimestamp;
     uint256 rfqId;
     RequestForQuoteState state;
     PositionType positionType;
@@ -31,15 +33,13 @@ struct RequestForQuote {
     uint256 marketId;
     Side side;
     uint256 notionalUsd;
-    uint16 leverageUsed;
     uint256 lockedMarginA;
     uint256 protocolFee;
     uint256 liquidationFee;
     uint256 cva;
     uint256 minExpectedUnits;
     uint256 maxExpectedUnits;
-    uint256 creationTimestamp;
-    uint256 mutableTimestamp;
+    address affiliate;
 }
 
 struct Fill {
@@ -52,6 +52,8 @@ struct Fill {
 }
 
 struct Position {
+    uint256 creationTimestamp;
+    uint256 mutableTimestamp;
     uint256 positionId;
     bytes16 uuid;
     PositionState state;
@@ -59,7 +61,6 @@ struct Position {
     uint256 marketId;
     address partyA;
     address partyB;
-    uint16 leverageUsed;
     Side side;
     uint256 lockedMarginA;
     uint256 lockedMarginB;
@@ -68,8 +69,7 @@ struct Position {
     uint256 cva;
     uint256 currentBalanceUnits;
     uint256 initialNotionalUsd;
-    uint256 creationTimestamp;
-    uint256 mutableTimestamp;
+    address affiliate;
 }
 
 struct Constants {

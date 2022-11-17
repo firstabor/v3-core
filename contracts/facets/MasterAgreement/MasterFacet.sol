@@ -13,7 +13,7 @@ contract MasterFacet {
     event UpdateUuid(uint256 indexed positionId, bytes16 oldUuid, bytes16 newUuid);
 
     /*-------------------------*
-     * PRIVATE WRITE FUNCTIONS *
+     * PUBLIC WRITE FUNCTIONS *
      *-------------------------*/
     function updateUuid(uint256 positionId, bytes16 uuid) external {
         Position storage position = s.ma._allPositionsMap[positionId];
