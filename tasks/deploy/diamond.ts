@@ -6,6 +6,7 @@ import { FacetCutAction, getSelectors } from "../utils/diamondCut";
 import { readData, writeData } from "../utils/fs";
 import { generateGasReport } from "../utils/gas";
 import { FacetNames } from "./constants";
+import { initializeMarkets } from "./markets";
 
 const JSON_FILE_NAME = "deployed.json";
 
@@ -107,6 +108,10 @@ task("deploy:diamond", "Deploys the Diamond contract")
       throw Error(`Diamond upgrade failed: ${tx.hash}`);
     }
     console.log("Completed Diamond Cut");
+
+    // Deploy the first Markets to trade on.
+    const marketsFacet = await ethers.getContractAt("MarketsFacet", diamond.address);
+    await initializeMarkets(marketsFacet);
 
     if (reportGas) {
       await generateGasReport(ethers.provider, totalGasUsed);

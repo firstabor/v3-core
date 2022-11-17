@@ -42,15 +42,6 @@ struct RequestForQuote {
     address affiliate;
 }
 
-struct Fill {
-    uint256 fillId;
-    uint256 positionId;
-    Side side;
-    uint256 filledAmountUnits;
-    uint256 avgPriceUsd;
-    uint256 timestamp;
-}
-
 struct Position {
     uint256 creationTimestamp;
     uint256 mutableTimestamp;
@@ -110,7 +101,6 @@ struct MAState {
     uint256 _allPositionsLength;
     mapping(address => uint256) _openPositionsIsolatedLength;
     mapping(address => uint256) _openPositionsCrossLength;
-    mapping(uint256 => Fill[]) _positionFills;
 }
 
 struct AppStorage {

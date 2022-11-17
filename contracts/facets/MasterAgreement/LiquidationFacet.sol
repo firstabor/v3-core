@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, Position, Fill } from "../../libraries/LibAppStorage.sol";
+import { AppStorage, Position } from "../../libraries/LibAppStorage.sol";
 import { SchnorrSign } from "../../interfaces/IMuonV03.sol";
 import { LibOracle, PositionPrice } from "../../libraries/LibOracle.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
@@ -275,8 +275,8 @@ contract LiquidationFacet {
     function _updatePositionDataTemplate(uint256 positionId, PositionPrice memory positionPrice) private {
         Position storage position = s.ma._allPositionsMap[positionId];
 
-        // Add the Fill
-        LibMaster.createFill(
+        // Emit the Fill
+        LibMaster.emitFill(
             position.positionId,
             position.side == Side.BUY ? Side.SELL : Side.BUY,
             position.currentBalanceUnits,

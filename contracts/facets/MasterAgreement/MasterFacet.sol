@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, RequestForQuote, Position, Fill } from "../../libraries/LibAppStorage.sol";
+import { AppStorage, RequestForQuote, Position } from "../../libraries/LibAppStorage.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
 import { PositionPrice } from "../../libraries/LibOracle.sol";
@@ -63,10 +63,6 @@ contract MasterFacet {
 
     function getCrossRequestForQuotesLength(address party) external view returns (uint256) {
         return s.ma._crossRequestForQuotesLength[party];
-    }
-
-    function getPositionFills(uint256 positionId) external view returns (Fill[] memory fills) {
-        return s.ma._positionFills[positionId];
     }
 
     function calculateUPnLIsolated(

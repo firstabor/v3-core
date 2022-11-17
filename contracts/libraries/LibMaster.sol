@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, LibAppStorage, RequestForQuote, Position, Fill } from "../libraries/LibAppStorage.sol";
+import { AppStorage, LibAppStorage, RequestForQuote, Position, Market } from "../libraries/LibAppStorage.sol";
 import { LibDiamond } from "../libraries/LibDiamond.sol";
 import { LibMarkets } from "../libraries/LibMarkets.sol";
 import { PositionPrice } from "../libraries/LibOracle.sol";
@@ -11,6 +11,8 @@ import "../libraries/LibEnums.sol";
 
 library LibMaster {
     using Decimal for Decimal.D256;
+
+    event Fill(uint256 indexed marketId, Side side, uint256 amount, uint256 price);
 
     /*--------------------------*
      * INTERNAL WRITE FUNCTIONS *
@@ -134,9 +136,6 @@ library LibMaster {
             affiliate: rfq.affiliate
         });
 
-        // Create the first Fill
-        createFill(currentPositionId, rfq.side, filledAmountUnits, avgPriceUsd);
-
         // Update global mappings
         s.ma._allPositionsMap[currentPositionId] = position;
         s.ma._allPositionsLength++;
@@ -167,6 +166,8 @@ library LibMaster {
             // Decrease the number of active RFQs
             s.ma._crossRequestForQuotesLength[rfq.partyA]--;
         }
+
+        emitFill(currentPositionId, rfq.side, filledAmountUnits, avgPriceUsd);
     }
 
     function onFillCloseMarket(uint256 positionId, PositionPrice memory positionPrice) internal {
@@ -175,8 +176,8 @@ library LibMaster {
 
         uint256 price = position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice;
 
-        // Add the Fill
-        createFill(positionId, position.side == Side.BUY ? Side.SELL : Side.BUY, position.currentBalanceUnits, price);
+        // Emit the Fill
+        emitFill(positionId, position.side == Side.BUY ? Side.SELL : Side.BUY, position.currentBalanceUnits, price);
 
         // Calculate the PnL of PartyA
         (int256 uPnLA, ) = _calculateUPnLIsolated(
@@ -286,11 +287,10 @@ library LibMaster {
         }
     }
 
-    function createFill(uint256 positionId, Side side, uint256 amount, uint256 price) internal {
+    function emitFill(uint256 positionId, Side side, uint256 amount, uint256 price) internal {
         AppStorage storage s = LibAppStorage.diamondStorage();
-        uint256 fillId = s.ma._positionFills[positionId].length;
-        Fill memory fill = Fill(fillId, positionId, side, amount, price, block.timestamp);
-        s.ma._positionFills[positionId].push(fill);
+        Market memory market = s.markets._marketMap[s.ma._allPositionsMap[positionId].marketId];
+        emit Fill(market.marketId, side, amount, price);
     }
 
     /*-------------------------*

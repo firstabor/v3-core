@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { AppStorage, LibAppStorage, Position, Fill } from "../../../libraries/LibAppStorage.sol";
+import { AppStorage, LibAppStorage, Position } from "../../../libraries/LibAppStorage.sol";
 import { LibMaster } from "../../../libraries/LibMaster.sol";
 import { LibOracle, SchnorrSign } from "../../../libraries/LibOracle.sol";
 import { C } from "../../../C.sol";
@@ -88,7 +88,7 @@ contract CloseMarketFacet {
         require(position.partyB == msg.sender, "Invalid party");
         require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
 
-        // Handle the fill --
+        // Handle the fill
         LibMaster.onFillCloseMarket(positionId, LibOracle.createPositionPrice(positionId, avgPriceUsd, avgPriceUsd));
 
         emit FillCloseMarket(msg.sender, positionId);
