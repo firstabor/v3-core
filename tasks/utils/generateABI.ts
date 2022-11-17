@@ -1,5 +1,6 @@
 import { AbiCoder } from "@ethersproject/abi";
 import fs from "fs";
+import isEqual from "lodash/isEqual";
 import path from "path";
 
 let files: string[] = [];
@@ -13,6 +14,18 @@ function loopDirectory(directory: string) {
     }
   });
   return files;
+}
+
+function filterUnique(abi: AbiCoder[]) {
+  const cleaned: AbiCoder[] = [];
+  abi.forEach(function (itm) {
+    var unique = true;
+    cleaned.forEach(function (itm2) {
+      if (isEqual(itm, itm2)) unique = false;
+    });
+    if (unique) cleaned.push(itm);
+  });
+  return cleaned;
 }
 
 export function generateABI() {
@@ -31,7 +44,12 @@ export function generateABI() {
     abi.push(...json.abi);
   }
 
-  let finalAbi = JSON.stringify(abi);
+  // remove duplicate objects
+  const filtered = filterUnique(abi);
+
+  // stringify it
+  let finalAbi = JSON.stringify(filtered);
+
   fs.writeFileSync("./tasks/data/diamond.json", finalAbi);
   console.log("ABI written to tasks/data/diamond.json");
 }
