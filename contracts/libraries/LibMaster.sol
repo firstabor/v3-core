@@ -288,9 +288,7 @@ library LibMaster {
     }
 
     function emitFill(uint256 positionId, Side side, uint256 amount, uint256 price) internal {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-        Market memory market = s.markets._marketMap[s.ma._allPositionsMap[positionId].marketId];
-        emit Fill(market.marketId, side, amount, price);
+        emit Fill(positionId, side, amount, price);
     }
 
     /*-------------------------*
