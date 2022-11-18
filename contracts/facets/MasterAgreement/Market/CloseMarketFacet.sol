@@ -29,7 +29,10 @@ contract CloseMarketFacet {
         Position storage position = s.ma._allPositionsMap[positionId];
 
         require(position.partyA == msg.sender, "Invalid party");
-        require(position.state == PositionState.OPEN, "Invalid position state");
+        require(
+            position.state == PositionState.OPEN || position.state == PositionState.MARKET_CLOSE_REQUESTED,
+            "Invalid position state"
+        );
 
         _updatePositionState(position, PositionState.MARKET_CLOSE_REQUESTED);
 
