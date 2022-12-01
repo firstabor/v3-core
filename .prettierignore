@@ -19,3 +19,6 @@ coverage.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# custom files
+contracts/utils/SchnorrSECP256K1Verifier.sol
