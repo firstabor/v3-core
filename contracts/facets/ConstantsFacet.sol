@@ -3,6 +3,7 @@ pragma solidity >=0.8.16;
 
 import { Ownable } from "../utils/Ownable.sol";
 import { AppStorage } from "../libraries/LibAppStorage.sol";
+import { PublicKey } from "../libraries/LibOracle.sol";
 import { C } from "../C.sol";
 
 contract ConstantsFacet is Ownable {
@@ -72,12 +73,16 @@ contract ConstantsFacet is Ownable {
         return C.getMuon();
     }
 
-    function getMuonAppId() external view returns (bytes32) {
+    function getMuonAppId() external view returns (uint256) {
         return C.getMuonAppId();
     }
 
-    function getMinimumRequiredSignatures() external view returns (uint8) {
-        return C.getMinimumRequiredSignatures();
+    function getMuonPublicKey() external view returns (PublicKey memory) {
+        return C.getMuonPublicKey();
+    }
+
+    function getMuonGatewaySigner() external view returns (address) {
+        return C.getMuonGatewaySigner();
     }
 
     function getProtocolFee() external view returns (uint256) {

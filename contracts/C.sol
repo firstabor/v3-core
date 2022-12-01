@@ -2,6 +2,7 @@
 pragma solidity >=0.8.16;
 
 import { Decimal } from "./libraries/LibDecimal.sol";
+import { PublicKey } from "./libraries/LibOracle.sol";
 import { AppStorage, LibAppStorage } from "./libraries/LibAppStorage.sol";
 
 library C {
@@ -28,14 +29,19 @@ library C {
         return s.constants.muon;
     }
 
-    function getMuonAppId() internal view returns (bytes32) {
+    function getMuonAppId() internal view returns (uint256) {
         AppStorage storage s = LibAppStorage.diamondStorage();
-        return s.constants.muonAppId;
+        return s.constants.muonAppIdV2;
     }
 
-    function getMinimumRequiredSignatures() internal view returns (uint8) {
+    function getMuonPublicKey() internal view returns (PublicKey memory) {
         AppStorage storage s = LibAppStorage.diamondStorage();
-        return s.constants.minimumRequiredSignatures;
+        return s.constants.muonPublicKey;
+    }
+
+    function getMuonGatewaySigner() internal view returns (address) {
+        AppStorage storage s = LibAppStorage.diamondStorage();
+        return s.constants.muonGatewaySigner;
     }
 
     function getProtocolFee() internal view returns (Decimal.D256 memory) {
