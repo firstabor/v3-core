@@ -3,6 +3,7 @@ pragma solidity >=0.8.16;
 
 import { Ownable } from "../utils/Ownable.sol";
 import { AppStorage } from "../libraries/LibAppStorage.sol";
+import { PublicKey } from "../libraries/LibOracle.sol";
 import { C } from "../C.sol";
 
 contract ConstantsFacet is Ownable {
@@ -16,16 +17,16 @@ contract ConstantsFacet is Ownable {
         s.constants.collateral = _collateral;
     }
 
-    function setMuon(address _muon) external onlyOwner {
-        s.constants.muon = _muon;
+    function setMuonAppId(uint256 _muonAppId) external onlyOwner {
+        s.constants.muonAppIdV2 = _muonAppId;
     }
 
-    function setMuonAppId(bytes32 _muonAppId) external onlyOwner {
-        s.constants.muonAppId = _muonAppId;
+    function setMuonPublicKey(uint256 x, uint8 parity) external onlyOwner {
+        s.constants.muonPublicKey = PublicKey(x, parity);
     }
 
-    function setMinimumRequiredSignatures(uint8 _minimumRequiredSignatures) external onlyOwner {
-        s.constants.minimumRequiredSignatures = _minimumRequiredSignatures;
+    function setMuonGatewaySigner(address _muonGatewaySigner) external onlyOwner {
+        s.constants.muonGatewaySigner = _muonGatewaySigner;
     }
 
     function setProtocolFee(uint256 _protocolFee) external onlyOwner {
@@ -36,9 +37,7 @@ contract ConstantsFacet is Ownable {
         s.constants.liquidationFee = _liquidationFee;
     }
 
-    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyOwner {
-        s.constants.protocolLiquidationShare = _protocolLiquidationShare;
-    }
+    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyOwner {}
 
     function setCVA(uint256 _cva) external onlyOwner {
         s.constants.cva = _cva;
@@ -68,16 +67,16 @@ contract ConstantsFacet is Ownable {
         return C.getCollateral();
     }
 
-    function getMuon() external view returns (address) {
-        return C.getMuon();
-    }
-
-    function getMuonAppId() external view returns (bytes32) {
+    function getMuonAppId() external view returns (uint256) {
         return C.getMuonAppId();
     }
 
-    function getMinimumRequiredSignatures() external view returns (uint8) {
-        return C.getMinimumRequiredSignatures();
+    function getMuonPublicKey() external view returns (PublicKey memory) {
+        return C.getMuonPublicKey();
+    }
+
+    function getMuonGatewaySigner() external view returns (address) {
+        return C.getMuonGatewaySigner();
     }
 
     function getProtocolFee() external view returns (uint256) {

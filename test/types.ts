@@ -15,6 +15,7 @@ import type {
   CloseMarketFacet,
   LiquidationFacet,
   PauseFacet,
+  OracleFacet,
 } from "../src/types";
 
 type Fixture<T> = () => Promise<T>;
@@ -39,6 +40,7 @@ declare module "mocha" {
     masterFacet: MasterFacet;
     openMarketSingleFacet: OpenMarketSingleFacet;
     closeMarketFacet: CloseMarketFacet;
+    oracleFacet: OracleFacet;
   }
 }
 

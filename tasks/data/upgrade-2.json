@@ -1,0 +1,5 @@
+[
+  { "name": "ConstantsFacet", "address": "0x30e7605168d8875bdfe9435582dd6a28ea51035d", "constructorArguments": [] },
+  { "name": "LiquidationFacet", "address": "0x62c5aac26ede49f5f829031f5fcb75746226c32a", "constructorArguments": [] },
+  { "name": "OracleFacet", "address": "0x39b8dA5cc747144600D288D2f8Fe7a3527e4C9ee", "constructorArguments": [] }
+]

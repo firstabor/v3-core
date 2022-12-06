@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 import "./LibEnums.sol";
+import { PublicKey } from "./LibOracle.sol";
 
 struct Hedger {
     address addr;
@@ -65,15 +66,18 @@ struct Position {
 
 struct Constants {
     address collateral;
-    address muon;
-    bytes32 muonAppId;
-    uint8 minimumRequiredSignatures;
+    address muon; // DEPRECATED
+    bytes32 muonAppId; // DEPRECATED
+    uint8 minimumRequiredSignatures; // DEPRECATED
     uint256 protocolFee;
     uint256 liquidationFee;
     uint256 protocolLiquidationShare;
     uint256 cva;
     uint256 requestTimeout;
     uint256 maxOpenPositionsCross;
+    uint256 muonAppIdV2;
+    PublicKey muonPublicKey;
+    address muonGatewaySigner;
 }
 
 struct HedgersState {

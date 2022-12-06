@@ -4,11 +4,7 @@ pragma solidity >=0.8.16;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import { ReentrancyGuard } from "../utils/ReentrancyGuard.sol";
 import { C } from "../C.sol";
-import { LibHedgers } from "../libraries/LibHedgers.sol";
-import { LibOracle, PositionPrice } from "../libraries/LibOracle.sol";
-import { LibMaster } from "../libraries/LibMaster.sol";
 import { Position } from "../libraries/LibAppStorage.sol";
-import { SchnorrSign } from "../interfaces/IMuonV03.sol";
 
 contract AccountFacet is ReentrancyGuard {
     event Deposit(address indexed party, uint256 amount);

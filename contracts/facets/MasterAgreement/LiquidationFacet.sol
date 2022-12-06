@@ -2,8 +2,7 @@
 pragma solidity >=0.8.16;
 
 import { AppStorage, Position } from "../../libraries/LibAppStorage.sol";
-import { SchnorrSign } from "../../interfaces/IMuonV03.sol";
-import { LibOracle, PositionPrice } from "../../libraries/LibOracle.sol";
+import { LibOracle, SchnorrSign, PositionPrice } from "../../libraries/LibOracle.sol";
 import { LibMaster } from "../../libraries/LibMaster.sol";
 import { Decimal } from "../../libraries/LibDecimal.sol";
 import { LibDiamond } from "../../libraries/LibDiamond.sol";
@@ -33,11 +32,11 @@ contract LiquidationFacet {
         uint256 bidPrice,
         uint256 askPrice,
         bytes calldata reqId,
-        uint256 timestamp,
-        SchnorrSign[] calldata sigs
+        SchnorrSign calldata sign,
+        bytes calldata gatewaySignature
     ) external {
         // Verify oracle signatures
-        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, timestamp, sigs);
+        LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sign, gatewaySignature);
 
         Position memory position = s.ma._allPositionsMap[positionId];
 
@@ -102,11 +101,11 @@ contract LiquidationFacet {
         uint256[] calldata bidPrices,
         uint256[] calldata askPrices,
         bytes calldata reqId,
-        uint256 timestamp,
-        SchnorrSign[] calldata sigs
+        SchnorrSign calldata sign,
+        bytes calldata gatewaySignature
     ) external {
         // Verify oracle signatures
-        LibOracle.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, timestamp, sigs);
+        LibOracle.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, sign, gatewaySignature);
 
         // Check if all positionIds are provided by length
         require(positionIds.length == s.ma._openPositionsCrossLength[partyA], "Invalid positionIds length");
