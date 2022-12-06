@@ -17,10 +17,6 @@ contract ConstantsFacet is Ownable {
         s.constants.collateral = _collateral;
     }
 
-    function setMuon(address _muon) external onlyOwner {
-        s.constants.muon = _muon;
-    }
-
     function setMuonAppId(uint256 _muonAppId) external onlyOwner {
         s.constants.muonAppIdV2 = _muonAppId;
     }
@@ -41,9 +37,7 @@ contract ConstantsFacet is Ownable {
         s.constants.liquidationFee = _liquidationFee;
     }
 
-    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyOwner {
-        s.constants.protocolLiquidationShare = _protocolLiquidationShare;
-    }
+    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyOwner {}
 
     function setCVA(uint256 _cva) external onlyOwner {
         s.constants.cva = _cva;
@@ -71,10 +65,6 @@ contract ConstantsFacet is Ownable {
 
     function getCollateral() external view returns (address) {
         return C.getCollateral();
-    }
-
-    function getMuon() external view returns (address) {
-        return C.getMuon();
     }
 
     function getMuonAppId() external view returns (uint256) {

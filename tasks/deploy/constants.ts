@@ -10,4 +10,5 @@ export const FacetNames = [
   "MasterFacet",
   "OpenMarketSingleFacet",
   "CloseMarketFacet",
+  "OracleFacet",
 ];

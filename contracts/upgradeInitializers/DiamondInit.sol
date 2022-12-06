@@ -15,7 +15,7 @@ import { IDiamondCut } from "../interfaces/IDiamondCut.sol";
 import { IERC165 } from "../interfaces/IERC165.sol";
 
 contract DiamondInit {
-    function init(address _collateral, address _muon) external {
+    function init() external {
         // Initialize DiamondStorage
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         ds.supportedInterfaces[type(IERC165).interfaceId] = true;
@@ -24,8 +24,7 @@ contract DiamondInit {
 
         // Initialize AppStorage
         AppStorage storage s = LibAppStorage.diamondStorage();
-        s.constants.collateral = _collateral;
-        s.constants.muon = _muon;
+        s.constants.collateral = 0xB62F2fb600D39A44883688DE20A8E058c76Ad558;
         s.constants.muonAppId = 0xe3338429f245381abeff397891ec063410462933b264c7c9451c9c407c0f0849;
         s.constants.minimumRequiredSignatures = 0;
         s.constants.protocolFee = 0.0005e18; // 0.05%

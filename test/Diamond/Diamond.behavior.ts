@@ -8,11 +8,11 @@ export function shouldBehaveLikeDiamond(): void {
   let selectors: string[] = [];
   let result: string[] = [];
 
-  it("should have 12 facets", async function () {
+  it("should have 13 facets", async function () {
     for (const address of await this.diamondLoupeFacet.facetAddresses()) {
       addresses.push(address);
     }
-    assert.equal(addresses.length, 12);
+    assert.equal(addresses.length, 13);
   });
 
   it("facets should have the right function selectors -- call to facetFunctionSelectors function", async function () {
@@ -75,6 +75,11 @@ export function shouldBehaveLikeDiamond(): void {
     // CloseMarketSingleFacet
     selectors = getSelectors(this.closeMarketFacet).selectors;
     result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[11]);
+    assert.sameMembers(result, selectors);
+
+    // OracleFacet
+    selectors = getSelectors(this.oracleFacet).selectors;
+    result = await this.diamondLoupeFacet.facetFunctionSelectors(addresses[12]);
     assert.sameMembers(result, selectors);
   });
 

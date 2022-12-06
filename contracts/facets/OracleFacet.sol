@@ -8,7 +8,7 @@ contract OracleFacet {
      * PUBLIC VIEW FUNCTIONS *
      *------------------------*/
 
-    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) internal view {
+    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) external view {
         LibOracle.verifyTSSOrThrow(data, reqId, sign);
     }
 
@@ -19,7 +19,7 @@ contract OracleFacet {
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
-    ) internal view {
+    ) external view {
         LibOracle.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sign, gatewaySignature);
     }
 
@@ -30,7 +30,7 @@ contract OracleFacet {
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
-    ) internal view {
+    ) external view {
         LibOracle.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, sign, gatewaySignature);
     }
 }

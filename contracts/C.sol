@@ -24,11 +24,6 @@ library C {
         return s.constants.collateral;
     }
 
-    function getMuon() internal view returns (address) {
-        AppStorage storage s = LibAppStorage.diamondStorage();
-        return s.constants.muon;
-    }
-
     function getMuonAppId() internal view returns (uint256) {
         AppStorage storage s = LibAppStorage.diamondStorage();
         return s.constants.muonAppIdV2;

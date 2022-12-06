@@ -66,9 +66,9 @@ struct Position {
 
 struct Constants {
     address collateral;
-    address muon;
+    address muon; // DEPRECATED
     bytes32 muonAppId; // DEPRECATED
-    uint8 minimumRequiredSignatures;
+    uint8 minimumRequiredSignatures; // DEPRECATED
     uint256 protocolFee;
     uint256 liquidationFee;
     uint256 protocolLiquidationShare;
