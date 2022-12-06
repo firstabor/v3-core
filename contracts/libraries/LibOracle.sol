@@ -22,15 +22,32 @@ struct PositionPrice {
     uint256 askPrice;
 }
 
-/**
- * TODO: add upgrade initializer for:
- * 1. bytes32 muonAppId => uint256 muonAppId
- * 2. PublicKey muonPublicKey
- * 3. address muonGatewaySigner
- **/
-
 library LibOracle {
     using ECDSA for bytes32;
+
+    /*-----------------------*
+     * PUBLIC VIEW FUNCTIONS *
+     *-----------------------*/
+
+    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) public view {
+        (uint256 muonAppId, PublicKey memory muonPublicKey, ) = _getMuonConstants();
+
+        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, data));
+        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
+        require(verified, "TSS not verified");
+    }
+
+    /*------------------------*
+     * PRIVATE VIEW FUNCTIONS *
+     *------------------------*/
+
+    function _getMuonConstants()
+        private
+        view
+        returns (uint256 muonAppId, PublicKey memory muonPublicKey, address muonGatewaySigner)
+    {
+        return (C.getMuonAppId(), C.getMuonPublicKey(), C.getMuonGatewaySigner());
+    }
 
     function _verifySignature(
         uint256 hash,
@@ -47,22 +64,6 @@ library LibOracle {
             );
     }
 
-    function _getMuonConstants()
-        private
-        view
-        returns (uint256 muonAppId, PublicKey memory muonPublicKey, address muonGatewaySigner)
-    {
-        return (C.getMuonAppId(), C.getMuonPublicKey(), C.getMuonGatewaySigner());
-    }
-
-    function _verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) private view {
-        (uint256 muonAppId, PublicKey memory muonPublicKey, ) = _getMuonConstants();
-
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, data));
-        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
-        require(verified, "TSS not verified");
-    }
-
     // To get the gatewaySignature, gwSign=true should be passed to the MuonApp.
     function _verifyTSSAndGatewayOrThrow(
         bytes32 hash,
@@ -76,8 +77,12 @@ library LibOracle {
 
         hash = hash.toEthSignedMessageHash();
         address gatewaySigner = hash.recover(gatewaySignature);
-        require(gatewaySigner == muonGatewaySigner, "Gateway is not valid");
+        require(gatewaySigner == muonGatewaySigner, "Invalid gateway signer");
     }
+
+    /*-------------------------*
+     * INTERNAL VIEW FUNCTIONS *
+     *-------------------------*/
 
     function verifyPositionPriceOrThrow(
         uint256 positionId,

@@ -21,12 +21,16 @@ contract ConstantsFacet is Ownable {
         s.constants.muon = _muon;
     }
 
-    function setMuonAppId(bytes32 _muonAppId) external onlyOwner {
-        s.constants.muonAppId = _muonAppId;
+    function setMuonAppId(uint256 _muonAppId) external onlyOwner {
+        s.constants.muonAppIdV2 = _muonAppId;
     }
 
-    function setMinimumRequiredSignatures(uint8 _minimumRequiredSignatures) external onlyOwner {
-        s.constants.minimumRequiredSignatures = _minimumRequiredSignatures;
+    function setMuonPublicKey(uint256 x, uint8 parity) external onlyOwner {
+        s.constants.muonPublicKey = PublicKey(x, parity);
+    }
+
+    function setMuonGatewaySigner(address _muonGatewaySigner) external onlyOwner {
+        s.constants.muonGatewaySigner = _muonGatewaySigner;
     }
 
     function setProtocolFee(uint256 _protocolFee) external onlyOwner {
