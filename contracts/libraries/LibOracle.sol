@@ -25,18 +25,6 @@ struct PositionPrice {
 library LibOracle {
     using ECDSA for bytes32;
 
-    /*-----------------------*
-     * PUBLIC VIEW FUNCTIONS *
-     *-----------------------*/
-
-    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) public view {
-        (uint256 muonAppId, PublicKey memory muonPublicKey, ) = _getMuonConstants();
-
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, data));
-        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
-        require(verified, "TSS not verified");
-    }
-
     /*------------------------*
      * PRIVATE VIEW FUNCTIONS *
      *------------------------*/
@@ -64,12 +52,24 @@ library LibOracle {
             );
     }
 
+    /*-------------------------*
+     * INTERNAL VIEW FUNCTIONS *
+     *-------------------------*/
+
+    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) internal view {
+        (uint256 muonAppId, PublicKey memory muonPublicKey, ) = _getMuonConstants();
+
+        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, data));
+        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
+        require(verified, "TSS not verified");
+    }
+
     // To get the gatewaySignature, gwSign=true should be passed to the MuonApp.
-    function _verifyTSSAndGatewayOrThrow(
+    function verifyTSSAndGatewayOrThrow(
         bytes32 hash,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
-    ) private view {
+    ) internal view {
         (, PublicKey memory muonPublicKey, address muonGatewaySigner) = _getMuonConstants();
 
         bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
@@ -79,10 +79,6 @@ library LibOracle {
         address gatewaySigner = hash.recover(gatewaySignature);
         require(gatewaySigner == muonGatewaySigner, "Invalid gateway signer");
     }
-
-    /*-------------------------*
-     * INTERNAL VIEW FUNCTIONS *
-     *-------------------------*/
 
     function verifyPositionPriceOrThrow(
         uint256 positionId,
@@ -95,7 +91,7 @@ library LibOracle {
         (uint256 muonAppId, , ) = _getMuonConstants();
 
         bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, positionId, bidPrice, askPrice));
-        _verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
+        verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
     function verifyPositionPricesOrThrow(
@@ -109,7 +105,7 @@ library LibOracle {
         (uint256 muonAppId, , ) = _getMuonConstants();
 
         bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, positionIds, bidPrices, askPrices));
-        _verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
+        verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
     function createPositionPrice(
