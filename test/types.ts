@@ -1,78 +1,45 @@
-import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import type {
-  ICollateral,
+  AccessControl,
+  AccessControlAdmin,
   Diamond,
-  DiamondLoupeFacet,
-  DiamondCutFacet,
-  ConstantsFacet,
-  OwnershipFacet,
-  AccountFacet,
-  MarketsFacet,
-  HedgersFacet,
-  MasterFacet,
-  OpenMarketSingleFacet,
-  CloseMarketFacet,
-  LiquidationFacet,
-  PauseFacet,
-  OracleFacet,
+  DiamondCut,
+  DiamondLoupe,
+  ERC165,
+  ERC2771Context,
+  ERC2771ContextOwnable,
+  HedgerERC2771,
+  HedgerOwnable,
+  IMasterAgreement,
+  Ownable,
 } from "../src/types";
-
-type Fixture<T> = () => Promise<T>;
 
 declare module "mocha" {
   export interface Context {
     signers: Signers;
-    loadFixture: <T>(fixture: Fixture<T>) => Promise<T>;
-    // Misc
-    collateral: ICollateral;
-    // Diamond Facets
     diamond: Diamond;
-    diamondLoupeFacet: DiamondLoupeFacet;
-    diamondCutFacet: DiamondCutFacet;
-    constantsFacet: ConstantsFacet;
-    ownershipFacet: OwnershipFacet;
-    pauseFacet: PauseFacet;
-    accountFacet: AccountFacet;
-    hedgersFacet: HedgersFacet;
-    marketsFacet: MarketsFacet;
-    liquidationFacet: LiquidationFacet;
-    masterFacet: MasterFacet;
-    openMarketSingleFacet: OpenMarketSingleFacet;
-    closeMarketFacet: CloseMarketFacet;
-    oracleFacet: OracleFacet;
+    // Core
+    diamondCut: DiamondCut;
+    diamondLoupe: DiamondLoupe;
+    erc165: ERC165;
+    ownable: Ownable;
+    // App
+    accessControl: AccessControl;
+    accessControlAdmin: AccessControlAdmin;
+    hedgerERC2771: HedgerERC2771;
+    hedgerOwnable: HedgerOwnable;
+    erc2771Context: ERC2771Context;
+    erc2771ContextOwnable: ERC2771ContextOwnable;
+    // Config
+    masterAgreement: IMasterAgreement;
+    collateral: string;
+    trustedForwarder: string;
   }
 }
 
 export interface Signers {
+  owner: SignerWithAddress;
   admin: SignerWithAddress;
+  signer: SignerWithAddress;
   user: SignerWithAddress;
-  hedger: SignerWithAddress;
-}
-
-export enum MarketType {
-  FOREX,
-  METALS,
-  ENERGIES,
-  INDICES,
-  STOCKS,
-  COMMODITIES,
-  BONDS,
-  ETFS,
-  CRYPTO,
-}
-
-export enum Side {
-  BUY,
-  SELL,
-}
-
-export enum OrderType {
-  LIMIT,
-  MARKET,
-}
-
-export enum PositionType {
-  ISOLATED,
-  CROSS,
 }

@@ -1,53 +1,53 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { Ownable } from "../utils/Ownable.sol";
+import { AccessControlInternal } from "../access/roles/AccessControlInternal.sol";
 import { AppStorage } from "../libraries/LibAppStorage.sol";
 import { PublicKey } from "../libraries/LibOracle.sol";
 import { C } from "../C.sol";
 
-contract ConstantsFacet is Ownable {
+contract ConstantsFacet is AccessControlInternal {
     AppStorage internal s;
 
     /*------------------------*
      * PUBLIC WRITE FUNCTIONS *
      *------------------------*/
 
-    function setCollateral(address _collateral) external onlyOwner {
+    function setCollateral(address _collateral) external onlyRole(ADMIN_ROLE) {
         s.constants.collateral = _collateral;
     }
 
-    function setMuonAppId(uint256 _muonAppId) external onlyOwner {
+    function setMuonAppId(uint256 _muonAppId) external onlyRole(ADMIN_ROLE) {
         s.constants.muonAppIdV2 = _muonAppId;
     }
 
-    function setMuonPublicKey(uint256 x, uint8 parity) external onlyOwner {
+    function setMuonPublicKey(uint256 x, uint8 parity) external onlyRole(ADMIN_ROLE) {
         s.constants.muonPublicKey = PublicKey(x, parity);
     }
 
-    function setMuonGatewaySigner(address _muonGatewaySigner) external onlyOwner {
+    function setMuonGatewaySigner(address _muonGatewaySigner) external onlyRole(ADMIN_ROLE) {
         s.constants.muonGatewaySigner = _muonGatewaySigner;
     }
 
-    function setProtocolFee(uint256 _protocolFee) external onlyOwner {
+    function setProtocolFee(uint256 _protocolFee) external onlyRole(ADMIN_ROLE) {
         s.constants.protocolFee = _protocolFee;
     }
 
-    function setLiquidationFee(uint256 _liquidationFee) external onlyOwner {
+    function setLiquidationFee(uint256 _liquidationFee) external onlyRole(ADMIN_ROLE) {
         s.constants.liquidationFee = _liquidationFee;
     }
 
-    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyOwner {}
+    function setProtocolLiquidationShare(uint256 _protocolLiquidationShare) external onlyRole(ADMIN_ROLE) {}
 
-    function setCVA(uint256 _cva) external onlyOwner {
+    function setCVA(uint256 _cva) external onlyRole(ADMIN_ROLE) {
         s.constants.cva = _cva;
     }
 
-    function setRequestTimeout(uint256 _requestTimeout) external onlyOwner {
+    function setRequestTimeout(uint256 _requestTimeout) external onlyRole(ADMIN_ROLE) {
         s.constants.requestTimeout = _requestTimeout;
     }
 
-    function setMaxOpenPositionsCross(uint256 _maxOpenPositionsCross) external onlyOwner {
+    function setMaxOpenPositionsCross(uint256 _maxOpenPositionsCross) external onlyRole(ADMIN_ROLE) {
         s.constants.maxOpenPositionsCross = _maxOpenPositionsCross;
     }
 

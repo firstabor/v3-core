@@ -1,16 +1,8 @@
-import { run } from "hardhat";
+import { deployments } from "hardhat";
+import { Diamond } from "../../src/types";
 
-import { Diamond, FakeStablecoin } from "../../src/types";
-import { deployFakeStablecoin } from "../Collateral/Collateral.fixture";
-
-export async function deployDiamondFixture(): Promise<{ diamond: Diamond; collateral: FakeStablecoin }> {
-  const collateral = await deployFakeStablecoin();
-
-  const diamond = await run("deploy:diamond", {
-    logData: false,
-    genABI: false,
-    reportGas: true,
-  });
-
-  return { diamond, collateral };
-}
+export const deployDiamondFixture = deployments.createFixture(async ({ deployments, ethers }) => {
+  await deployments.fixture();
+  const diamond = await deployments.get("Diamond");
+  return (await ethers.getContractAt("Diamond", diamond.address)) as Diamond;
+});

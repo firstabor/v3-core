@@ -1,0 +1,114 @@
+{
+  "address": "0x14EF3a9EB49bb184688F2Aa6d24D2De414a05bcB",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x852c2f5b23f111b4e1b7b51447fb628a30bde03f166bd6ddce8ccd0aeb5845c8",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x14EF3a9EB49bb184688F2Aa6d24D2De414a05bcB",
+    "transactionIndex": 1,
+    "gasUsed": "1244005",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0xb0ac9f36b7ede27b6928fed15d2d663c7ca2efcf07bf39b7dfdb636501e33b2d",
+    "transactionHash": "0x852c2f5b23f111b4e1b7b51447fb628a30bde03f166bd6ddce8ccd0aeb5845c8",
+    "logs": [],
+    "blockNumber": 46636184,
+    "cumulativeGasUsed": "1244005",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "41fcbcd5b361b708382de1dfb0ea216f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"owner()\":{\"returns\":{\"_0\":\"contract owner\"}},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner.\"},\"transferOwnership(address)\":{\"params\":{\"account\":\"address of new owner\"}}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"owner()\":{\"notice\":\"get the ERC173 contract owner\"},\"transferOwnership(address)\":{\"notice\":\"transfer contract ownership to new account\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/access/ownable/Ownable.sol\":\"Ownable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\"},\"contracts/access/ownable/IERC173.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.16;\\n\\nimport { IERC173Events } from \\\"./IERC173Events.sol\\\";\\n\\n/**\\n * @title Contract ownership standard interface\\n * @dev see https://eips.ethereum.org/EIPS/eip-173\\n */\\ninterface IERC173 is IERC173Events {\\n    /**\\n     * @notice get the ERC173 contract owner\\n     * @return contract owner\\n     */\\n    function owner() external view returns (address);\\n\\n    /**\\n     * @notice renounce ownership of the contract\\n     */\\n    function renounceOwnership() external;\\n\\n    /**\\n     * @notice transfer contract ownership to new account\\n     * @param account address of new owner\\n     */\\n    function transferOwnership(address account) external;\\n}\\n\",\"keccak256\":\"0xbe49cb15314ae54a6b5d9ea4940ba4679bfbbb31136bcd99c30bdfd00785e596\",\"license\":\"MIT\"},\"contracts/access/ownable/IERC173Events.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/**\\r\\n * @title Contract ownership standard interface (event only)\\r\\n * @dev see https://eips.ethereum.org/EIPS/eip-173\\r\\n */\\r\\ninterface IERC173Events {\\r\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\r\\n}\\r\\n\",\"keccak256\":\"0x075a53ed639ad1f9aab7f8ec66d69aae3104f3651de3682c1d1dca68e55973be\",\"license\":\"MIT\"},\"contracts/access/ownable/Ownable.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { IERC173 } from \\\"./IERC173.sol\\\";\\r\\nimport { OwnableInternal } from \\\"./OwnableInternal.sol\\\";\\r\\n\\r\\ncontract Ownable is IERC173, OwnableInternal {\\r\\n    /**\\r\\n     * @inheritdoc IERC173\\r\\n     */\\r\\n    function owner() public view virtual returns (address) {\\r\\n        return _owner();\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Leaves the contract without owner. It will not be possible to call\\r\\n     * `onlyOwner` functions anymore. Can only be called by the current owner.\\r\\n     *\\r\\n     * NOTE: Renouncing ownership will leave the contract without an owner,\\r\\n     * thereby removing any functionality that is only available to the owner.\\r\\n     */\\r\\n    function renounceOwnership() public virtual onlyOwner {\\r\\n        _transferOwnership(address(0));\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @inheritdoc IERC173\\r\\n     */\\r\\n    function transferOwnership(address account) public virtual onlyOwner {\\r\\n        _transferOwnership(account);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x63c2e5c2f01801e2dc9dd38da9fabf45427f9395c0f5fbf972a20d18284438d4\",\"license\":\"MIT\"},\"contracts/access/ownable/OwnableInternal.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Context } from \\\"@openzeppelin/contracts/utils/Context.sol\\\";\\r\\n\\r\\nimport { OwnableStorage } from \\\"./OwnableStorage.sol\\\";\\r\\nimport { IERC173Events } from \\\"./IERC173Events.sol\\\";\\r\\n\\r\\nabstract contract OwnableInternal is IERC173Events, Context {\\r\\n    using OwnableStorage for OwnableStorage.Layout;\\r\\n\\r\\n    modifier onlyOwner() {\\r\\n        require(_msgSender() == _owner(), \\\"Ownable: sender must be owner\\\");\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    function _owner() internal view virtual returns (address) {\\r\\n        return OwnableStorage.layout().owner;\\r\\n    }\\r\\n\\r\\n    function _transferOwnership(address account) internal virtual {\\r\\n        OwnableStorage.layout().setOwner(account);\\r\\n        emit OwnershipTransferred(_msgSender(), account);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xd8f6e6196c0555ea058a13a597913cd8a747b7e2207bba57e3d0d4d7ed25471e\",\"license\":\"MIT\"},\"contracts/access/ownable/OwnableStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary OwnableStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.access.ownable\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        address owner;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function setOwner(Layout storage l, address owner) internal {\\r\\n        l.owner = owner;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xc471a7d1ef434c0ae90d2716897b02087235ca99767ca84f6e30d04589555435\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610016576101f6908161001c8239f35b600080fdfe6080604052600436101561001257600080fd5b6000803560e01c8063715018a61461011e5780638da5cb5b146100d65763f2fde38b1461003e57600080fd5b346100d35760203660031901126100d3576004356001600160a01b03818116918290036100cf57817fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab3916100978354918216331461019d565b6001600160a01b03191617905560405190337f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08484a3f35b8280fd5b80fd5b50346100d357806003193601126100d3577fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab3546040516001600160a01b039091168152602090f35b50346100d357806003193601126100d3577fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab38054610166336001600160a01b0383161461019d565b6001600160a01b031916905560405181337f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08284a3f35b156101a457565b60405162461bcd60e51b815260206004820152601d60248201527f4f776e61626c653a2073656e646572206d757374206265206f776e65720000006044820152606490fdfea164736f6c6343000810000a",
+  "deployedBytecode": "0x6080604052600436101561001257600080fd5b6000803560e01c8063715018a61461011e5780638da5cb5b146100d65763f2fde38b1461003e57600080fd5b346100d35760203660031901126100d3576004356001600160a01b03818116918290036100cf57817fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab3916100978354918216331461019d565b6001600160a01b03191617905560405190337f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08484a3f35b8280fd5b80fd5b50346100d357806003193601126100d3577fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab3546040516001600160a01b039091168152602090f35b50346100d357806003193601126100d3577fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab38054610166336001600160a01b0383161461019d565b6001600160a01b031916905560405181337f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e08284a3f35b156101a457565b60405162461bcd60e51b815260206004820152601d60248201527f4f776e61626c653a2073656e646572206d757374206265206f776e65720000006044820152606490fdfea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "owner()": {
+        "returns": {
+          "_0": "contract owner"
+        }
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+      },
+      "transferOwnership(address)": {
+        "params": {
+          "account": "address of new owner"
+        }
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {
+      "owner()": {
+        "notice": "get the ERC173 contract owner"
+      },
+      "transferOwnership(address)": {
+        "notice": "transfer contract ownership to new account"
+      }
+    },
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

@@ -1,2 +1,0 @@
-import "./diamond";
-import "./stablecoin";

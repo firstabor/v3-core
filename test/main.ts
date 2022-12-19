@@ -1,76 +1,70 @@
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import type { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
-
-import { shouldBehaveLikeAccountFacet } from "./AccountFacet/AccountFacet.behavior";
-import { shouldBehaveLikeCloseMarketFacet } from "./CloseMarketFacet/CloseMarketFacet.behavior";
+import {
+  AccessControl,
+  AccessControlAdmin,
+  DiamondCut,
+  DiamondLoupe,
+  ERC165,
+  ERC2771Context,
+  ERC2771ContextOwnable,
+  HedgerERC2771,
+  HedgerOwnable,
+  IMasterAgreement,
+  Ownable,
+} from "../src/types";
+import { MASTER_AGREEMENT } from "./constants";
 import { shouldBehaveLikeDiamond } from "./Diamond/Diamond.behavior";
 import { deployDiamondFixture } from "./Diamond/Diamond.fixture";
-import { shouldBehaveLikeHedgersFacet } from "./HedgersFacet/HedgersFacet.behavior";
-import { shouldBehaveLikeLiquidationFacet } from "./LiquidationFacet/LiquidationFacet.behavior";
-import { shouldBehaveLikeMarketsFacet } from "./MarketsFacet/MarketsFacet.behavior";
-import { shouldBehaveLikeMasterFacet } from "./MasterFacet/MasterFacet.behavior";
-import { shouldBehaveLikeOpenMarketSingleFacet } from "./OpenMarketSingleFacet/OpenMarketSingleFacet.behavior";
-import type { Signers } from "./types";
+import { shouldBehaveLikeHedgerERC2771 } from "./HedgerERC2771/HedgerERC2771.behavior";
+import { Signers } from "./types";
 
 describe("Unit Test", function () {
   before(async function () {
-    this.signers = {} as Signers;
-    this.loadFixture = loadFixture;
-
     const signers: SignerWithAddress[] = await ethers.getSigners();
-    this.signers.admin = signers[0];
-    this.signers.user = signers[1];
-    this.signers.hedger = signers[2];
+    this.signers = {} as Signers;
+    this.signers.owner = signers[0];
+    this.signers.admin = signers[1];
+    this.signers.signer = signers[2];
+    this.signers.user = signers[3];
 
-    const { diamond, collateral } = await this.loadFixture(deployDiamondFixture);
-    this.collateral = collateral;
+    const diamond = await deployDiamondFixture();
     this.diamond = diamond;
 
-    // Facets
-    this.diamondCutFacet = await ethers.getContractAt("DiamondCutFacet", diamond.address);
-    this.diamondLoupeFacet = await ethers.getContractAt("DiamondLoupeFacet", diamond.address);
-    this.constantsFacet = await ethers.getContractAt("ConstantsFacet", diamond.address);
-    this.ownershipFacet = await ethers.getContractAt("OwnershipFacet", diamond.address);
-    this.pauseFacet = await ethers.getContractAt("PauseFacet", diamond.address);
-    this.accountFacet = await ethers.getContractAt("AccountFacet", diamond.address);
-    this.hedgersFacet = await ethers.getContractAt("HedgersFacet", diamond.address);
-    this.marketsFacet = await ethers.getContractAt("MarketsFacet", diamond.address);
-    this.liquidationFacet = await ethers.getContractAt("LiquidationFacet", diamond.address);
-    this.masterFacet = await ethers.getContractAt("MasterFacet", diamond.address);
-    this.openMarketSingleFacet = await ethers.getContractAt("OpenMarketSingleFacet", diamond.address);
-    this.closeMarketFacet = await ethers.getContractAt("CloseMarketFacet", diamond.address);
+    // Core
+    this.diamondCut = (await ethers.getContractAt("DiamondCut", diamond.address)) as DiamondCut;
+    this.diamondLoupe = (await ethers.getContractAt("DiamondLoupe", diamond.address)) as DiamondLoupe;
+    this.erc165 = (await ethers.getContractAt("ERC165", diamond.address)) as ERC165;
+    this.ownable = (await ethers.getContractAt("Ownable", diamond.address)) as Ownable;
+
+    // App
+    this.accessControl = (await ethers.getContractAt("AccessControl", diamond.address)) as AccessControl;
+    this.accessControlAdmin = (await ethers.getContractAt("AccessControlAdmin", diamond.address)) as AccessControlAdmin;
+    this.hedgerERC2771 = (await ethers.getContractAt("HedgerERC2771", diamond.address)) as HedgerERC2771;
+    this.hedgerOwnable = (await ethers.getContractAt("HedgerOwnable", diamond.address)) as HedgerOwnable;
+    this.erc2771Context = (await ethers.getContractAt("ERC2771Context", diamond.address)) as ERC2771Context;
+    this.erc2771ContextOwnable = (await ethers.getContractAt(
+      "ERC2771ContextOwnable",
+      diamond.address,
+    )) as ERC2771ContextOwnable;
+
+    // Config
+    this.masterAgreement = (await ethers.getContractAt("IMasterAgreement", MASTER_AGREEMENT)) as IMasterAgreement;
+    this.collateral = await this.hedgerOwnable.getCollateral(MASTER_AGREEMENT);
+    this.trustedForwarder = await this.erc2771Context.trustedForwarder();
+  });
+
+  before(async function () {
+    // Setup roles
+    await this.accessControlAdmin.connect(this.signers.owner).grantAdminRole(this.signers.admin.address);
+    await this.accessControlAdmin.connect(this.signers.admin).grantSignerRole(this.signers.signer.address);
   });
 
   describe("Diamond", function () {
     shouldBehaveLikeDiamond();
   });
 
-  describe("AccountFacet", function () {
-    shouldBehaveLikeAccountFacet();
-  });
-
-  describe("MarketsFacet", function () {
-    shouldBehaveLikeMarketsFacet();
-  });
-
-  describe("HedgersFacet", function () {
-    shouldBehaveLikeHedgersFacet();
-  });
-
-  describe("OpenMarketSingleFacet", function () {
-    shouldBehaveLikeOpenMarketSingleFacet();
-  });
-
-  describe("MasterFacet", function () {
-    shouldBehaveLikeMasterFacet();
-  });
-
-  describe("CloseMarketFacet", function () {
-    shouldBehaveLikeCloseMarketFacet();
-  });
-
-  describe("LiquidationFacet", function () {
-    shouldBehaveLikeLiquidationFacet();
+  describe("HedgerERC2771", function () {
+    shouldBehaveLikeHedgerERC2771();
   });
 });

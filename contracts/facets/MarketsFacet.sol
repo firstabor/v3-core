@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 pragma solidity >=0.8.16;
 
-import { Ownable } from "../utils/Ownable.sol";
+import { AccessControlInternal } from "../access/roles/AccessControlInternal.sol";
 import { LibMarkets } from "../libraries/LibMarkets.sol";
 import { AppStorage, Market } from "../libraries/LibAppStorage.sol";
 import "../libraries/LibEnums.sol";
 
-contract MarketsFacet is Ownable {
+contract MarketsFacet is AccessControlInternal {
     AppStorage internal s;
 
     event CreateMarket(uint256 indexed marketId);
@@ -28,7 +28,7 @@ contract MarketsFacet is Ownable {
         string calldata symbol,
         bytes32 muonPriceFeedId,
         bytes32 fundingRateId
-    ) external onlyOwner returns (Market memory market) {
+    ) external onlyRole(ADMIN_ROLE) returns (Market memory market) {
         uint256 currentMarketId = s.markets._marketList.length + 1;
         market = Market(
             currentMarketId,
@@ -48,25 +48,25 @@ contract MarketsFacet is Ownable {
         emit CreateMarket(currentMarketId);
     }
 
-    function updateMarketIdentifier(uint256 marketId, string calldata identifier) external onlyOwner {
+    function updateMarketIdentifier(uint256 marketId, string calldata identifier) external onlyRole(ADMIN_ROLE) {
         string memory oldIdentifier = s.markets._marketMap[marketId].identifier;
         s.markets._marketMap[marketId].identifier = identifier;
         emit UpdateMarketIdentifier(marketId, oldIdentifier, identifier);
     }
 
-    function updateMarketActive(uint256 marketId, bool active) external onlyOwner {
+    function updateMarketActive(uint256 marketId, bool active) external onlyRole(ADMIN_ROLE) {
         bool oldStatus = s.markets._marketMap[marketId].active;
         s.markets._marketMap[marketId].active = active;
         emit UpdateMarketActive(marketId, oldStatus, active);
     }
 
-    function updateMarketMuonPriceFeedId(uint256 marketId, bytes32 muonPriceFeedId) external onlyOwner {
+    function updateMarketMuonPriceFeedId(uint256 marketId, bytes32 muonPriceFeedId) external onlyRole(ADMIN_ROLE) {
         bytes32 oldMuonPriceFeedId = s.markets._marketMap[marketId].muonPriceFeedId;
         s.markets._marketMap[marketId].muonPriceFeedId = muonPriceFeedId;
         emit UpdateMarketMuonPriceFeedId(marketId, oldMuonPriceFeedId, muonPriceFeedId);
     }
 
-    function updateMarketFundingRateId(uint256 marketId, bytes32 fundingRateId) external onlyOwner {
+    function updateMarketFundingRateId(uint256 marketId, bytes32 fundingRateId) external onlyRole(ADMIN_ROLE) {
         bytes32 oldFundingRateId = s.markets._marketMap[marketId].fundingRateId;
         s.markets._marketMap[marketId].fundingRateId = fundingRateId;
         emit UpdateMarketFundingRateId(marketId, oldFundingRateId, fundingRateId);

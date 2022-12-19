@@ -1,0 +1,230 @@
+{
+  "address": "0xBBcF1b50fec94e86534497774E5DF4920aB3099F",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "owner",
+          "type": "address"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "diamondCutFacet",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "diamondLoupeFacet",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "erc165Facet",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "erc173Facet",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Diamond.CoreFacets",
+          "name": "_coreFacets",
+          "type": "tuple"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "facetAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "enum IDiamondCut.FacetCutAction",
+              "name": "action",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bytes4[]",
+              "name": "functionSelectors",
+              "type": "bytes4[]"
+            }
+          ],
+          "internalType": "struct IDiamondCut.FacetCut[]",
+          "name": "_appFacets",
+          "type": "tuple[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "initContract",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes",
+              "name": "initData",
+              "type": "bytes"
+            }
+          ],
+          "internalType": "struct Diamond.Initialization[]",
+          "name": "_initializations",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "facet",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "selector",
+          "type": "bytes4"
+        }
+      ],
+      "name": "ErrDiamondFacetAlreadyExists",
+      "type": "error"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "fallback"
+    },
+    {
+      "stateMutability": "payable",
+      "type": "receive"
+    }
+  ],
+  "transactionHash": "0xff1aeb6afa5003de12a117ba37bf518fdcdff562108f32107b18a3f8af12192c",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0xBBcF1b50fec94e86534497774E5DF4920aB3099F",
+    "transactionIndex": 1,
+    "gasUsed": "7546529",
+    "logsBloom": "0x00000400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000200000000000000000000000002000000000000000000000000000000080000004000000000000000000000000000000000000000000000000000000000000000000000000000000200000000040000080000000000100000000000000000000000000020000000000000000000000000000000000020000000000000000000000000080002000000000000000000000000000000000000000800000000000000000000010000004000000000000000000000000001000000000000000000000000000",
+    "blockHash": "0xd8489f95732e4734c2b233cb7cc8df113c651e09e81f117e038a521c8221c63f",
+    "transactionHash": "0xff1aeb6afa5003de12a117ba37bf518fdcdff562108f32107b18a3f8af12192c",
+    "logs": [
+      {
+        "transactionIndex": 1,
+        "blockNumber": 46636234,
+        "transactionHash": "0xff1aeb6afa5003de12a117ba37bf518fdcdff562108f32107b18a3f8af12192c",
+        "address": "0xB62F2fb600D39A44883688DE20A8E058c76Ad558",
+        "topics": [
+          "0x8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b925",
+          "0x000000000000000000000000bbcf1b50fec94e86534497774e5df4920ab3099f",
+          "0x000000000000000000000000212e1a33350a85c4bdb2607c47e041a65bd14361"
+        ],
+        "data": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "logIndex": 0,
+        "blockHash": "0xd8489f95732e4734c2b233cb7cc8df113c651e09e81f117e038a521c8221c63f"
+      },
+      {
+        "transactionIndex": 1,
+        "blockNumber": 46636234,
+        "transactionHash": "0xff1aeb6afa5003de12a117ba37bf518fdcdff562108f32107b18a3f8af12192c",
+        "address": "0x212e1A33350a85c4bdB2607C47E041a65bD14361",
+        "topics": [
+          "0x26e589948abb2fd35abf27f57c4ce8588920bcfcb529f185a94fee86251369a1",
+          "0x000000000000000000000000bbcf1b50fec94e86534497774e5df4920ab3099f"
+        ],
+        "data": "0x",
+        "logIndex": 1,
+        "blockHash": "0xd8489f95732e4734c2b233cb7cc8df113c651e09e81f117e038a521c8221c63f"
+      }
+    ],
+    "blockNumber": 46636234,
+    "cumulativeGasUsed": "7546529",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [
+    "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    [
+      "0x39C75B1971d026c1068BbE42F1B12c8D4A804C1B",
+      "0x46c6cA1373754099148fD0da50A1d377afD3763C",
+      "0x9b1a69ba63024335072E86d7a9885ab65539ee8e",
+      "0x14EF3a9EB49bb184688F2Aa6d24D2De414a05bcB"
+    ],
+    [
+      {
+        "facetAddress": "0xe423f39BbDa08271b714b700743B2F35C98A5e17",
+        "action": 0,
+        "functionSelectors": [
+          "0x248a9ca3",
+          "0x2f2ff15d",
+          "0x91d14854",
+          "0x36568abe",
+          "0xd547741f"
+        ]
+      },
+      {
+        "facetAddress": "0x3C81A0Cc1cf920a3A9A6B90944715f8d18560E13",
+        "action": 0,
+        "functionSelectors": [
+          "0xc634b78e",
+          "0xcffa8187"
+        ]
+      },
+      {
+        "facetAddress": "0xa1fDC6f05dcde5d3F4A0f2AB19b6AD3B21690889",
+        "action": 0,
+        "functionSelectors": [
+          "0x918e7283"
+        ]
+      },
+      {
+        "facetAddress": "0x3399857619e8EDc256B6Dd8d161737E2CDf0c32a",
+        "action": 0,
+        "functionSelectors": [
+          "0xcd3d8f01",
+          "0xb78b52df",
+          "0x196bcfc0",
+          "0x59db9eb0",
+          "0x30efbe20",
+          "0x47e7ef24",
+          "0xd9a9accb",
+          "0x9b56d6c9",
+          "0x1173d7ce",
+          "0x29ff1308",
+          "0xf3fef3a3",
+          "0xe086e5ec"
+        ]
+      }
+    ],
+    [
+      {
+        "initContract": "0x85180D112867d183c2990f52cF7E28A507E9Fad1",
+        "initData": "0xe1c7392a"
+      }
+    ]
+  ],
+  "numDeployments": 3,
+  "solcInputHash": "41fcbcd5b361b708382de1dfb0ea216f",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"diamondCutFacet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"diamondLoupeFacet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"erc165Facet\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"erc173Facet\",\"type\":\"address\"}],\"internalType\":\"struct Diamond.CoreFacets\",\"name\":\"_coreFacets\",\"type\":\"tuple\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"facetAddress\",\"type\":\"address\"},{\"internalType\":\"enum IDiamondCut.FacetCutAction\",\"name\":\"action\",\"type\":\"uint8\"},{\"internalType\":\"bytes4[]\",\"name\":\"functionSelectors\",\"type\":\"bytes4[]\"}],\"internalType\":\"struct IDiamondCut.FacetCut[]\",\"name\":\"_appFacets\",\"type\":\"tuple[]\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"initContract\",\"type\":\"address\"},{\"internalType\":\"bytes\",\"name\":\"initData\",\"type\":\"bytes\"}],\"internalType\":\"struct Diamond.Initialization[]\",\"name\":\"_initializations\",\"type\":\"tuple[]\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"facet\",\"type\":\"address\"},{\"internalType\":\"bytes4\",\"name\":\"selector\",\"type\":\"bytes4\"}],\"name\":\"ErrDiamondFacetAlreadyExists\",\"type\":\"error\"},{\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/diamond/Diamond.sol\":\"Diamond\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\"},\"contracts/access/ownable/IERC173.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.16;\\n\\nimport { IERC173Events } from \\\"./IERC173Events.sol\\\";\\n\\n/**\\n * @title Contract ownership standard interface\\n * @dev see https://eips.ethereum.org/EIPS/eip-173\\n */\\ninterface IERC173 is IERC173Events {\\n    /**\\n     * @notice get the ERC173 contract owner\\n     * @return contract owner\\n     */\\n    function owner() external view returns (address);\\n\\n    /**\\n     * @notice renounce ownership of the contract\\n     */\\n    function renounceOwnership() external;\\n\\n    /**\\n     * @notice transfer contract ownership to new account\\n     * @param account address of new owner\\n     */\\n    function transferOwnership(address account) external;\\n}\\n\",\"keccak256\":\"0xbe49cb15314ae54a6b5d9ea4940ba4679bfbbb31136bcd99c30bdfd00785e596\",\"license\":\"MIT\"},\"contracts/access/ownable/IERC173Events.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/**\\r\\n * @title Contract ownership standard interface (event only)\\r\\n * @dev see https://eips.ethereum.org/EIPS/eip-173\\r\\n */\\r\\ninterface IERC173Events {\\r\\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\\r\\n}\\r\\n\",\"keccak256\":\"0x075a53ed639ad1f9aab7f8ec66d69aae3104f3651de3682c1d1dca68e55973be\",\"license\":\"MIT\"},\"contracts/access/ownable/OwnableStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary OwnableStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.access.ownable\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        address owner;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function setOwner(Layout storage l, address owner) internal {\\r\\n        l.owner = owner;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xc471a7d1ef434c0ae90d2716897b02087235ca99767ca84f6e30d04589555435\",\"license\":\"MIT\"},\"contracts/diamond/Diamond.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/******************************************************************************\\\\\\r\\n* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)\\r\\n* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535\\r\\n/******************************************************************************/\\r\\n\\r\\nimport { IERC165 } from \\\"@openzeppelin/contracts/utils/introspection/IERC165.sol\\\";\\r\\nimport { ERC165Storage } from \\\"../introspection/ERC165Storage.sol\\\";\\r\\nimport { IDiamondCut } from \\\"./IDiamondCut.sol\\\";\\r\\nimport { DiamondStorage } from \\\"./DiamondStorage.sol\\\";\\r\\nimport { IDiamondLoupe } from \\\"./IDiamondLoupe.sol\\\";\\r\\nimport { OwnableStorage } from \\\"../access/ownable/OwnableStorage.sol\\\";\\r\\nimport { IERC173 } from \\\"../access/ownable/IERC173.sol\\\";\\r\\n\\r\\ncontract Diamond {\\r\\n    using ERC165Storage for ERC165Storage.Layout;\\r\\n    using OwnableStorage for OwnableStorage.Layout;\\r\\n\\r\\n    struct Initialization {\\r\\n        address initContract;\\r\\n        bytes initData;\\r\\n    }\\r\\n\\r\\n    struct CoreFacets {\\r\\n        address diamondCutFacet;\\r\\n        address diamondLoupeFacet;\\r\\n        address erc165Facet;\\r\\n        address erc173Facet;\\r\\n    }\\r\\n\\r\\n    constructor(\\r\\n        address owner,\\r\\n        CoreFacets memory _coreFacets,\\r\\n        IDiamondCut.FacetCut[] memory _appFacets,\\r\\n        Initialization[] memory _initializations\\r\\n    ) {\\r\\n        ERC165Storage.Layout storage erc165 = ERC165Storage.layout();\\r\\n\\r\\n        // Register DiamondCut\\r\\n        bytes4[] memory selectorsDiamondCut = new bytes4[](1);\\r\\n        selectorsDiamondCut[0] = IDiamondCut.diamondCut.selector;\\r\\n        erc165.setSupportedInterface(type(IDiamondCut).interfaceId, true);\\r\\n\\r\\n        // Register DiamondLoupe\\r\\n        bytes4[] memory selectorsDiamondLoupe = new bytes4[](4);\\r\\n        selectorsDiamondLoupe[0] = IDiamondLoupe.facets.selector;\\r\\n        selectorsDiamondLoupe[1] = IDiamondLoupe.facetFunctionSelectors.selector;\\r\\n        selectorsDiamondLoupe[2] = IDiamondLoupe.facetAddresses.selector;\\r\\n        selectorsDiamondLoupe[3] = IDiamondLoupe.facetAddress.selector;\\r\\n        erc165.setSupportedInterface(type(IDiamondLoupe).interfaceId, true);\\r\\n\\r\\n        // Register ERC165 (supportsInterface)\\r\\n        bytes4[] memory selectorsERC165 = new bytes4[](1);\\r\\n        selectorsERC165[0] = IERC165.supportsInterface.selector;\\r\\n\\r\\n        // Register ERC173 (Ownable)\\r\\n        bytes4[] memory selectorsERC173 = new bytes4[](3);\\r\\n        selectorsERC173[0] = IERC173.owner.selector;\\r\\n        selectorsERC173[1] = IERC173.renounceOwnership.selector;\\r\\n        selectorsERC173[2] = IERC173.transferOwnership.selector;\\r\\n        erc165.setSupportedInterface(type(IERC173).interfaceId, true);\\r\\n\\r\\n        // Execute the first ever diamond cut, we're calling the addFunctions directly to save ~ %50 gas\\r\\n        DiamondStorage.addFunctions(_coreFacets.diamondCutFacet, selectorsDiamondCut);\\r\\n        DiamondStorage.addFunctions(_coreFacets.diamondLoupeFacet, selectorsDiamondLoupe);\\r\\n        DiamondStorage.addFunctions(_coreFacets.erc165Facet, selectorsERC165);\\r\\n        DiamondStorage.addFunctions(_coreFacets.erc173Facet, selectorsERC173);\\r\\n\\r\\n        // Set owner\\r\\n        OwnableStorage.layout().setOwner(owner);\\r\\n\\r\\n        // Initialize facet selectors\\r\\n        for (uint256 i = 0; i < _appFacets.length; i++) {\\r\\n            DiamondStorage.addFunctions(_appFacets[i].facetAddress, _appFacets[i].functionSelectors);\\r\\n        }\\r\\n\\r\\n        // Init additional txns atomically\\r\\n        for (uint256 i = 0; i < _initializations.length; i++) {\\r\\n            DiamondStorage.initializeDiamondCut(_initializations[i].initContract, _initializations[i].initData);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    // Find facet for function that is called and execute the\\r\\n    // function if a facet is found and return any value.\\r\\n    fallback() external payable {\\r\\n        DiamondStorage.Layout storage l;\\r\\n        bytes32 position = DiamondStorage.DIAMOND_STORAGE_POSITION;\\r\\n\\r\\n        // get diamond storage\\r\\n        assembly {\\r\\n            l.slot := position\\r\\n        }\\r\\n\\r\\n        // get facet from function selector\\r\\n        address facet = l.selectorToFacetAndPosition[msg.sig].facetAddress;\\r\\n        require(facet != address(0), \\\"Diamond: Function does not exist\\\");\\r\\n\\r\\n        // Execute external function from facet using delegatecall and return any value.\\r\\n        assembly {\\r\\n            // copy function selector and any arguments\\r\\n            calldatacopy(0, 0, calldatasize())\\r\\n            // execute function call using the facet\\r\\n            let result := delegatecall(gas(), facet, 0, calldatasize(), 0, 0)\\r\\n            // get any return value\\r\\n            returndatacopy(0, 0, returndatasize())\\r\\n            // return any return value or error back to the caller\\r\\n            switch result\\r\\n            case 0 {\\r\\n                revert(0, returndatasize())\\r\\n            }\\r\\n            default {\\r\\n                return(0, returndatasize())\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    receive() external payable {}\\r\\n}\\r\\n\",\"keccak256\":\"0xf5f209ec60d7160e6c1aee19f96889e73254ab2c2edc17094770ea424343f3af\",\"license\":\"MIT\"},\"contracts/diamond/DiamondStorage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/******************************************************************************\\\\\\r\\n* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)\\r\\n* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535\\r\\n/******************************************************************************/\\r\\n\\r\\nimport { IDiamondCut } from \\\"./IDiamondCut.sol\\\";\\r\\n\\r\\nerror InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);\\r\\nerror ErrDiamondFacetAlreadyExists(address facet, bytes4 selector);\\r\\nerror ErrDiamondFacetSameFunction(address facet, bytes4 selector);\\r\\n\\r\\nlibrary DiamondStorage {\\r\\n    bytes32 internal constant DIAMOND_STORAGE_POSITION = keccak256(\\\"diamond.standard.diamond.storage\\\");\\r\\n\\r\\n    struct FacetAddressAndPosition {\\r\\n        address facetAddress;\\r\\n        uint96 functionSelectorPosition; // position in facetFunctionSelectors.functionSelectors array\\r\\n    }\\r\\n\\r\\n    struct FacetFunctionSelectors {\\r\\n        bytes4[] functionSelectors;\\r\\n        uint256 facetAddressPosition; // position of facetAddress in facetAddresses array\\r\\n    }\\r\\n\\r\\n    struct Layout {\\r\\n        // maps function selector to the facet address and\\r\\n        // the position of the selector in the facetFunctionSelectors.selectors array\\r\\n        mapping(bytes4 => FacetAddressAndPosition) selectorToFacetAndPosition;\\r\\n        // maps facet addresses to function selectors\\r\\n        mapping(address => FacetFunctionSelectors) facetFunctionSelectors;\\r\\n        // facet addresses\\r\\n        address[] facetAddresses;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 position = DIAMOND_STORAGE_POSITION;\\r\\n        assembly {\\r\\n            l.slot := position\\r\\n        }\\r\\n    }\\r\\n\\r\\n    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);\\r\\n\\r\\n    // Internal function version of diamondCut\\r\\n    function diamondCut(IDiamondCut.FacetCut[] memory _diamondCut, address _init, bytes memory _calldata) internal {\\r\\n        for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {\\r\\n            IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;\\r\\n            if (action == IDiamondCut.FacetCutAction.Add) {\\r\\n                addFunctions(_diamondCut[facetIndex].facetAddress, _diamondCut[facetIndex].functionSelectors);\\r\\n            } else if (action == IDiamondCut.FacetCutAction.Replace) {\\r\\n                replaceFunctions(_diamondCut[facetIndex].facetAddress, _diamondCut[facetIndex].functionSelectors);\\r\\n            } else if (action == IDiamondCut.FacetCutAction.Remove) {\\r\\n                removeFunctions(_diamondCut[facetIndex].facetAddress, _diamondCut[facetIndex].functionSelectors);\\r\\n            } else {\\r\\n                revert(\\\"LibDiamondCut: Incorrect FacetCutAction\\\");\\r\\n            }\\r\\n        }\\r\\n        emit DiamondCut(_diamondCut, _init, _calldata);\\r\\n        initializeDiamondCut(_init, _calldata);\\r\\n    }\\r\\n\\r\\n    function addFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {\\r\\n        require(_functionSelectors.length > 0, \\\"LibDiamondCut: No selectors in facet to cut\\\");\\r\\n        require(_facetAddress != address(0), \\\"LibDiamondCut: Add facet can't be address(0)\\\");\\r\\n\\r\\n        Layout storage l = layout();\\r\\n        uint96 selectorPosition = uint96(l.facetFunctionSelectors[_facetAddress].functionSelectors.length);\\r\\n\\r\\n        // add new facet address if it does not exist\\r\\n        if (selectorPosition == 0) {\\r\\n            addFacet(l, _facetAddress);\\r\\n        }\\r\\n\\r\\n        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {\\r\\n            bytes4 selector = _functionSelectors[selectorIndex];\\r\\n            address oldFacetAddress = l.selectorToFacetAndPosition[selector].facetAddress;\\r\\n            if (oldFacetAddress != address(0)) {\\r\\n                revert ErrDiamondFacetAlreadyExists(oldFacetAddress, selector);\\r\\n            }\\r\\n            addFunction(l, selector, selectorPosition, _facetAddress);\\r\\n            selectorPosition++;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function replaceFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {\\r\\n        require(_functionSelectors.length > 0, \\\"LibDiamondCut: No selectors in facet to cut\\\");\\r\\n        require(_facetAddress != address(0), \\\"LibDiamondCut: Add facet can't be address(0)\\\");\\r\\n\\r\\n        Layout storage l = layout();\\r\\n        uint96 selectorPosition = uint96(l.facetFunctionSelectors[_facetAddress].functionSelectors.length);\\r\\n\\r\\n        // add new facet address if it does not exist\\r\\n        if (selectorPosition == 0) {\\r\\n            addFacet(l, _facetAddress);\\r\\n        }\\r\\n\\r\\n        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {\\r\\n            bytes4 selector = _functionSelectors[selectorIndex];\\r\\n            address oldFacetAddress = l.selectorToFacetAndPosition[selector].facetAddress;\\r\\n\\r\\n            if (oldFacetAddress == _facetAddress) {\\r\\n                revert ErrDiamondFacetSameFunction(oldFacetAddress, selector);\\r\\n            }\\r\\n\\r\\n            removeFunction(l, oldFacetAddress, selector);\\r\\n            addFunction(l, selector, selectorPosition, _facetAddress);\\r\\n            selectorPosition++;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function removeFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {\\r\\n        require(_functionSelectors.length > 0, \\\"LibDiamondCut: No selectors in facet to cut\\\");\\r\\n        require(_facetAddress == address(0), \\\"LibDiamondCut: Remove facet address must be address(0)\\\");\\r\\n\\r\\n        Layout storage l = layout();\\r\\n\\r\\n        for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {\\r\\n            bytes4 selector = _functionSelectors[selectorIndex];\\r\\n            address oldFacetAddress = l.selectorToFacetAndPosition[selector].facetAddress;\\r\\n            removeFunction(l, oldFacetAddress, selector);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function addFacet(Layout storage l, address _facetAddress) internal {\\r\\n        enforceHasContractCode(_facetAddress, \\\"LibDiamondCut: New facet has no code\\\");\\r\\n        l.facetFunctionSelectors[_facetAddress].facetAddressPosition = l.facetAddresses.length;\\r\\n        l.facetAddresses.push(_facetAddress);\\r\\n    }\\r\\n\\r\\n    function addFunction(Layout storage l, bytes4 _selector, uint96 _selectorPosition, address _facetAddress) internal {\\r\\n        l.selectorToFacetAndPosition[_selector].functionSelectorPosition = _selectorPosition;\\r\\n        l.facetFunctionSelectors[_facetAddress].functionSelectors.push(_selector);\\r\\n        l.selectorToFacetAndPosition[_selector].facetAddress = _facetAddress;\\r\\n    }\\r\\n\\r\\n    function removeFunction(Layout storage l, address _facetAddress, bytes4 _selector) internal {\\r\\n        require(_facetAddress != address(0), \\\"LibDiamondCut: Can't remove function that doesn't exist\\\");\\r\\n        // an immutable function is a function defined directly in a diamond\\r\\n        require(_facetAddress != address(this), \\\"LibDiamondCut: Can't remove immutable function\\\");\\r\\n\\r\\n        // replace selector with last selector, then delete last selector\\r\\n        uint256 selectorPosition = l.selectorToFacetAndPosition[_selector].functionSelectorPosition;\\r\\n        uint256 lastSelectorPosition = l.facetFunctionSelectors[_facetAddress].functionSelectors.length - 1;\\r\\n        // if not the same then replace _selector with lastSelector\\r\\n        if (selectorPosition != lastSelectorPosition) {\\r\\n            bytes4 lastSelector = l.facetFunctionSelectors[_facetAddress].functionSelectors[lastSelectorPosition];\\r\\n            l.facetFunctionSelectors[_facetAddress].functionSelectors[selectorPosition] = lastSelector;\\r\\n            l.selectorToFacetAndPosition[lastSelector].functionSelectorPosition = uint96(selectorPosition);\\r\\n        }\\r\\n        // delete the last selector\\r\\n        l.facetFunctionSelectors[_facetAddress].functionSelectors.pop();\\r\\n        delete l.selectorToFacetAndPosition[_selector];\\r\\n\\r\\n        // if no more selectors for facet address then delete the facet address\\r\\n        if (lastSelectorPosition == 0) {\\r\\n            // replace facet address with last facet address and delete last facet address\\r\\n            uint256 lastFacetAddressPosition = l.facetAddresses.length - 1;\\r\\n            uint256 facetAddressPosition = l.facetFunctionSelectors[_facetAddress].facetAddressPosition;\\r\\n            if (facetAddressPosition != lastFacetAddressPosition) {\\r\\n                address lastFacetAddress = l.facetAddresses[lastFacetAddressPosition];\\r\\n                l.facetAddresses[facetAddressPosition] = lastFacetAddress;\\r\\n                l.facetFunctionSelectors[lastFacetAddress].facetAddressPosition = facetAddressPosition;\\r\\n            }\\r\\n            l.facetAddresses.pop();\\r\\n            delete l.facetFunctionSelectors[_facetAddress].facetAddressPosition;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function initializeDiamondCut(address _init, bytes memory _calldata) internal {\\r\\n        if (_init == address(0)) {\\r\\n            require(_calldata.length == 0, \\\"LibDiamondCut: _init is address(0) but_calldata is not empty\\\");\\r\\n        } else {\\r\\n            require(_calldata.length > 0, \\\"LibDiamondCut: _calldata is empty but _init is not address(0)\\\");\\r\\n            if (_init != address(this)) {\\r\\n                enforceHasContractCode(_init, \\\"LibDiamondCut: _init address has no code\\\");\\r\\n            }\\r\\n            (bool success, bytes memory error) = _init.delegatecall(_calldata);\\r\\n            if (!success) {\\r\\n                if (error.length > 0) {\\r\\n                    // bubble up the error\\r\\n                    revert(string(error));\\r\\n                } else {\\r\\n                    revert(\\\"LibDiamondCut: _init function reverted\\\");\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function enforceHasContractCode(address _contract, string memory _errorMessage) internal view {\\r\\n        uint256 contractSize;\\r\\n        assembly {\\r\\n            contractSize := extcodesize(_contract)\\r\\n        }\\r\\n        require(contractSize > 0, _errorMessage);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x763e0eef2dd552019c34710a8f1ebc6bccd8903e6a660f362e16397caa6eb88f\",\"license\":\"MIT\"},\"contracts/diamond/IDiamondCut.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\npragma solidity ^0.8.16;\\n\\n/******************************************************************************\\\\\\n* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)\\n* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535\\n/******************************************************************************/\\n\\ninterface IDiamondCut {\\n    enum FacetCutAction {\\n        Add,\\n        Replace,\\n        Remove\\n    }\\n    // Add=0, Replace=1, Remove=2\\n\\n    struct FacetCut {\\n        address facetAddress;\\n        FacetCutAction action;\\n        bytes4[] functionSelectors;\\n    }\\n\\n    /// @notice Add/replace/remove any number of functions and optionally execute\\n    ///         a function with delegatecall\\n    /// @param _diamondCut Contains the facet addresses and function selectors\\n    /// @param _init The address of the contract or facet to execute _calldata\\n    /// @param _calldata A function call, including function selector and arguments\\n    ///                  _calldata is executed with delegatecall on _init\\n    function diamondCut(FacetCut[] calldata _diamondCut, address _init, bytes calldata _calldata) external;\\n\\n    event DiamondCut(FacetCut[] _diamondCut, address _init, bytes _calldata);\\n}\\n\",\"keccak256\":\"0x5088d8ea8041291d6e9c645ffd0dfcc68cb5eca443f73b2550ab6829cec6ba53\",\"license\":\"MIT\"},\"contracts/diamond/IDiamondLoupe.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/******************************************************************************\\\\\\r\\n* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)\\r\\n* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535\\r\\n/******************************************************************************/\\r\\n\\r\\ninterface IDiamondLoupe {\\r\\n    struct Facet {\\r\\n        address facetAddress;\\r\\n        bytes4[] functionSelectors;\\r\\n    }\\r\\n\\r\\n    /// @notice Gets all facet addresses and their four byte function selectors.\\r\\n    /// @return facets_ Facet\\r\\n    function facets() external view returns (Facet[] memory facets_);\\r\\n\\r\\n    /// @notice Gets all the function selectors supported by a specific facet.\\r\\n    /// @param _facet The facet address.\\r\\n    /// @return facetFunctionSelectors_\\r\\n    function facetFunctionSelectors(address _facet) external view returns (bytes4[] memory facetFunctionSelectors_);\\r\\n\\r\\n    /// @notice Get all the facet addresses used by a diamond.\\r\\n    /// @return facetAddresses_\\r\\n    function facetAddresses() external view returns (address[] memory facetAddresses_);\\r\\n\\r\\n    /// @notice Gets the facet that supports the given selector.\\r\\n    /// @dev If facet is not found return address(0).\\r\\n    /// @param _functionSelector The function selector.\\r\\n    /// @return facetAddress_ The facet address.\\r\\n    function facetAddress(bytes4 _functionSelector) external view returns (address facetAddress_);\\r\\n}\\r\\n\",\"keccak256\":\"0xb743e3126cb81bd408f912d3719e8695c5027a3eabbb4eb6d47c69f46f130c32\",\"license\":\"MIT\"},\"contracts/introspection/ERC165Storage.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary ERC165Storage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.introspection.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(bytes4 => bool) supportedInterfaces;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function isSupportedInterface(Layout storage l, bytes4 interfaceId) internal view returns (bool) {\\r\\n        return l.supportedInterfaces[interfaceId];\\r\\n    }\\r\\n\\r\\n    function setSupportedInterface(Layout storage l, bytes4 interfaceId, bool status) internal {\\r\\n        require(interfaceId != 0xffffffff, \\\"ERC165: invalid interface id\\\");\\r\\n        l.supportedInterfaces[interfaceId] = status;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x602522d5b50d8524b54fba6854bc9936f9f1c63398c3db88584d0739a2f2fcf3\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60806040523461075c57610e2c80380380610019816108b9565b92833981818101039160e0831261075c576080610035826108de565b93601f19011261075c5760405192608084016001600160401b0381118582101761066557604052610068602083016108de565b8452610076604083016108de565b6020850152610087606083016108de565b6040850152610098608083016108de565b606085015260a0820151916001600160401b03831161075c57838101601f84830101121561075c57828101516100d56100d0826108f2565b6108b9565b93602085838152019086840160208460051b83870101011161075c57602081850101915b60208460051b83870101018310610776575050505060c0810151936001600160401b03851161075c57808201601f86840101121561075c5784820151906101426100d0836108f2565b95602087848152019082850160208560051b83880101011161075c57602081860101915b60208560051b838801010183106106915750505050505061018561087b565b60018152602036818301376307e4c70760e21b806101a283610947565b526000908152600080516020610dec833981519152602052604090819020805460ff1916600117905551906001600160401b0360a08301908111908311176106655760a08201604052600482526080366020840137637a0ed62760e01b61020883610947565b526356fe50af60e11b61021a83610954565b526314bbdacb60e21b61022c83610964565b5281516003101561067b576366ffd66360e11b60808301526348e2b09360e01b600052600080516020610dec8339815191526020527f85baa9dc32e964e8db249342de5e5ef0ea04dd486a7533784720bf6eb00e25c3805460ff1916600117905561029561087b565b9060018252602036818401376301ffc9a760e01b6102b283610947565b52604051916001600160401b036080840190811190841117610665576103869761039e6060926103926103a6976080880160405260038852853660208a0137638da5cb5b60e01b61030289610947565b526338a80c5360e11b61031489610954565b5263f2fde38b60e01b61032689610964565b52630704183b60e11b600052600080516020610dec8339815191526020527f7c2dd16ed74ff046e5845bc4a8d08504db96c8326f82b23dbe3cc261ecb36252805460ff1916600117905584516001600160a01b039d8e98909189166109ad565b866020860151166109ad565b846040840151166109ad565b0151166109ad565b7fa7222481f8aff9c0b8c2a969dffbd3c91ebd3e9fb5b7b31128200b05480e8ab380546001600160a01b03191691851691909117905560005b815181101561041c5780610412856103fa6104179486610974565b51511660406104098487610974565b510151906109ad565b610988565b6103df565b505060005b815181101561065757826104358284610974565b51511660206104448385610974565b51015190806104cc5750516104615761045c90610988565b610421565b60405162461bcd60e51b815260206004820152603c60248201527f4c69624469616d6f6e644375743a205f696e697420697320616464726573732860448201527f3029206275745f63616c6c64617461206973206e6f7420656d707479000000006064820152608490fd5b8151156105ec57600091829130810361059b575b602082519201905af43d15610593573d906104fd6100d083610909565b9182523d6000602084013e5b15610518575061045c90610988565b80511561053f5760405162461bcd60e51b815290819061053b9060048301610ce1565b0390fd5b60405162461bcd60e51b815260206004820152602660248201527f4c69624469616d6f6e644375743a205f696e69742066756e6374696f6e2072656044820152651d995c9d195960d21b6064820152608490fd5b606090610509565b6105e76105a661089a565b602881527f4c69624469616d6f6e644375743a205f696e6974206164647265737320686173602082015267206e6f20636f646560c01b604082015282610d0d565b6104e0565b60405162461bcd60e51b815260206004820152603d60248201527f4c69624469616d6f6e644375743a205f63616c6c6461746120697320656d707460448201527f7920627574205f696e6974206973206e6f7420616464726573732830290000006064820152608490fd5b60405160b99081610d338239f35b634e487b7160e01b600052604160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b8251906001600160401b03821161075c576040878401830186890103601f19011261075c5760408051929083016001600160401b03811184821017610761576040526106e3602082868b0101016108de565b8352878401810160400151906001600160401b03821161075c57848901010190858801603f8301121561075c576020820151906107226100d083610909565b93828552878a016040848601011161075c578461074b6020969487966040888098019101610924565b838201528152019301929050610166565b600080fd5b60246000634e487b7160e01b81526041600452fd5b82516001600160401b03811161075c57828601016060601f19828b890103011261075c5760405190606082016001600160401b03811183821017610761576040526107c3602082016108de565b82526040810151600381101561075c57602083015260608101516001600160401b03811161075c578a8801603f82840101121561075c576020818301015161080d6100d0826108f2565b9260208483815201908d8b0160408460051b86840101011161075c57604084820101915b60408460051b8684010101831061085a57505050505060408201528152602092830192016100f9565b82516001600160e01b03198116810361075c57815260209283019201610831565b60408051919082016001600160401b0381118382101761066557604052565b60405190606082016001600160401b0381118382101761066557604052565b6040519190601f01601f191682016001600160401b0381118382101761066557604052565b51906001600160a01b038216820361075c57565b6001600160401b0381116106655760051b60200190565b6001600160401b03811161066557601f01601f191660200190565b60005b8381106109375750506000910152565b8181015183820152602001610927565b80511561067b5760200190565b80516001101561067b5760400190565b80516002101561067b5760600190565b805182101561067b5760209160051b010190565b60001981146109975760010190565b634e487b7160e01b600052601160045260246000fd5b919091825115610c88576001600160a01b0392818416908115610c2e576001600160a01b0383166000908152600080516020610e0c83398151915260205260409020546001600160601b0392908316918215610b56575b6000925b8151841015610b4c57610a1b8483610974565b519063ffffffff60e01b8216806000527fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131c6020908082526040918c83600020541680610b2f5750600084815282825283812080548f1660a088901b6001600160a01b0319908116919091179091556001600160a01b038d168252600080516020610e0c8339815191526020526040909120958b169695909493929190938454680100000000000000008110156106655760019788820180885582101561067b578b96600052836000208260031c019182549060e0809160051b1663ffffffff811b9384921c901b16911916179055600052526000209182541617905585821461099757610b29910193610988565b92610a08565b60449085855191631a2f0c8360e11b835260048301526024820152fd5b5050505050509050565b610b9e610b6161089a565b602481527f4c69624469616d6f6e644375743a204e657720666163657420686173206e6f20602082015263636f646560e01b604082015286610d0d565b7fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131e805490816001610bee8960018060a01b0316600052600080516020610e0c833981519152602052604060002090565b015568010000000000000000821015610665576001820180825582101561067b576000908152602090200180546001600160a01b03191683179055610a04565b60405162461bcd60e51b815260206004820152602c60248201527f4c69624469616d6f6e644375743a204164642066616365742063616e2774206260448201526b65206164647265737328302960a01b6064820152608490fd5b60405162461bcd60e51b815260206004820152602b60248201527f4c69624469616d6f6e644375743a204e6f2073656c6563746f727320696e206660448201526a1858d95d081d1bc818dd5d60aa1b6064820152608490fd5b60409160208252610d018151809281602086015260208686019101610924565b601f01601f1916010190565b3b15610d165750565b60405162461bcd60e51b815290819061053b9060048301610ce156fe6080604052361560aa57600080356001600160e01b03191681527fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131c60205260408120546001600160a01b03168015606c57818091368280378136915af43d82803e156068573d90f35b3d90fd5b62461bcd60e51b6080526020608452602060a4527f4469616d6f6e643a2046756e6374696f6e20646f6573206e6f7420657869737460c45260646080fd5b00fea164736f6c6343000810000a0a438a7a1f9a2584bc07ed93973b0247d34f9a1fc8d1966afb5667f23e00fcb0c8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131d",
+  "deployedBytecode": "0x6080604052361560aa57600080356001600160e01b03191681527fc8fcad8db84d3cc18b4c41d551ea0ee66dd599cde068d998e57d5e09332c131c60205260408120546001600160a01b03168015606c57818091368280378136915af43d82803e156068573d90f35b3d90fd5b62461bcd60e51b6080526020608452602060a4527f4469616d6f6e643a2046756e6374696f6e20646f6573206e6f7420657869737460c45260646080fd5b00fea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
