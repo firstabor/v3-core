@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.16;
 
 /******************************************************************************\
@@ -47,11 +47,7 @@ library DiamondStorage {
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // Internal function version of diamondCut
-    function diamondCut(
-        IDiamondCut.FacetCut[] memory _diamondCut,
-        address _init,
-        bytes memory _calldata
-    ) internal {
+    function diamondCut(IDiamondCut.FacetCut[] memory _diamondCut, address _init, bytes memory _calldata) internal {
         for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {
             IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;
             if (action == IDiamondCut.FacetCutAction.Add) {
@@ -136,22 +132,13 @@ library DiamondStorage {
         l.facetAddresses.push(_facetAddress);
     }
 
-    function addFunction(
-        Layout storage l,
-        bytes4 _selector,
-        uint96 _selectorPosition,
-        address _facetAddress
-    ) internal {
+    function addFunction(Layout storage l, bytes4 _selector, uint96 _selectorPosition, address _facetAddress) internal {
         l.selectorToFacetAndPosition[_selector].functionSelectorPosition = _selectorPosition;
         l.facetFunctionSelectors[_facetAddress].functionSelectors.push(_selector);
         l.selectorToFacetAndPosition[_selector].facetAddress = _facetAddress;
     }
 
-    function removeFunction(
-        Layout storage l,
-        address _facetAddress,
-        bytes4 _selector
-    ) internal {
+    function removeFunction(Layout storage l, address _facetAddress, bytes4 _selector) internal {
         require(_facetAddress != address(0), "LibDiamondCut: Can't remove function that doesn't exist");
         // an immutable function is a function defined directly in a diamond
         require(_facetAddress != address(this), "LibDiamondCut: Can't remove immutable function");

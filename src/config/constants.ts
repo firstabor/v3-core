@@ -1,22 +1,25 @@
-export const diamondName = "V3HedgerDiamond";
+export const diamondName = "V3CoreDiamond";
 
 export const coreFacetNames = ["DiamondCut", "DiamondLoupe", "ERC165", "Ownable"] as const;
 export const appFacetNames = [
   "AccessControl",
   "AccessControlAdmin",
-  "HedgerERC2771",
-  "HedgerOwnable",
-  "ERC2771Context",
-  "ERC2771ContextOwnable",
-  "ConstantsFacet",
-  "PauseFacet",
-  "AccountFacet",
-  "HedgersFacet",
-  "MarketsFacet",
-  "LiquidationFacet",
-  "MasterFacet",
-  "OpenMarketSingleFacet",
-  "CloseMarketFacet",
-  "OracleFacet",
+  "Constants",
+  "ConstantsOwnable",
+  "Hedgers",
+  "Markets",
+  "MarketsOwnable",
+  "Accounts",
+  "AccountsOwnable",
+  "Liquidations",
+  "CloseMarket",
+  "ClosePosition",
+  "ClosePositionOwnable",
+  "OpenMarketSingle",
+  "OpenPosition",
+  "MasterAgreement",
+  "Oracle",
+  "OracleOwnable",
+  "PauseOwnable",
 ];
 export const allFacetNames = [...coreFacetNames, ...appFacetNames];

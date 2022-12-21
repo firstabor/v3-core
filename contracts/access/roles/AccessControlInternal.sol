@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.16;
 
 import { Context } from "@openzeppelin/contracts/utils/Context.sol";
@@ -11,7 +11,9 @@ abstract contract AccessControlInternal is Context, IAccessControlEvents {
     using AccessControlStorage for AccessControlStorage.Layout;
 
     bytes32 internal constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
-    bytes32 internal constant SIGNER_ROLE = keccak256("SIGNER_ROLE");
+    bytes32 internal constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 internal constant REVENUE_ROLE = keccak256("REVENUE_ROLE");
+    bytes32 internal constant EMERGENCY_ROLE = keccak256("EMERGENCY_ROLE");
 
     /**
      * @dev Modifier that checks that an account has a specific role. Reverts

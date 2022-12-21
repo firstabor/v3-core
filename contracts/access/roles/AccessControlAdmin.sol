@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.16;
 
 import { OwnableInternal } from "../../access/ownable/OwnableInternal.sol";
@@ -10,7 +10,15 @@ contract AccessControlAdmin is IAccessControlAdmin, OwnableInternal, AccessContr
         _grantRole(ADMIN_ROLE, admin);
     }
 
-    function grantSignerRole(address signer) external onlyRole(ADMIN_ROLE) {
-        _grantRole(SIGNER_ROLE, signer);
+    function grantPauserRole(address pauser) external onlyRole(ADMIN_ROLE) {
+        _grantRole(PAUSER_ROLE, pauser);
+    }
+
+    function grantRevenueRole(address collector) external onlyRole(ADMIN_ROLE) {
+        _grantRole(REVENUE_ROLE, collector);
+    }
+
+    function grantEmergencyRole(address emergency) external onlyRole(ADMIN_ROLE) {
+        _grantRole(EMERGENCY_ROLE, emergency);
     }
 }

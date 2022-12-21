@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.16;
 
 /******************************************************************************\
@@ -67,7 +67,6 @@ contract Diamond {
         DiamondStorage.addFunctions(_coreFacets.diamondLoupeFacet, selectorsDiamondLoupe);
         DiamondStorage.addFunctions(_coreFacets.erc165Facet, selectorsERC165);
         DiamondStorage.addFunctions(_coreFacets.erc173Facet, selectorsERC173);
-
 
         // Set owner
         OwnableStorage.layout().setOwner(owner);
