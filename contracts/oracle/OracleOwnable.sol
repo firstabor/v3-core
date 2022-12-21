@@ -12,7 +12,7 @@ contract OracleOwnable is AccessControlInternal, IOracleEvents {
         OracleInternal.setMuonAppId(muonAppId);
     }
 
-    function setMuonAppCID(bytes32 muonAppCID) external onlyRole(ADMIN_ROLE) {
+    function setMuonAppCID(bytes calldata muonAppCID) external onlyRole(ADMIN_ROLE) {
         emit SetMuonAppCID(OracleInternal.getMuonAppCID(), muonAppCID);
         OracleInternal.setMuonAppCID(muonAppCID);
     }

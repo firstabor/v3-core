@@ -15,7 +15,7 @@ library OracleInternal {
         return OracleStorage.layout().muonAppId;
     }
 
-    function getMuonAppCID() internal view returns (bytes32) {
+    function getMuonAppCID() internal view returns (bytes memory) {
         return OracleStorage.layout().muonAppCID;
     }
 
@@ -28,9 +28,9 @@ library OracleInternal {
     }
 
     function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) internal view {
-        (uint256 muonAppId, PublicKey memory muonPublicKey, ) = _getMuonConstants();
+        (uint256 muonAppId, bytes memory muonAppCID, PublicKey memory muonPublicKey, ) = _getMuonConstants();
 
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, data));
+        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, data));
         bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
         require(verified, "TSS not verified");
     }
@@ -41,7 +41,7 @@ library OracleInternal {
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) internal view {
-        (, PublicKey memory muonPublicKey, address muonGatewaySigner) = _getMuonConstants();
+        (, , PublicKey memory muonPublicKey, address muonGatewaySigner) = _getMuonConstants();
 
         bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);
         require(verified, "TSS not verified");
@@ -59,9 +59,9 @@ library OracleInternal {
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) internal view {
-        (uint256 muonAppId, , ) = _getMuonConstants();
+        (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();
 
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, positionId, bidPrice, askPrice));
+        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionId, bidPrice, askPrice));
         verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
@@ -73,9 +73,9 @@ library OracleInternal {
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) internal view {
-        (uint256 muonAppId, , ) = _getMuonConstants();
+        (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();
 
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, positionIds, bidPrices, askPrices));
+        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionIds, bidPrices, askPrices));
         verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
@@ -109,7 +109,7 @@ library OracleInternal {
         OracleStorage.layout().muonAppId = muonAppId;
     }
 
-    function setMuonAppCID(bytes32 muonAppCID) internal {
+    function setMuonAppCID(bytes calldata muonAppCID) internal {
         OracleStorage.layout().muonAppCID = muonAppCID;
     }
 
@@ -126,9 +126,9 @@ library OracleInternal {
     function _getMuonConstants()
         private
         view
-        returns (uint256 muonAppId, PublicKey memory muonPublicKey, address muonGatewaySigner)
+        returns (uint256 muonAppId, bytes memory muonAppCID, PublicKey memory muonPublicKey, address muonGatewaySigner)
     {
-        return (getMuonAppId(), getMuonPublicKey(), getMuonGatewaySigner());
+        return (getMuonAppId(), getMuonAppCID(), getMuonPublicKey(), getMuonGatewaySigner());
     }
 
     function _verifySignature(

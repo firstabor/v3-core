@@ -1509,7 +1509,7 @@
   {
     "inputs": [],
     "name": "getMuonAppCID",
-    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "outputs": [{ "internalType": "bytes", "name": "", "type": "bytes" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -1633,8 +1633,8 @@
   {
     "anonymous": false,
     "inputs": [
-      { "indexed": false, "internalType": "bytes32", "name": "oldCID", "type": "bytes32" },
-      { "indexed": false, "internalType": "bytes32", "name": "newCID", "type": "bytes32" }
+      { "indexed": false, "internalType": "bytes", "name": "oldCID", "type": "bytes" },
+      { "indexed": false, "internalType": "bytes", "name": "newCID", "type": "bytes" }
     ],
     "name": "SetMuonAppCID",
     "type": "event"
@@ -1669,7 +1669,7 @@
     "type": "event"
   },
   {
-    "inputs": [{ "internalType": "bytes32", "name": "muonAppCID", "type": "bytes32" }],
+    "inputs": [{ "internalType": "bytes", "name": "muonAppCID", "type": "bytes" }],
     "name": "setMuonAppCID",
     "outputs": [],
     "stateMutability": "nonpayable",

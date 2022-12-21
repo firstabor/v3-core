@@ -23,7 +23,7 @@ library OracleStorage {
 
     struct Layout {
         uint256 muonAppId;
-        bytes32 muonAppCID;
+        bytes muonAppCID;
         PublicKey muonPublicKey;
         address muonGatewaySigner;
     }

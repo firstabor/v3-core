@@ -9,7 +9,7 @@ contract Oracle {
         return OracleInternal.getMuonAppId();
     }
 
-    function getMuonAppCID() external view returns (bytes32) {
+    function getMuonAppCID() external view returns (bytes memory) {
         return OracleInternal.getMuonAppCID();
     }
 

@@ -21,7 +21,7 @@ contract DiamondInit {
         ConstantsInternal.setMaxOpenPositionsCross(5);
 
         // Oracle
-        OracleInternal.setMuonAppId(0x0);
-        OracleInternal.setMuonAppCID(0x0);
+        // OracleInternal.setMuonAppId();
+        // OracleInternal.setMuonAppCID();
     }
 }
