@@ -1,11 +1,10 @@
 import "@nomicfoundation/hardhat-chai-matchers";
 import "@nomicfoundation/hardhat-toolbox";
+import "@typechain/hardhat";
 import { config as dotenvConfig } from "dotenv";
+import "hardhat-deploy";
 import type { HardhatUserConfig } from "hardhat/config";
 import { resolve } from "path";
-
-import "./tasks/deploy";
-import "./tasks/upgrade";
 
 const dotenvConfigPath: string = process.env.DOTENV_CONFIG_PATH || "./.env";
 dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
@@ -14,16 +13,6 @@ dotenvConfig({ path: resolve(__dirname, dotenvConfigPath) });
 const privateKey: string | undefined = process.env.PRIVATE_KEY;
 if (!privateKey) {
   throw new Error("Please set your PRIVATE_KEY in a .env file");
-}
-
-const fantomRpcURL: string | undefined = process.env.FANTOM_RPC_URL;
-if (!fantomRpcURL) {
-  throw new Error("Please set your fantomRpcURL in a .env file");
-}
-
-const ftmscanAPIKey: string | undefined = process.env.FTMSCAN_API_KEY;
-if (!ftmscanAPIKey) {
-  throw new Error("Please set your ftmscanAPIKey in a .env file");
 }
 
 const arbitrumRpcURL: string | undefined = process.env.ARBITRUM_RPC_URL;
@@ -47,13 +36,8 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       forking: {
-        url: fantomRpcURL,
+        url: arbitrumRpcURL,
       },
-      allowUnlimitedContractSize: false,
-    },
-    fantom: {
-      url: fantomRpcURL,
-      accounts: [privateKey],
     },
     arbitrum: {
       url: arbitrumRpcURL,
@@ -62,8 +46,12 @@ const config: HardhatUserConfig = {
   },
   etherscan: {
     apiKey: {
-      opera: ftmscanAPIKey,
       arbitrumOne: arbiscanAPIKey,
+    },
+  },
+  verify: {
+    etherscan: {
+      apiKey: arbiscanAPIKey,
     },
   },
   paths: {
@@ -92,6 +80,11 @@ const config: HardhatUserConfig = {
   typechain: {
     outDir: "src/types",
     target: "ethers-v5",
+  },
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
   },
 };
 

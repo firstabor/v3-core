@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
-pragma solidity >=0.8.16;
+// SPDX-License-Identifier: BUSL-1.1
+pragma solidity ^0.8.16;
 
 enum MarketType {
     FOREX,
@@ -32,23 +32,4 @@ enum OrderType {
 enum PositionType {
     ISOLATED,
     CROSS
-}
-
-enum RequestForQuoteState {
-    ORPHAN,
-    CANCELATION_REQUESTED,
-    CANCELED,
-    REJECTED,
-    ACCEPTED
-}
-
-enum PositionState {
-    OPEN,
-    MARKET_CLOSE_REQUESTED,
-    MARKET_CLOSE_CANCELATION_REQUESTED,
-    LIMIT_CLOSE_REQUESTED,
-    LIMIT_CLOSE_CANCELATION_REQUESTED,
-    LIMIT_CLOSE_ACTIVE,
-    CLOSED,
-    LIQUIDATED
 }
