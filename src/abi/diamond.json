@@ -1300,29 +1300,12 @@
       { "indexed": false, "internalType": "address", "name": "partyA", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "partyB", "type": "address" }
     ],
-    "name": "RejectCloseMarket",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "uint256", "name": "positionId", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "partyA", "type": "address" },
-      { "indexed": false, "internalType": "address", "name": "partyB", "type": "address" }
-    ],
     "name": "RequestCloseMarket",
     "type": "event"
   },
   {
     "inputs": [{ "internalType": "uint256", "name": "positionId", "type": "uint256" }],
     "name": "cancelCloseMarket",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "positionId", "type": "uint256" }],
-    "name": "rejectCloseMarket",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -1405,16 +1388,6 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "uint256", "name": "rfqId", "type": "uint256" },
-      { "indexed": false, "internalType": "address", "name": "partyA", "type": "address" },
-      { "indexed": false, "internalType": "address", "name": "partyB", "type": "address" }
-    ],
-    "name": "RequestForQuoteRejected",
-    "type": "event"
-  },
-  {
     "inputs": [{ "internalType": "uint256[]", "name": "rfqIds", "type": "uint256[]" }],
     "name": "cancelAllOpenMarketSingle",
     "outputs": [],
@@ -1424,13 +1397,6 @@
   {
     "inputs": [{ "internalType": "uint256", "name": "rfqId", "type": "uint256" }],
     "name": "cancelOpenMarketSingle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "uint256", "name": "rfqId", "type": "uint256" }],
-    "name": "rejectOpenMarketSingle",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

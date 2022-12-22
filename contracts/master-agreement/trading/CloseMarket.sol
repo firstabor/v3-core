@@ -48,16 +48,4 @@ contract CloseMarket is CloseBase {
 
         emit CancelCloseMarket(positionId, msg.sender, position.partyB);
     }
-
-    function rejectCloseMarket(uint256 positionId) external {
-        MasterStorage.Layout storage s = MasterStorage.layout();
-        Position storage position = s.allPositionsMap[positionId];
-
-        require(position.partyB == msg.sender, "Invalid party");
-        require(position.state == PositionState.MARKET_CLOSE_REQUESTED, "Invalid position state");
-
-        _updatePositionState(position, PositionState.OPEN);
-
-        emit RejectCloseMarket(positionId, msg.sender, position.partyB);
-    }
 }

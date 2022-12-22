@@ -51,7 +51,7 @@ contract OpenMarketSingle is OpenBase {
         require(rfq.mutableTimestamp + ConstantsInternal.getRequestTimeout() < block.timestamp, "Request Timeout");
 
         _updateRequestForQuoteState(rfq, RequestForQuoteState.CANCELED);
-        _rejectRequestForQuote(rfq);
+        _cancelRequestForQuote(rfq);
 
         emit RequestForQuoteCanceled(rfqId, msg.sender, rfq.partyB);
     }
@@ -60,19 +60,5 @@ contract OpenMarketSingle is OpenBase {
         for (uint256 i = 0; i < rfqIds.length; i++) {
             cancelOpenMarketSingle(rfqIds[i]);
         }
-    }
-
-    function rejectOpenMarketSingle(uint256 rfqId) external {
-        RequestForQuote storage rfq = MasterStorage.layout().requestForQuotesMap[rfqId];
-
-        require(rfq.partyB == msg.sender, "Invalid party");
-        require(rfq.orderType == OrderType.MARKET, "Invalid order type");
-        require(rfq.hedgerMode == HedgerMode.SINGLE, "Invalid hedger mode");
-        require(rfq.state == RequestForQuoteState.NEW, "Invalid RFQ state");
-
-        _updateRequestForQuoteState(rfq, RequestForQuoteState.REJECTED);
-        _rejectRequestForQuote(rfq);
-
-        emit RequestForQuoteRejected(rfqId, rfq.partyA, msg.sender);
     }
 }

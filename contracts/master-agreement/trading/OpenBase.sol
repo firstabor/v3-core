@@ -162,7 +162,7 @@ abstract contract OpenBase is IOpenEvents {
         rfq.mutableTimestamp = block.timestamp;
     }
 
-    function _rejectRequestForQuote(RequestForQuote memory rfq) internal {
+    function _cancelRequestForQuote(RequestForQuote memory rfq) internal {
         MasterStorage.Layout storage s = MasterStorage.layout();
 
         // Return user funds

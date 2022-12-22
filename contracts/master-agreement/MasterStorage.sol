@@ -6,7 +6,6 @@ import { PositionType, OrderType, HedgerMode, Side } from "../libraries/LibEnums
 enum RequestForQuoteState {
     NEW,
     CANCELED,
-    REJECTED,
     ACCEPTED
 }
 
