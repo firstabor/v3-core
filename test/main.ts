@@ -1,32 +1,52 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
+
 import {
-  AccessControl,
-  AccessControlAdmin,
+  /* Core */
   DiamondCut,
   DiamondLoupe,
   ERC165,
-  ERC2771Context,
-  ERC2771ContextOwnable,
-  HedgerERC2771,
-  HedgerOwnable,
-  IMasterAgreement,
   Ownable,
+  /* App */
+  AccessControl,
+  AccessControlAdmin,
+  Constants,
+  ConstantsOwnable,
+  Hedgers,
+  Markets,
+  MarketsOwnable,
+  Accounts,
+  AccountsOwnable,
+  Liquidations,
+  CloseMarket,
+  ClosePosition,
+  ClosePositionOwnable,
+  OpenMarketSingle,
+  OpenPosition,
+  MasterAgreement,
+  Oracle,
+  OracleOwnable,
+  PauseOwnable,
 } from "../src/types";
-import { MASTER_AGREEMENT } from "./constants";
+import { shouldBehaveLikeAccounts } from "./Accounts/Accounts.behavior";
 import { shouldBehaveLikeDiamond } from "./Diamond/Diamond.behavior";
 import { deployDiamondFixture } from "./Diamond/Diamond.fixture";
-import { shouldBehaveLikeHedgerERC2771 } from "./HedgerERC2771/HedgerERC2771.behavior";
+import { shouldBehaveLikeHedgers } from "./Hedgers/Hedgers.behavior";
+import { Collateral, CollateralABI } from "./collateral";
 import { Signers } from "./types";
 
 describe("Unit Test", function () {
   before(async function () {
     const signers: SignerWithAddress[] = await ethers.getSigners();
+
     this.signers = {} as Signers;
     this.signers.owner = signers[0];
     this.signers.admin = signers[1];
-    this.signers.signer = signers[2];
-    this.signers.user = signers[3];
+    this.signers.pauser = signers[2];
+    this.signers.revenue = signers[3];
+    this.signers.emergency = signers[4];
+    this.signers.hedger = signers[5];
+    this.signers.user = signers[6];
 
     const diamond = await deployDiamondFixture();
     this.diamond = diamond;
@@ -40,31 +60,51 @@ describe("Unit Test", function () {
     // App
     this.accessControl = (await ethers.getContractAt("AccessControl", diamond.address)) as AccessControl;
     this.accessControlAdmin = (await ethers.getContractAt("AccessControlAdmin", diamond.address)) as AccessControlAdmin;
-    this.hedgerERC2771 = (await ethers.getContractAt("HedgerERC2771", diamond.address)) as HedgerERC2771;
-    this.hedgerOwnable = (await ethers.getContractAt("HedgerOwnable", diamond.address)) as HedgerOwnable;
-    this.erc2771Context = (await ethers.getContractAt("ERC2771Context", diamond.address)) as ERC2771Context;
-    this.erc2771ContextOwnable = (await ethers.getContractAt(
-      "ERC2771ContextOwnable",
+    this.constants = (await ethers.getContractAt("Constants", diamond.address)) as Constants;
+    this.constantsOwnable = (await ethers.getContractAt("ConstantsOwnable", diamond.address)) as ConstantsOwnable;
+    this.hedgers = (await ethers.getContractAt("Hedgers", diamond.address)) as Hedgers;
+    this.markets = (await ethers.getContractAt("Markets", diamond.address)) as Markets;
+    this.marketsOwnable = (await ethers.getContractAt("MarketsOwnable", diamond.address)) as MarketsOwnable;
+    this.accounts = (await ethers.getContractAt("Accounts", diamond.address)) as Accounts;
+    this.accountsOwnable = (await ethers.getContractAt("AccountsOwnable", diamond.address)) as AccountsOwnable;
+    this.liquidations = (await ethers.getContractAt("Liquidations", diamond.address)) as Liquidations;
+    this.closeMarket = (await ethers.getContractAt("CloseMarket", diamond.address)) as CloseMarket;
+    this.closePosition = (await ethers.getContractAt("ClosePosition", diamond.address)) as ClosePosition;
+    this.closePositionOwnable = (await ethers.getContractAt(
+      "ClosePositionOwnable",
       diamond.address,
-    )) as ERC2771ContextOwnable;
+    )) as ClosePositionOwnable;
+    this.openMarketSingle = (await ethers.getContractAt("OpenMarketSingle", diamond.address)) as OpenMarketSingle;
+    this.openPosition = (await ethers.getContractAt("OpenPosition", diamond.address)) as OpenPosition;
+    this.masterAgreement = (await ethers.getContractAt("MasterAgreement", diamond.address)) as MasterAgreement;
+    this.oracle = (await ethers.getContractAt("Oracle", diamond.address)) as Oracle;
+    this.oracleOwnable = (await ethers.getContractAt("OracleOwnable", diamond.address)) as OracleOwnable;
+    this.pauseOwnable = (await ethers.getContractAt("PauseOwnable", diamond.address)) as PauseOwnable;
 
-    // Config
-    this.masterAgreement = (await ethers.getContractAt("IMasterAgreement", MASTER_AGREEMENT)) as IMasterAgreement;
-    this.collateral = await this.hedgerOwnable.getCollateral(MASTER_AGREEMENT);
-    this.trustedForwarder = await this.erc2771Context.trustedForwarder();
+    // Misc
+    this.collateral = (await ethers.getContractAt(
+      CollateralABI,
+      await this.constants.getCollateral(),
+    )) as unknown as Collateral;
   });
 
   before(async function () {
     // Setup roles
     await this.accessControlAdmin.connect(this.signers.owner).grantAdminRole(this.signers.admin.address);
-    await this.accessControlAdmin.connect(this.signers.admin).grantSignerRole(this.signers.signer.address);
+    await this.accessControlAdmin.connect(this.signers.admin).grantEmergencyRole(this.signers.emergency.address);
+    await this.accessControlAdmin.connect(this.signers.admin).grantPauserRole(this.signers.pauser.address);
+    await this.accessControlAdmin.connect(this.signers.admin).grantRevenueRole(this.signers.revenue.address);
   });
 
   describe("Diamond", function () {
     shouldBehaveLikeDiamond();
   });
 
-  describe("HedgerERC2771", function () {
-    shouldBehaveLikeHedgerERC2771();
+  describe("Hedgers", function () {
+    shouldBehaveLikeHedgers();
+  });
+
+  describe("Accounts", function () {
+    shouldBehaveLikeAccounts();
   });
 });

@@ -1,18 +1,44 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import type {
-  AccessControl,
-  AccessControlAdmin,
+
+import {
+  /* Core */
   Diamond,
   DiamondCut,
   DiamondLoupe,
   ERC165,
-  ERC2771Context,
-  ERC2771ContextOwnable,
-  HedgerERC2771,
-  HedgerOwnable,
-  IMasterAgreement,
   Ownable,
+  /* App */
+  AccessControl,
+  AccessControlAdmin,
+  Constants,
+  ConstantsOwnable,
+  Hedgers,
+  Markets,
+  MarketsOwnable,
+  Accounts,
+  AccountsOwnable,
+  Liquidations,
+  CloseMarket,
+  ClosePosition,
+  ClosePositionOwnable,
+  OpenMarketSingle,
+  OpenPosition,
+  MasterAgreement,
+  Oracle,
+  OracleOwnable,
+  PauseOwnable,
 } from "../src/types";
+import { Collateral } from "./collateral";
+
+export interface Signers {
+  owner: SignerWithAddress;
+  admin: SignerWithAddress;
+  pauser: SignerWithAddress;
+  revenue: SignerWithAddress;
+  emergency: SignerWithAddress;
+  hedger: SignerWithAddress;
+  user: SignerWithAddress;
+}
 
 declare module "mocha" {
   export interface Context {
@@ -26,20 +52,24 @@ declare module "mocha" {
     // App
     accessControl: AccessControl;
     accessControlAdmin: AccessControlAdmin;
-    hedgerERC2771: HedgerERC2771;
-    hedgerOwnable: HedgerOwnable;
-    erc2771Context: ERC2771Context;
-    erc2771ContextOwnable: ERC2771ContextOwnable;
-    // Config
-    masterAgreement: IMasterAgreement;
-    collateral: string;
-    trustedForwarder: string;
+    constants: Constants;
+    constantsOwnable: ConstantsOwnable;
+    hedgers: Hedgers;
+    markets: Markets;
+    marketsOwnable: MarketsOwnable;
+    accounts: Accounts;
+    accountsOwnable: AccountsOwnable;
+    liquidations: Liquidations;
+    closeMarket: CloseMarket;
+    closePosition: ClosePosition;
+    closePositionOwnable: ClosePositionOwnable;
+    openMarketSingle: OpenMarketSingle;
+    openPosition: OpenPosition;
+    masterAgreement: MasterAgreement;
+    oracle: Oracle;
+    oracleOwnable: OracleOwnable;
+    pauseOwnable: PauseOwnable;
+    // Misc
+    collateral: Collateral;
   }
-}
-
-export interface Signers {
-  owner: SignerWithAddress;
-  admin: SignerWithAddress;
-  signer: SignerWithAddress;
-  user: SignerWithAddress;
 }

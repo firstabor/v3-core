@@ -18,7 +18,15 @@ library AccountsInternal {
         return MasterStorage.layout().marginBalances[party];
     }
 
-    function getLockedMargin(address party) internal view returns (uint256) {
+    function getLockedMarginIsolated(address party, uint256 positionId) internal view returns (uint256) {
+        MasterStorage.Layout storage s = MasterStorage.layout();
+        Position storage position = s.allPositionsMap[positionId];
+
+        require(position.partyA == party || position.partyB == party, "Invalid party");
+        return position.partyA == party ? position.lockedMarginA : position.lockedMarginB;
+    }
+
+    function getLockedMarginCross(address party) internal view returns (uint256) {
         return MasterStorage.layout().crossLockedMargin[party];
     }
 
@@ -66,13 +74,17 @@ library AccountsInternal {
 
     function addFreeMarginIsolated(address party, uint256 amount, uint256 positionId) internal {
         MasterStorage.Layout storage s = MasterStorage.layout();
-
         Position storage position = s.allPositionsMap[positionId];
-        require(position.partyB == party, "Not partyB");
 
         require(s.marginBalances[party] >= amount, "Insufficient margin balance");
         s.marginBalances[party] -= amount;
-        position.lockedMarginB += amount;
+
+        require(position.partyA == party || position.partyB == party, "Invalid party");
+        if (position.partyA == party) {
+            position.lockedMarginA += amount;
+        } else {
+            position.lockedMarginB += amount;
+        }
     }
 
     function addFreeMarginCross(address party, uint256 amount) internal {

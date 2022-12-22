@@ -16,8 +16,12 @@ contract Accounts is ReentrancyGuard, IAccountsEvents {
         return AccountsInternal.getMarginBalance(party);
     }
 
-    function getLockedMargin(address party) external view returns (uint256) {
-        return AccountsInternal.getLockedMargin(party);
+    function getLockedMarginIsolated(address party, uint256 positionId) external view returns (uint256) {
+        return AccountsInternal.getLockedMarginIsolated(party, positionId);
+    }
+
+    function getLockedMarginCross(address party) external view returns (uint256) {
+        return AccountsInternal.getLockedMarginCross(party);
     }
 
     function getLockedMarginReserved(address party) external view returns (uint256) {
