@@ -16,6 +16,7 @@ enum PositionState {
     LIMIT_CLOSE_ACTIVE,
     CLOSED,
     LIQUIDATED
+    // TODO: add cancel limit close
 }
 
 struct RequestForQuote {

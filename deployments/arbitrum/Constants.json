@@ -1,0 +1,145 @@
+{
+  "address": "0x6cCdf66FB3E35563683eDFCb37Af7776320EbBe3",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "getCVA",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCollateral",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getLiquidationFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMaxOpenPositionsCross",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getPercentBase",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getPrecision",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getProtocolLiquidationShare",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getRequestTimeout",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x66b73e1372d58c9c300c7c532e3918268850e6205832820e3f608af5080698d0",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x6cCdf66FB3E35563683eDFCb37Af7776320EbBe3",
+    "transactionIndex": 1,
+    "gasUsed": "1430967",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1db8c4e8008334265eba263341a1ffb65a2c469d23d2ccb9a87512f4fd09e088",
+    "transactionHash": "0x66b73e1372d58c9c300c7c532e3918268850e6205832820e3f608af5080698d0",
+    "logs": [],
+    "blockNumber": 48067626,
+    "cumulativeGasUsed": "1430967",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "be9232a782139b4a70c2c17c27752f91",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getCVA\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCollateral\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getLiquidationFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMaxOpenPositionsCross\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getPercentBase\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getPrecision\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getProtocolLiquidationShare\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getRequestTimeout\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/constants/Constants.sol\":\"Constants\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)\\n\\npragma solidity ^0.8.0;\\n\\n// CAUTION\\n// This version of SafeMath should only be used with Solidity 0.8 or later,\\n// because it relies on the compiler's built in overflow checks.\\n\\n/**\\n * @dev Wrappers over Solidity's arithmetic operations.\\n *\\n * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler\\n * now has built in overflow checking.\\n */\\nlibrary SafeMath {\\n    /**\\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            uint256 c = a + b;\\n            if (c < a) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b > a) return (false, 0);\\n            return (true, a - b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n            // benefit is lost if 'b' is also tested.\\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n            if (a == 0) return (true, 0);\\n            uint256 c = a * b;\\n            if (c / a != b) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a / b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a % b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the addition of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `+` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Addition cannot overflow.\\n     */\\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a + b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting on\\n     * overflow (when the result is negative).\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a - b;\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `*` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Multiplication cannot overflow.\\n     */\\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a * b;\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a / b;\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting when dividing by zero.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a % b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\\n     * overflow (when the result is negative).\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {trySub}.\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b <= a, errorMessage);\\n            return a - b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting with custom message on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\\n     * uses an invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a / b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting with custom message when dividing by zero.\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {tryMod}.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a % b;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e\",\"license\":\"MIT\"},\"contracts/constants/Constants.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { ConstantsInternal } from \\\"./ConstantsInternal.sol\\\";\\r\\n\\r\\ncontract Constants {\\r\\n    function getPrecision() external pure returns (uint256) {\\r\\n        return ConstantsInternal.getPrecision();\\r\\n    }\\r\\n\\r\\n    function getPercentBase() external pure returns (uint256) {\\r\\n        return ConstantsInternal.getPercentBase();\\r\\n    }\\r\\n\\r\\n    function getCollateral() external view returns (address) {\\r\\n        return ConstantsInternal.getCollateral();\\r\\n    }\\r\\n\\r\\n    function getLiquidationFee() external view returns (uint256) {\\r\\n        return ConstantsInternal.getLiquidationFee().value;\\r\\n    }\\r\\n\\r\\n    function getProtocolLiquidationShare() external view returns (uint256) {\\r\\n        return ConstantsInternal.getProtocolLiquidationShare().value;\\r\\n    }\\r\\n\\r\\n    function getCVA() external view returns (uint256) {\\r\\n        return ConstantsInternal.getCVA().value;\\r\\n    }\\r\\n\\r\\n    function getRequestTimeout() external view returns (uint256) {\\r\\n        return ConstantsInternal.getRequestTimeout();\\r\\n    }\\r\\n\\r\\n    function getMaxOpenPositionsCross() external view returns (uint256) {\\r\\n        return ConstantsInternal.getMaxOpenPositionsCross();\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x46efa587e2f5abf94162f185f6ea91c8afa5774bdeb78e7e5a0314139768305b\",\"license\":\"BUSL-1.1\"},\"contracts/constants/ConstantsInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { ConstantsStorage } from \\\"./ConstantsStorage.sol\\\";\\r\\nimport { IConstantsEvents } from \\\"./IConstantsEvents.sol\\\";\\r\\n\\r\\nlibrary ConstantsInternal {\\r\\n    using ConstantsStorage for ConstantsStorage.Layout;\\r\\n    using Decimal for Decimal.D256;\\r\\n\\r\\n    uint256 private constant PERCENT_BASE = 1e18;\\r\\n    uint256 private constant PRECISION = 1e18;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getPrecision() internal pure returns (uint256) {\\r\\n        return PRECISION;\\r\\n    }\\r\\n\\r\\n    function getPercentBase() internal pure returns (uint256) {\\r\\n        return PERCENT_BASE;\\r\\n    }\\r\\n\\r\\n    function getCollateral() internal view returns (address) {\\r\\n        return ConstantsStorage.layout().collateral;\\r\\n    }\\r\\n\\r\\n    function getLiquidationFee() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().liquidationFee, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getProtocolLiquidationShare() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().protocolLiquidationShare, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getCVA() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().cva, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getRequestTimeout() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().requestTimeout;\\r\\n    }\\r\\n\\r\\n    function getMaxOpenPositionsCross() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    /* ========== SETTERS ========== */\\r\\n\\r\\n    function setCollateral(address collateral) internal {\\r\\n        ConstantsStorage.layout().collateral = collateral;\\r\\n    }\\r\\n\\r\\n    function setLiquidationFee(uint256 liquidationFee) internal {\\r\\n        ConstantsStorage.layout().liquidationFee = liquidationFee;\\r\\n    }\\r\\n\\r\\n    function setProtocolLiquidationShare(uint256 protocolLiquidationShare) internal {\\r\\n        ConstantsStorage.layout().protocolLiquidationShare = protocolLiquidationShare;\\r\\n    }\\r\\n\\r\\n    function setCVA(uint256 cva) internal {\\r\\n        ConstantsStorage.layout().cva = cva;\\r\\n    }\\r\\n\\r\\n    function setRequestTimeout(uint256 requestTimeout) internal {\\r\\n        ConstantsStorage.layout().requestTimeout = requestTimeout;\\r\\n    }\\r\\n\\r\\n    function setMaxOpenPositionsCross(uint256 maxOpenPositionsCross) internal {\\r\\n        ConstantsStorage.layout().maxOpenPositionsCross = maxOpenPositionsCross;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x2cfd838c49a4c1e59f64b2a006ea74fbfcf98a376350bb0b1130150b9cee5806\",\"license\":\"BUSL-1.1\"},\"contracts/constants/ConstantsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary ConstantsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.constants.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        address collateral;\\r\\n        uint256 liquidationFee;\\r\\n        uint256 protocolLiquidationShare;\\r\\n        uint256 cva;\\r\\n        uint256 requestTimeout;\\r\\n        uint256 maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x95ca5941aa95afe59bee8f04990cb8bcb0eafb0e277a0f53fada8397e53c2baf\",\"license\":\"BUSL-1.1\"},\"contracts/constants/IConstantsEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\ninterface IConstantsEvents {\\r\\n    event SetCollateral(address oldAddress, address newAddress);\\r\\n    event SetLiquidationFee(uint256 oldFee, uint256 newFee);\\r\\n    event SetProtocolLiquidationShare(uint256 oldShare, uint256 newShare);\\r\\n    event SetCVA(uint256 oldCVA, uint256 newCVA);\\r\\n    event SetRequestTimeout(uint256 oldTimeout, uint256 newTimeout);\\r\\n    event SetMaxOpenPositionsCross(uint256 oldMax, uint256 newMax);\\r\\n}\\r\\n\",\"keccak256\":\"0x556ffdc7440aa7317b606497a3ada3e6e71faa64d2ad3da56fd8f6591b289745\",\"license\":\"BUSL-1.1\"},\"contracts/libraries/LibDecimal.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts/utils/math/SafeMath.sol\\\";\\r\\n\\r\\n/**\\r\\n * @title Decimal\\r\\n * @author dYdX\\r\\n *\\r\\n * Library that defines a fixed-point number with 18 decimal places.\\r\\n */\\r\\nlibrary Decimal {\\r\\n    using SafeMath for uint256;\\r\\n\\r\\n    // ============ Constants ============\\r\\n\\r\\n    uint256 constant BASE = 10 ** 18;\\r\\n\\r\\n    // ============ Structs ============\\r\\n\\r\\n    struct D256 {\\r\\n        uint256 value;\\r\\n    }\\r\\n\\r\\n    // ============ Static Functions ============\\r\\n\\r\\n    function zero() internal pure returns (D256 memory) {\\r\\n        return D256({ value: 0 });\\r\\n    }\\r\\n\\r\\n    function one() internal pure returns (D256 memory) {\\r\\n        return D256({ value: BASE });\\r\\n    }\\r\\n\\r\\n    function from(uint256 a) internal pure returns (D256 memory) {\\r\\n        return D256({ value: a.mul(BASE) });\\r\\n    }\\r\\n\\r\\n    function ratio(uint256 a, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(a, BASE, b) });\\r\\n    }\\r\\n\\r\\n    // ============ Self Functions ============\\r\\n\\r\\n    function add(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE), reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.mul(b) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.div(b) });\\r\\n    }\\r\\n\\r\\n    function pow(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        if (b == 0) {\\r\\n            return one();\\r\\n        }\\r\\n\\r\\n        D256 memory temp = D256({ value: self.value });\\r\\n        for (uint256 i = 1; i < b; ++i) {\\r\\n            temp = mul(temp, self);\\r\\n        }\\r\\n\\r\\n        return temp;\\r\\n    }\\r\\n\\r\\n    function add(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value, reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, b.value, BASE) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, BASE, b.value) });\\r\\n    }\\r\\n\\r\\n    function equals(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return self.value == b.value;\\r\\n    }\\r\\n\\r\\n    function greaterThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 2;\\r\\n    }\\r\\n\\r\\n    function lessThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 0;\\r\\n    }\\r\\n\\r\\n    function greaterThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) > 0;\\r\\n    }\\r\\n\\r\\n    function lessThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) < 2;\\r\\n    }\\r\\n\\r\\n    function isZero(D256 memory self) internal pure returns (bool) {\\r\\n        return self.value == 0;\\r\\n    }\\r\\n\\r\\n    function asUint256(D256 memory self) internal pure returns (uint256) {\\r\\n        return self.value.div(BASE);\\r\\n    }\\r\\n\\r\\n    // ============ Core Methods ============\\r\\n\\r\\n    function getPartial(uint256 target, uint256 numerator, uint256 denominator) private pure returns (uint256) {\\r\\n        return target.mul(numerator).div(denominator);\\r\\n    }\\r\\n\\r\\n    function compareTo(D256 memory a, D256 memory b) private pure returns (uint256) {\\r\\n        if (a.value == b.value) {\\r\\n            return 1;\\r\\n        }\\r\\n        return a.value > b.value ? 2 : 0;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xfa323074357185fffcd95c964c95e25fbba23f2ac0fd542ea23333721457f3d5\",\"license\":\"MIT\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610016576102c7908161001c8239f35b600080fdfe604060808152600436101561001357600080fd5b600090813560e01c80630c6ec6d9146101f35780632e4cd05a146101b657806355192dac146100c95780635c1548fb1461016f578063670f90e41461013257806386111fae146100eb5780639670c0bc146100c95763fbf419841461007757600080fd5b346100c557816003193601126100c55760209161009261023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b054610270565b519051908152f35b5080fd5b50346100c557816003193601126100c55760209051670de0b6b3a76400008152f35b50346100c557816003193601126100c55760209161010761023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b154610270565b50346100c557816003193601126100c5576020907f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b4549051908152f35b50346100c557816003193601126100c5577f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44af5490516001600160a01b039091168152602090f35b50346100c557816003193601126100c5576020907f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b3549051908152f35b50346100c557816003193601126100c55760209161020f61023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b254610270565b604051906020820182811067ffffffffffffffff82111761025a57604052565b634e487b7160e01b600052604160045260246000fd5b600061027a61023a565b52670de0b6b3a764000081600019048111821515166102a4578061029c61023a565b920204815290565b634e487b7160e01b600052601160045260246000fdfea164736f6c6343000810000a",
+  "deployedBytecode": "0x604060808152600436101561001357600080fd5b600090813560e01c80630c6ec6d9146101f35780632e4cd05a146101b657806355192dac146100c95780635c1548fb1461016f578063670f90e41461013257806386111fae146100eb5780639670c0bc146100c95763fbf419841461007757600080fd5b346100c557816003193601126100c55760209161009261023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b054610270565b519051908152f35b5080fd5b50346100c557816003193601126100c55760209051670de0b6b3a76400008152f35b50346100c557816003193601126100c55760209161010761023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b154610270565b50346100c557816003193601126100c5576020907f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b4549051908152f35b50346100c557816003193601126100c5577f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44af5490516001600160a01b039091168152602090f35b50346100c557816003193601126100c5576020907f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b3549051908152f35b50346100c557816003193601126100c55760209161020f61023a565b526100bd7f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b254610270565b604051906020820182811067ffffffffffffffff82111761025a57604052565b634e487b7160e01b600052604160045260246000fd5b600061027a61023a565b52670de0b6b3a764000081600019048111821515166102a4578061029c61023a565b920204815290565b634e487b7160e01b600052601160045260246000fdfea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

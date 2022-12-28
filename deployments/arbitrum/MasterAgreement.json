@@ -1,0 +1,763 @@
+{
+  "address": "0x0b3Facbca0dAEAf5378C67B32538AD8cEbD40C73",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "positionId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes16",
+          "name": "oldUuid",
+          "type": "bytes16"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes16",
+          "name": "newUuid",
+          "type": "bytes16"
+        }
+      ],
+      "name": "UpdateUuid",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "notionalSize",
+          "type": "uint256"
+        }
+      ],
+      "name": "calculateCVAAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "party",
+          "type": "address"
+        },
+        {
+          "internalType": "int256",
+          "name": "uPnLCross",
+          "type": "int256"
+        }
+      ],
+      "name": "calculateCrossMarginHealth",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Decimal.D256",
+          "name": "ratio",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "notionalSize",
+          "type": "uint256"
+        }
+      ],
+      "name": "calculateLiquidationFeeAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "notionalSize",
+          "type": "uint256"
+        }
+      ],
+      "name": "calculateProtocolFeeAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "positionId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "bidPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "askPrice",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct PositionPrice[]",
+          "name": "positionPrices",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "address",
+          "name": "party",
+          "type": "address"
+        }
+      ],
+      "name": "calculateUPnLCross",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "uPnLCross",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "positionId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "bidPrice",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "askPrice",
+          "type": "uint256"
+        }
+      ],
+      "name": "calculateUPnLIsolated",
+      "outputs": [
+        {
+          "internalType": "int256",
+          "name": "uPnLA",
+          "type": "int256"
+        },
+        {
+          "internalType": "int256",
+          "name": "uPnLB",
+          "type": "int256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "party",
+          "type": "address"
+        }
+      ],
+      "name": "getCrossRequestForQuotesLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "partyA",
+          "type": "address"
+        }
+      ],
+      "name": "getOpenPositionsCrossLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "party",
+          "type": "address"
+        }
+      ],
+      "name": "getOpenPositionsIsolatedLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "positionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPosition",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "creationTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "mutableTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "positionId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes16",
+              "name": "uuid",
+              "type": "bytes16"
+            },
+            {
+              "internalType": "enum PositionState",
+              "name": "state",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum PositionType",
+              "name": "positionType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "partyA",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "partyB",
+              "type": "address"
+            },
+            {
+              "internalType": "enum Side",
+              "name": "side",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginA",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginB",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFeePaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "cva",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "currentBalanceUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "initialNotionalUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "affiliate",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Position",
+          "name": "position",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "positionIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getPositions",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "creationTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "mutableTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "positionId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bytes16",
+              "name": "uuid",
+              "type": "bytes16"
+            },
+            {
+              "internalType": "enum PositionState",
+              "name": "state",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum PositionType",
+              "name": "positionType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "partyA",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "partyB",
+              "type": "address"
+            },
+            {
+              "internalType": "enum Side",
+              "name": "side",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginA",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginB",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFeePaid",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "cva",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "currentBalanceUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "initialNotionalUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "affiliate",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Position[]",
+          "name": "positions",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "rfqId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getRequestForQuote",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "creationTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "mutableTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rfqId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum RequestForQuoteState",
+              "name": "state",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum PositionType",
+              "name": "positionType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum OrderType",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "partyA",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "partyB",
+              "type": "address"
+            },
+            {
+              "internalType": "enum HedgerMode",
+              "name": "hedgerMode",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum Side",
+              "name": "side",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "notionalUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginA",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "cva",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minExpectedUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxExpectedUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "affiliate",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct RequestForQuote",
+          "name": "rfq",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "rfqIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getRequestForQuotes",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "creationTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "mutableTimestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "rfqId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum RequestForQuoteState",
+              "name": "state",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum PositionType",
+              "name": "positionType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "enum OrderType",
+              "name": "orderType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "address",
+              "name": "partyA",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "partyB",
+              "type": "address"
+            },
+            {
+              "internalType": "enum HedgerMode",
+              "name": "hedgerMode",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "enum Side",
+              "name": "side",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "notionalUsd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "lockedMarginA",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidationFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "cva",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "minExpectedUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxExpectedUnits",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "affiliate",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct RequestForQuote[]",
+          "name": "rfqs",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "positionId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes16",
+          "name": "uuid",
+          "type": "bytes16"
+        }
+      ],
+      "name": "updateUuid",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x39a6606d9ae7f9981d171cd178909f9a08ef6d598a486490acf4bb0df3ee99a1",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x0b3Facbca0dAEAf5378C67B32538AD8cEbD40C73",
+    "transactionIndex": 1,
+    "gasUsed": "8394960",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x2eebbd05c0b0033cb8e9ca7af69406d4f1ca621f8cad1f27fdd1d340e9b516ac",
+    "transactionHash": "0x39a6606d9ae7f9981d171cd178909f9a08ef6d598a486490acf4bb0df3ee99a1",
+    "logs": [],
+    "blockNumber": 48067702,
+    "cumulativeGasUsed": "8394960",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "d90b29cf48681035a62a283f3cda4c3c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes16\",\"name\":\"oldUuid\",\"type\":\"bytes16\"},{\"indexed\":false,\"internalType\":\"bytes16\",\"name\":\"newUuid\",\"type\":\"bytes16\"}],\"name\":\"UpdateUuid\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"notionalSize\",\"type\":\"uint256\"}],\"name\":\"calculateCVAAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"party\",\"type\":\"address\"},{\"internalType\":\"int256\",\"name\":\"uPnLCross\",\"type\":\"int256\"}],\"name\":\"calculateCrossMarginHealth\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"internalType\":\"struct Decimal.D256\",\"name\":\"ratio\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"notionalSize\",\"type\":\"uint256\"}],\"name\":\"calculateLiquidationFeeAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"notionalSize\",\"type\":\"uint256\"}],\"name\":\"calculateProtocolFeeAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bidPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"askPrice\",\"type\":\"uint256\"}],\"internalType\":\"struct PositionPrice[]\",\"name\":\"positionPrices\",\"type\":\"tuple[]\"},{\"internalType\":\"address\",\"name\":\"party\",\"type\":\"address\"}],\"name\":\"calculateUPnLCross\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"uPnLCross\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"bidPrice\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"askPrice\",\"type\":\"uint256\"}],\"name\":\"calculateUPnLIsolated\",\"outputs\":[{\"internalType\":\"int256\",\"name\":\"uPnLA\",\"type\":\"int256\"},{\"internalType\":\"int256\",\"name\":\"uPnLB\",\"type\":\"int256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"party\",\"type\":\"address\"}],\"name\":\"getCrossRequestForQuotesLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"partyA\",\"type\":\"address\"}],\"name\":\"getOpenPositionsCrossLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"party\",\"type\":\"address\"}],\"name\":\"getOpenPositionsIsolatedLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"}],\"name\":\"getPosition\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"creationTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"mutableTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"internalType\":\"bytes16\",\"name\":\"uuid\",\"type\":\"bytes16\"},{\"internalType\":\"enum PositionState\",\"name\":\"state\",\"type\":\"uint8\"},{\"internalType\":\"enum PositionType\",\"name\":\"positionType\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"partyA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"partyB\",\"type\":\"address\"},{\"internalType\":\"enum Side\",\"name\":\"side\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginA\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginB\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFeePaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cva\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentBalanceUnits\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"initialNotionalUsd\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"affiliate\",\"type\":\"address\"}],\"internalType\":\"struct Position\",\"name\":\"position\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"positionIds\",\"type\":\"uint256[]\"}],\"name\":\"getPositions\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"creationTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"mutableTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"internalType\":\"bytes16\",\"name\":\"uuid\",\"type\":\"bytes16\"},{\"internalType\":\"enum PositionState\",\"name\":\"state\",\"type\":\"uint8\"},{\"internalType\":\"enum PositionType\",\"name\":\"positionType\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"partyA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"partyB\",\"type\":\"address\"},{\"internalType\":\"enum Side\",\"name\":\"side\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginA\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginB\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFeePaid\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cva\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"currentBalanceUnits\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"initialNotionalUsd\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"affiliate\",\"type\":\"address\"}],\"internalType\":\"struct Position[]\",\"name\":\"positions\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"rfqId\",\"type\":\"uint256\"}],\"name\":\"getRequestForQuote\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"creationTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"mutableTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"rfqId\",\"type\":\"uint256\"},{\"internalType\":\"enum RequestForQuoteState\",\"name\":\"state\",\"type\":\"uint8\"},{\"internalType\":\"enum PositionType\",\"name\":\"positionType\",\"type\":\"uint8\"},{\"internalType\":\"enum OrderType\",\"name\":\"orderType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"partyA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"partyB\",\"type\":\"address\"},{\"internalType\":\"enum HedgerMode\",\"name\":\"hedgerMode\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"enum Side\",\"name\":\"side\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"notionalUsd\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginA\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cva\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"minExpectedUnits\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"maxExpectedUnits\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"affiliate\",\"type\":\"address\"}],\"internalType\":\"struct RequestForQuote\",\"name\":\"rfq\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"rfqIds\",\"type\":\"uint256[]\"}],\"name\":\"getRequestForQuotes\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"creationTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"mutableTimestamp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"rfqId\",\"type\":\"uint256\"},{\"internalType\":\"enum RequestForQuoteState\",\"name\":\"state\",\"type\":\"uint8\"},{\"internalType\":\"enum PositionType\",\"name\":\"positionType\",\"type\":\"uint8\"},{\"internalType\":\"enum OrderType\",\"name\":\"orderType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"partyA\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"partyB\",\"type\":\"address\"},{\"internalType\":\"enum HedgerMode\",\"name\":\"hedgerMode\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"enum Side\",\"name\":\"side\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"notionalUsd\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lockedMarginA\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"liquidationFee\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"cva\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"minExpectedUnits\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"maxExpectedUnits\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"affiliate\",\"type\":\"address\"}],\"internalType\":\"struct RequestForQuote[]\",\"name\":\"rfqs\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"},{\"internalType\":\"bytes16\",\"name\":\"uuid\",\"type\":\"bytes16\"}],\"name\":\"updateUuid\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/master-agreement/MasterAgreement.sol\":\"MasterAgreement\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/Strings.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (utils/Strings.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./math/Math.sol\\\";\\n\\n/**\\n * @dev String operations.\\n */\\nlibrary Strings {\\n    bytes16 private constant _SYMBOLS = \\\"0123456789abcdef\\\";\\n    uint8 private constant _ADDRESS_LENGTH = 20;\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` decimal representation.\\n     */\\n    function toString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            uint256 length = Math.log10(value) + 1;\\n            string memory buffer = new string(length);\\n            uint256 ptr;\\n            /// @solidity memory-safe-assembly\\n            assembly {\\n                ptr := add(buffer, add(32, length))\\n            }\\n            while (true) {\\n                ptr--;\\n                /// @solidity memory-safe-assembly\\n                assembly {\\n                    mstore8(ptr, byte(mod(value, 10), _SYMBOLS))\\n                }\\n                value /= 10;\\n                if (value == 0) break;\\n            }\\n            return buffer;\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.\\n     */\\n    function toHexString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            return toHexString(value, Math.log256(value) + 1);\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.\\n     */\\n    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {\\n        bytes memory buffer = new bytes(2 * length + 2);\\n        buffer[0] = \\\"0\\\";\\n        buffer[1] = \\\"x\\\";\\n        for (uint256 i = 2 * length + 1; i > 1; --i) {\\n            buffer[i] = _SYMBOLS[value & 0xf];\\n            value >>= 4;\\n        }\\n        require(value == 0, \\\"Strings: hex length insufficient\\\");\\n        return string(buffer);\\n    }\\n\\n    /**\\n     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.\\n     */\\n    function toHexString(address addr) internal pure returns (string memory) {\\n        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);\\n    }\\n}\\n\",\"keccak256\":\"0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/cryptography/ECDSA.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (utils/cryptography/ECDSA.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"../Strings.sol\\\";\\n\\n/**\\n * @dev Elliptic Curve Digital Signature Algorithm (ECDSA) operations.\\n *\\n * These functions can be used to verify that a message was signed by the holder\\n * of the private keys of a given address.\\n */\\nlibrary ECDSA {\\n    enum RecoverError {\\n        NoError,\\n        InvalidSignature,\\n        InvalidSignatureLength,\\n        InvalidSignatureS,\\n        InvalidSignatureV // Deprecated in v4.8\\n    }\\n\\n    function _throwError(RecoverError error) private pure {\\n        if (error == RecoverError.NoError) {\\n            return; // no error: do nothing\\n        } else if (error == RecoverError.InvalidSignature) {\\n            revert(\\\"ECDSA: invalid signature\\\");\\n        } else if (error == RecoverError.InvalidSignatureLength) {\\n            revert(\\\"ECDSA: invalid signature length\\\");\\n        } else if (error == RecoverError.InvalidSignatureS) {\\n            revert(\\\"ECDSA: invalid signature 's' value\\\");\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the address that signed a hashed message (`hash`) with\\n     * `signature` or error string. This address can then be used for verification purposes.\\n     *\\n     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:\\n     * this function rejects them by requiring the `s` value to be in the lower\\n     * half order, and the `v` value to be either 27 or 28.\\n     *\\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\\n     * verification to be secure: it is possible to craft signatures that\\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\\n     * this is by receiving a hash of the original message (which may otherwise\\n     * be too long), and then calling {toEthSignedMessageHash} on it.\\n     *\\n     * Documentation for signature generation:\\n     * - with https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign[Web3.js]\\n     * - with https://docs.ethers.io/v5/api/signer/#Signer-signMessage[ethers]\\n     *\\n     * _Available since v4.3._\\n     */\\n    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError) {\\n        if (signature.length == 65) {\\n            bytes32 r;\\n            bytes32 s;\\n            uint8 v;\\n            // ecrecover takes the signature parameters, and the only way to get them\\n            // currently is to use assembly.\\n            /// @solidity memory-safe-assembly\\n            assembly {\\n                r := mload(add(signature, 0x20))\\n                s := mload(add(signature, 0x40))\\n                v := byte(0, mload(add(signature, 0x60)))\\n            }\\n            return tryRecover(hash, v, r, s);\\n        } else {\\n            return (address(0), RecoverError.InvalidSignatureLength);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the address that signed a hashed message (`hash`) with\\n     * `signature`. This address can then be used for verification purposes.\\n     *\\n     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:\\n     * this function rejects them by requiring the `s` value to be in the lower\\n     * half order, and the `v` value to be either 27 or 28.\\n     *\\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\\n     * verification to be secure: it is possible to craft signatures that\\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\\n     * this is by receiving a hash of the original message (which may otherwise\\n     * be too long), and then calling {toEthSignedMessageHash} on it.\\n     */\\n    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {\\n        (address recovered, RecoverError error) = tryRecover(hash, signature);\\n        _throwError(error);\\n        return recovered;\\n    }\\n\\n    /**\\n     * @dev Overload of {ECDSA-tryRecover} that receives the `r` and `vs` short-signature fields separately.\\n     *\\n     * See https://eips.ethereum.org/EIPS/eip-2098[EIP-2098 short signatures]\\n     *\\n     * _Available since v4.3._\\n     */\\n    function tryRecover(\\n        bytes32 hash,\\n        bytes32 r,\\n        bytes32 vs\\n    ) internal pure returns (address, RecoverError) {\\n        bytes32 s = vs & bytes32(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);\\n        uint8 v = uint8((uint256(vs) >> 255) + 27);\\n        return tryRecover(hash, v, r, s);\\n    }\\n\\n    /**\\n     * @dev Overload of {ECDSA-recover} that receives the `r and `vs` short-signature fields separately.\\n     *\\n     * _Available since v4.2._\\n     */\\n    function recover(\\n        bytes32 hash,\\n        bytes32 r,\\n        bytes32 vs\\n    ) internal pure returns (address) {\\n        (address recovered, RecoverError error) = tryRecover(hash, r, vs);\\n        _throwError(error);\\n        return recovered;\\n    }\\n\\n    /**\\n     * @dev Overload of {ECDSA-tryRecover} that receives the `v`,\\n     * `r` and `s` signature fields separately.\\n     *\\n     * _Available since v4.3._\\n     */\\n    function tryRecover(\\n        bytes32 hash,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) internal pure returns (address, RecoverError) {\\n        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature\\n        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines\\n        // the valid range for s in (301): 0 < s < secp256k1n \\u00f7 2 + 1, and for v in (302): v \\u2208 {27, 28}. Most\\n        // signatures from current libraries generate a unique signature with an s-value in the lower half order.\\n        //\\n        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value\\n        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or\\n        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept\\n        // these malleable signatures as well.\\n        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {\\n            return (address(0), RecoverError.InvalidSignatureS);\\n        }\\n\\n        // If the signature is valid (and not malleable), return the signer address\\n        address signer = ecrecover(hash, v, r, s);\\n        if (signer == address(0)) {\\n            return (address(0), RecoverError.InvalidSignature);\\n        }\\n\\n        return (signer, RecoverError.NoError);\\n    }\\n\\n    /**\\n     * @dev Overload of {ECDSA-recover} that receives the `v`,\\n     * `r` and `s` signature fields separately.\\n     */\\n    function recover(\\n        bytes32 hash,\\n        uint8 v,\\n        bytes32 r,\\n        bytes32 s\\n    ) internal pure returns (address) {\\n        (address recovered, RecoverError error) = tryRecover(hash, v, r, s);\\n        _throwError(error);\\n        return recovered;\\n    }\\n\\n    /**\\n     * @dev Returns an Ethereum Signed Message, created from a `hash`. This\\n     * produces hash corresponding to the one signed with the\\n     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]\\n     * JSON-RPC method as part of EIP-191.\\n     *\\n     * See {recover}.\\n     */\\n    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {\\n        // 32 is the length in bytes of hash,\\n        // enforced by the type signature above\\n        return keccak256(abi.encodePacked(\\\"\\\\x19Ethereum Signed Message:\\\\n32\\\", hash));\\n    }\\n\\n    /**\\n     * @dev Returns an Ethereum Signed Message, created from `s`. This\\n     * produces hash corresponding to the one signed with the\\n     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]\\n     * JSON-RPC method as part of EIP-191.\\n     *\\n     * See {recover}.\\n     */\\n    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {\\n        return keccak256(abi.encodePacked(\\\"\\\\x19Ethereum Signed Message:\\\\n\\\", Strings.toString(s.length), s));\\n    }\\n\\n    /**\\n     * @dev Returns an Ethereum Signed Typed Data, created from a\\n     * `domainSeparator` and a `structHash`. This produces hash corresponding\\n     * to the one signed with the\\n     * https://eips.ethereum.org/EIPS/eip-712[`eth_signTypedData`]\\n     * JSON-RPC method as part of EIP-712.\\n     *\\n     * See {recover}.\\n     */\\n    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32) {\\n        return keccak256(abi.encodePacked(\\\"\\\\x19\\\\x01\\\", domainSeparator, structHash));\\n    }\\n}\\n\",\"keccak256\":\"0xda898fa084aa1ddfdb346e6a40459e00a59d87071cce7c315a46d648dd71d0ba\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    enum Rounding {\\n        Down, // Toward negative infinity\\n        Up, // Toward infinity\\n        Zero // Toward zero\\n    }\\n\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a > b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds up instead\\n     * of rounding down.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a == 0 ? 0 : (a - 1) / b + 1;\\n    }\\n\\n    /**\\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)\\n     * with further edits by Uniswap Labs also under MIT license.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator\\n    ) internal pure returns (uint256 result) {\\n        unchecked {\\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\\n            // variables such that product = prod1 * 2^256 + prod0.\\n            uint256 prod0; // Least significant 256 bits of the product\\n            uint256 prod1; // Most significant 256 bits of the product\\n            assembly {\\n                let mm := mulmod(x, y, not(0))\\n                prod0 := mul(x, y)\\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n            }\\n\\n            // Handle non-overflow cases, 256 by 256 division.\\n            if (prod1 == 0) {\\n                return prod0 / denominator;\\n            }\\n\\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\\n            require(denominator > prod1);\\n\\n            ///////////////////////////////////////////////\\n            // 512 by 256 division.\\n            ///////////////////////////////////////////////\\n\\n            // Make division exact by subtracting the remainder from [prod1 prod0].\\n            uint256 remainder;\\n            assembly {\\n                // Compute remainder using mulmod.\\n                remainder := mulmod(x, y, denominator)\\n\\n                // Subtract 256 bit number from 512 bit number.\\n                prod1 := sub(prod1, gt(remainder, prod0))\\n                prod0 := sub(prod0, remainder)\\n            }\\n\\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.\\n            // See https://cs.stackexchange.com/q/138556/92363.\\n\\n            // Does not overflow because the denominator cannot be zero at this stage in the function.\\n            uint256 twos = denominator & (~denominator + 1);\\n            assembly {\\n                // Divide denominator by twos.\\n                denominator := div(denominator, twos)\\n\\n                // Divide [prod1 prod0] by twos.\\n                prod0 := div(prod0, twos)\\n\\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\\n                twos := add(div(sub(0, twos), twos), 1)\\n            }\\n\\n            // Shift in bits from prod1 into prod0.\\n            prod0 |= prod1 * twos;\\n\\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\\n            // four bits. That is, denominator * inv = 1 mod 2^4.\\n            uint256 inverse = (3 * denominator) ^ 2;\\n\\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works\\n            // in modular arithmetic, doubling the correct bits in each step.\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\\n\\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\\n            // is no longer required.\\n            result = prod0 * inverse;\\n            return result;\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator,\\n        Rounding rounding\\n    ) internal pure returns (uint256) {\\n        uint256 result = mulDiv(x, y, denominator);\\n        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.\\n     *\\n     * Inspired by Henry S. Warren, Jr.'s \\\"Hacker's Delight\\\" (Chapter 11).\\n     */\\n    function sqrt(uint256 a) internal pure returns (uint256) {\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\\n        //\\n        // We know that the \\\"msb\\\" (most significant bit) of our target number `a` is a power of 2 such that we have\\n        // `msb(a) <= a < 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.\\n        //\\n        // This can be rewritten `2**log2(a) <= a < 2**(log2(a) + 1)`\\n        // \\u2192 `sqrt(2**k) <= sqrt(a) < sqrt(2**(k+1))`\\n        // \\u2192 `2**(k/2) <= sqrt(a) < 2**((k+1)/2) <= 2**(k/2 + 1)`\\n        //\\n        // Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.\\n        uint256 result = 1 << (log2(a) >> 1);\\n\\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\\n        // into the expected uint128 result.\\n        unchecked {\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            return min(result, a / result);\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates sqrt(a), following the selected rounding direction.\\n     */\\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = sqrt(a);\\n            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 128;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 64;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 32;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 16;\\n            }\\n            if (value >> 8 > 0) {\\n                value >>= 8;\\n                result += 8;\\n            }\\n            if (value >> 4 > 0) {\\n                value >>= 4;\\n                result += 4;\\n            }\\n            if (value >> 2 > 0) {\\n                value >>= 2;\\n                result += 2;\\n            }\\n            if (value >> 1 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log2(value);\\n            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >= 10**64) {\\n                value /= 10**64;\\n                result += 64;\\n            }\\n            if (value >= 10**32) {\\n                value /= 10**32;\\n                result += 32;\\n            }\\n            if (value >= 10**16) {\\n                value /= 10**16;\\n                result += 16;\\n            }\\n            if (value >= 10**8) {\\n                value /= 10**8;\\n                result += 8;\\n            }\\n            if (value >= 10**4) {\\n                value /= 10**4;\\n                result += 4;\\n            }\\n            if (value >= 10**2) {\\n                value /= 10**2;\\n                result += 2;\\n            }\\n            if (value >= 10**1) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log10(value);\\n            return result + (rounding == Rounding.Up && 10**result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     *\\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\\n     */\\n    function log256(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 16;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 8;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 4;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 2;\\n            }\\n            if (value >> 8 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log256(value);\\n            return result + (rounding == Rounding.Up && 1 << (result * 8) < value ? 1 : 0);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)\\n\\npragma solidity ^0.8.0;\\n\\n// CAUTION\\n// This version of SafeMath should only be used with Solidity 0.8 or later,\\n// because it relies on the compiler's built in overflow checks.\\n\\n/**\\n * @dev Wrappers over Solidity's arithmetic operations.\\n *\\n * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler\\n * now has built in overflow checking.\\n */\\nlibrary SafeMath {\\n    /**\\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            uint256 c = a + b;\\n            if (c < a) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b > a) return (false, 0);\\n            return (true, a - b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n            // benefit is lost if 'b' is also tested.\\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n            if (a == 0) return (true, 0);\\n            uint256 c = a * b;\\n            if (c / a != b) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a / b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a % b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the addition of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `+` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Addition cannot overflow.\\n     */\\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a + b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting on\\n     * overflow (when the result is negative).\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a - b;\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `*` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Multiplication cannot overflow.\\n     */\\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a * b;\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a / b;\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting when dividing by zero.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a % b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\\n     * overflow (when the result is negative).\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {trySub}.\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b <= a, errorMessage);\\n            return a - b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting with custom message on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\\n     * uses an invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a / b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting with custom message when dividing by zero.\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {tryMod}.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a % b;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e\",\"license\":\"MIT\"},\"contracts/constants/ConstantsInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { ConstantsStorage } from \\\"./ConstantsStorage.sol\\\";\\r\\nimport { IConstantsEvents } from \\\"./IConstantsEvents.sol\\\";\\r\\n\\r\\nlibrary ConstantsInternal {\\r\\n    using ConstantsStorage for ConstantsStorage.Layout;\\r\\n    using Decimal for Decimal.D256;\\r\\n\\r\\n    uint256 private constant PERCENT_BASE = 1e18;\\r\\n    uint256 private constant PRECISION = 1e18;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getPrecision() internal pure returns (uint256) {\\r\\n        return PRECISION;\\r\\n    }\\r\\n\\r\\n    function getPercentBase() internal pure returns (uint256) {\\r\\n        return PERCENT_BASE;\\r\\n    }\\r\\n\\r\\n    function getCollateral() internal view returns (address) {\\r\\n        return ConstantsStorage.layout().collateral;\\r\\n    }\\r\\n\\r\\n    function getLiquidationFee() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().liquidationFee, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getProtocolLiquidationShare() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().protocolLiquidationShare, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getCVA() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().cva, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getRequestTimeout() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().requestTimeout;\\r\\n    }\\r\\n\\r\\n    function getMaxOpenPositionsCross() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    /* ========== SETTERS ========== */\\r\\n\\r\\n    function setCollateral(address collateral) internal {\\r\\n        ConstantsStorage.layout().collateral = collateral;\\r\\n    }\\r\\n\\r\\n    function setLiquidationFee(uint256 liquidationFee) internal {\\r\\n        ConstantsStorage.layout().liquidationFee = liquidationFee;\\r\\n    }\\r\\n\\r\\n    function setProtocolLiquidationShare(uint256 protocolLiquidationShare) internal {\\r\\n        ConstantsStorage.layout().protocolLiquidationShare = protocolLiquidationShare;\\r\\n    }\\r\\n\\r\\n    function setCVA(uint256 cva) internal {\\r\\n        ConstantsStorage.layout().cva = cva;\\r\\n    }\\r\\n\\r\\n    function setRequestTimeout(uint256 requestTimeout) internal {\\r\\n        ConstantsStorage.layout().requestTimeout = requestTimeout;\\r\\n    }\\r\\n\\r\\n    function setMaxOpenPositionsCross(uint256 maxOpenPositionsCross) internal {\\r\\n        ConstantsStorage.layout().maxOpenPositionsCross = maxOpenPositionsCross;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x2cfd838c49a4c1e59f64b2a006ea74fbfcf98a376350bb0b1130150b9cee5806\",\"license\":\"BUSL-1.1\"},\"contracts/constants/ConstantsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary ConstantsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.constants.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        address collateral;\\r\\n        uint256 liquidationFee;\\r\\n        uint256 protocolLiquidationShare;\\r\\n        uint256 cva;\\r\\n        uint256 requestTimeout;\\r\\n        uint256 maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x95ca5941aa95afe59bee8f04990cb8bcb0eafb0e277a0f53fada8397e53c2baf\",\"license\":\"BUSL-1.1\"},\"contracts/constants/IConstantsEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\ninterface IConstantsEvents {\\r\\n    event SetCollateral(address oldAddress, address newAddress);\\r\\n    event SetLiquidationFee(uint256 oldFee, uint256 newFee);\\r\\n    event SetProtocolLiquidationShare(uint256 oldShare, uint256 newShare);\\r\\n    event SetCVA(uint256 oldCVA, uint256 newCVA);\\r\\n    event SetRequestTimeout(uint256 oldTimeout, uint256 newTimeout);\\r\\n    event SetMaxOpenPositionsCross(uint256 oldMax, uint256 newMax);\\r\\n}\\r\\n\",\"keccak256\":\"0x556ffdc7440aa7317b606497a3ada3e6e71faa64d2ad3da56fd8f6591b289745\",\"license\":\"BUSL-1.1\"},\"contracts/libraries/LibDecimal.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts/utils/math/SafeMath.sol\\\";\\r\\n\\r\\n/**\\r\\n * @title Decimal\\r\\n * @author dYdX\\r\\n *\\r\\n * Library that defines a fixed-point number with 18 decimal places.\\r\\n */\\r\\nlibrary Decimal {\\r\\n    using SafeMath for uint256;\\r\\n\\r\\n    // ============ Constants ============\\r\\n\\r\\n    uint256 constant BASE = 10 ** 18;\\r\\n\\r\\n    // ============ Structs ============\\r\\n\\r\\n    struct D256 {\\r\\n        uint256 value;\\r\\n    }\\r\\n\\r\\n    // ============ Static Functions ============\\r\\n\\r\\n    function zero() internal pure returns (D256 memory) {\\r\\n        return D256({ value: 0 });\\r\\n    }\\r\\n\\r\\n    function one() internal pure returns (D256 memory) {\\r\\n        return D256({ value: BASE });\\r\\n    }\\r\\n\\r\\n    function from(uint256 a) internal pure returns (D256 memory) {\\r\\n        return D256({ value: a.mul(BASE) });\\r\\n    }\\r\\n\\r\\n    function ratio(uint256 a, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(a, BASE, b) });\\r\\n    }\\r\\n\\r\\n    // ============ Self Functions ============\\r\\n\\r\\n    function add(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE), reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.mul(b) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.div(b) });\\r\\n    }\\r\\n\\r\\n    function pow(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        if (b == 0) {\\r\\n            return one();\\r\\n        }\\r\\n\\r\\n        D256 memory temp = D256({ value: self.value });\\r\\n        for (uint256 i = 1; i < b; ++i) {\\r\\n            temp = mul(temp, self);\\r\\n        }\\r\\n\\r\\n        return temp;\\r\\n    }\\r\\n\\r\\n    function add(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value, reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, b.value, BASE) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, BASE, b.value) });\\r\\n    }\\r\\n\\r\\n    function equals(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return self.value == b.value;\\r\\n    }\\r\\n\\r\\n    function greaterThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 2;\\r\\n    }\\r\\n\\r\\n    function lessThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 0;\\r\\n    }\\r\\n\\r\\n    function greaterThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) > 0;\\r\\n    }\\r\\n\\r\\n    function lessThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) < 2;\\r\\n    }\\r\\n\\r\\n    function isZero(D256 memory self) internal pure returns (bool) {\\r\\n        return self.value == 0;\\r\\n    }\\r\\n\\r\\n    function asUint256(D256 memory self) internal pure returns (uint256) {\\r\\n        return self.value.div(BASE);\\r\\n    }\\r\\n\\r\\n    // ============ Core Methods ============\\r\\n\\r\\n    function getPartial(uint256 target, uint256 numerator, uint256 denominator) private pure returns (uint256) {\\r\\n        return target.mul(numerator).div(denominator);\\r\\n    }\\r\\n\\r\\n    function compareTo(D256 memory a, D256 memory b) private pure returns (uint256) {\\r\\n        if (a.value == b.value) {\\r\\n            return 1;\\r\\n        }\\r\\n        return a.value > b.value ? 2 : 0;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xfa323074357185fffcd95c964c95e25fbba23f2ac0fd542ea23333721457f3d5\",\"license\":\"MIT\"},\"contracts/libraries/LibEnums.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nenum MarketType {\\r\\n    FOREX,\\r\\n    METALS,\\r\\n    ENERGIES,\\r\\n    INDICES,\\r\\n    STOCKS,\\r\\n    COMMODITIES,\\r\\n    BONDS,\\r\\n    ETFS,\\r\\n    CRYPTO\\r\\n}\\r\\n\\r\\nenum Side {\\r\\n    BUY,\\r\\n    SELL\\r\\n}\\r\\n\\r\\nenum HedgerMode {\\r\\n    SINGLE,\\r\\n    HYBRID,\\r\\n    AUTO\\r\\n}\\r\\n\\r\\nenum OrderType {\\r\\n    LIMIT,\\r\\n    MARKET\\r\\n}\\r\\n\\r\\nenum PositionType {\\r\\n    ISOLATED,\\r\\n    CROSS\\r\\n}\\r\\n\",\"keccak256\":\"0xbedbd913c1366fd4d16201404d7cc37f9e662311ff71e9fff1cd1003ef91f03f\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { ConstantsInternal } from \\\"../constants/ConstantsInternal.sol\\\";\\r\\nimport { MarketsStorage, Market } from \\\"./MarketsStorage.sol\\\";\\r\\nimport { MasterStorage } from \\\"../master-agreement/MasterStorage.sol\\\";\\r\\n\\r\\nlibrary MarketsInternal {\\r\\n    using MarketsStorage for MarketsStorage.Layout;\\r\\n    using MasterStorage for MasterStorage.Layout;\\r\\n    using Decimal for Decimal.D256;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getMarkets() internal view returns (Market[] memory markets) {\\r\\n        return MarketsStorage.layout().marketList;\\r\\n    }\\r\\n\\r\\n    function getMarketById(uint256 marketId) internal view returns (Market memory market) {\\r\\n        return MarketsStorage.layout().marketMap[marketId];\\r\\n    }\\r\\n\\r\\n    function getMarketsByIds(uint256[] memory marketIds) internal view returns (Market[] memory markets) {\\r\\n        markets = new Market[](marketIds.length);\\r\\n        for (uint256 i = 0; i < marketIds.length; i++) {\\r\\n            markets[i] = MarketsStorage.layout().marketMap[marketIds[i]];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketsInRange(uint256 start, uint256 end) internal view returns (Market[] memory markets) {\\r\\n        uint256 length = end - start;\\r\\n        markets = new Market[](length);\\r\\n\\r\\n        for (uint256 i = 0; i < length; i++) {\\r\\n            markets[i] = MarketsStorage.layout().marketList[start + i];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketsLength() internal view returns (uint256 length) {\\r\\n        return MarketsStorage.layout().marketList.length;\\r\\n    }\\r\\n\\r\\n    function getMarketFromPositionId(uint256 positionId) internal view returns (Market memory market) {\\r\\n        uint256 marketId = MasterStorage.layout().allPositionsMap[positionId].marketId;\\r\\n        market = MarketsStorage.layout().marketMap[marketId];\\r\\n    }\\r\\n\\r\\n    function getMarketsFromPositionIds(uint256[] calldata positionIds) internal view returns (Market[] memory markets) {\\r\\n        markets = new Market[](positionIds.length);\\r\\n        for (uint256 i = 0; i < positionIds.length; i++) {\\r\\n            uint256 marketId = MasterStorage.layout().allPositionsMap[positionIds[i]].marketId;\\r\\n            markets[i] = MarketsStorage.layout().marketMap[marketId];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketProtocolFee(uint256 marketId) internal view returns (Decimal.D256 memory) {\\r\\n        uint256 fee = MarketsStorage.layout().marketMap[marketId].protocolFee;\\r\\n        return Decimal.ratio(fee, ConstantsInternal.getPercentBase());\\r\\n    }\\r\\n\\r\\n    function isValidMarketId(uint256 marketId) internal pure returns (bool) {\\r\\n        return marketId > 0;\\r\\n    }\\r\\n\\r\\n    function isActiveMarket(uint256 marketId) internal view returns (bool) {\\r\\n        return MarketsStorage.layout().marketMap[marketId].active;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x67254b706dbe914ce93051221ea3cf451e952a69ffda0f21a09e8503ce992e7f\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { MarketType } from \\\"../libraries/LibEnums.sol\\\";\\r\\n\\r\\nstruct Market {\\r\\n    uint256 marketId;\\r\\n    string identifier;\\r\\n    MarketType marketType;\\r\\n    bool active;\\r\\n    string baseCurrency;\\r\\n    string quoteCurrency;\\r\\n    string symbol;\\r\\n    bytes32 muonPriceFeedId;\\r\\n    bytes32 fundingRateId;\\r\\n    uint256 protocolFee;\\r\\n}\\r\\n\\r\\nlibrary MarketsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.markets.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(uint256 => Market) marketMap;\\r\\n        Market[] marketList;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x5e360238be1f82158114f4077a304abfdf950831638affa193270da06daad288\",\"license\":\"BUSL-1.1\"},\"contracts/master-agreement/MasterAgreement.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { PositionPrice } from \\\"../oracle/OracleInternal.sol\\\";\\r\\nimport { MasterCalculators } from \\\"./MasterCalculators.sol\\\";\\r\\nimport { MasterStorage, RequestForQuote, Position } from \\\"./MasterStorage.sol\\\";\\r\\n\\r\\ncontract MasterAgreement {\\r\\n    using MasterStorage for MasterStorage.Layout;\\r\\n\\r\\n    event UpdateUuid(uint256 indexed positionId, bytes16 oldUuid, bytes16 newUuid);\\r\\n\\r\\n    /* ========== WRITES ========== */\\r\\n\\r\\n    function updateUuid(uint256 positionId, bytes16 uuid) external {\\r\\n        MasterStorage.Layout storage s = MasterStorage.layout();\\r\\n\\r\\n        Position storage position = s.allPositionsMap[positionId];\\r\\n        require(position.partyB == msg.sender, \\\"Not partyB\\\");\\r\\n        bytes16 oldUuid = position.uuid;\\r\\n        position.uuid = uuid;\\r\\n        emit UpdateUuid(positionId, oldUuid, uuid);\\r\\n    }\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getRequestForQuote(uint256 rfqId) external view returns (RequestForQuote memory rfq) {\\r\\n        return MasterStorage.layout().requestForQuotesMap[rfqId];\\r\\n    }\\r\\n\\r\\n    function getRequestForQuotes(uint256[] calldata rfqIds) external view returns (RequestForQuote[] memory rfqs) {\\r\\n        uint256 len = rfqIds.length;\\r\\n        rfqs = new RequestForQuote[](len);\\r\\n\\r\\n        for (uint256 i = 0; i < len; i++) {\\r\\n            rfqs[i] = (MasterStorage.layout().requestForQuotesMap[rfqIds[i]]);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getPosition(uint256 positionId) external view returns (Position memory position) {\\r\\n        return MasterStorage.layout().allPositionsMap[positionId];\\r\\n    }\\r\\n\\r\\n    function getPositions(uint256[] calldata positionIds) external view returns (Position[] memory positions) {\\r\\n        uint256 len = positionIds.length;\\r\\n        positions = new Position[](len);\\r\\n\\r\\n        for (uint256 i = 0; i < len; i++) {\\r\\n            positions[i] = (MasterStorage.layout().allPositionsMap[positionIds[i]]);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getOpenPositionsIsolatedLength(address party) external view returns (uint256) {\\r\\n        return MasterStorage.layout().openPositionsIsolatedLength[party];\\r\\n    }\\r\\n\\r\\n    function getOpenPositionsCrossLength(address partyA) external view returns (uint256) {\\r\\n        return MasterStorage.layout().openPositionsCrossLength[partyA];\\r\\n    }\\r\\n\\r\\n    function getCrossRequestForQuotesLength(address party) external view returns (uint256) {\\r\\n        return MasterStorage.layout().crossRequestForQuotesLength[party];\\r\\n    }\\r\\n\\r\\n    function calculateUPnLIsolated(\\r\\n        uint256 positionId,\\r\\n        uint256 bidPrice,\\r\\n        uint256 askPrice\\r\\n    ) external view returns (int256 uPnLA, int256 uPnLB) {\\r\\n        return MasterCalculators.calculateUPnLIsolated(positionId, bidPrice, askPrice);\\r\\n    }\\r\\n\\r\\n    function calculateUPnLCross(\\r\\n        PositionPrice[] calldata positionPrices,\\r\\n        address party\\r\\n    ) external view returns (int256 uPnLCross) {\\r\\n        return MasterCalculators.calculateUPnLCross(positionPrices, party);\\r\\n    }\\r\\n\\r\\n    function calculateProtocolFeeAmount(uint256 marketId, uint256 notionalSize) external view returns (uint256) {\\r\\n        return MasterCalculators.calculateProtocolFeeAmount(marketId, notionalSize);\\r\\n    }\\r\\n\\r\\n    function calculateLiquidationFeeAmount(uint256 notionalSize) external view returns (uint256) {\\r\\n        return MasterCalculators.calculateLiquidationFeeAmount(notionalSize);\\r\\n    }\\r\\n\\r\\n    function calculateCVAAmount(uint256 notionalSize) external view returns (uint256) {\\r\\n        return MasterCalculators.calculateCVAAmount(notionalSize);\\r\\n    }\\r\\n\\r\\n    function calculateCrossMarginHealth(\\r\\n        address party,\\r\\n        int256 uPnLCross\\r\\n    ) external view returns (Decimal.D256 memory ratio) {\\r\\n        return MasterCalculators.calculateCrossMarginHealth(party, uPnLCross);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x9afdb16b67c52b4be9500606800e46d540224278620cf17b4488c244f420cb26\",\"license\":\"BUSL-1.1\"},\"contracts/master-agreement/MasterCalculators.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Side } from \\\"../libraries/LibEnums.sol\\\";\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { PositionPrice } from \\\"../oracle/OracleStorage.sol\\\";\\r\\nimport { ConstantsInternal } from \\\"../constants/ConstantsInternal.sol\\\";\\r\\nimport { MarketsInternal } from \\\"../markets/MarketsInternal.sol\\\";\\r\\nimport { MasterStorage, Position } from \\\"./MasterStorage.sol\\\";\\r\\n\\r\\nlibrary MasterCalculators {\\r\\n    using Decimal for Decimal.D256;\\r\\n    using MasterStorage for MasterStorage.Layout;\\r\\n\\r\\n    /**\\r\\n     * @notice Returns the UPnL for a specific position.\\r\\n     * @dev This is a naive function, inputs can not be trusted. Use cautiously.\\r\\n     */\\r\\n    function calculateUPnLIsolated(\\r\\n        uint256 positionId,\\r\\n        uint256 bidPrice,\\r\\n        uint256 askPrice\\r\\n    ) internal view returns (int256 uPnLA, int256 uPnLB) {\\r\\n        MasterStorage.Layout storage s = MasterStorage.layout();\\r\\n        Position memory position = s.allPositionsMap[positionId];\\r\\n\\r\\n        (uPnLA, uPnLB) = _calculateUPnLIsolated(\\r\\n            position.side,\\r\\n            position.currentBalanceUnits,\\r\\n            position.initialNotionalUsd,\\r\\n            bidPrice,\\r\\n            askPrice\\r\\n        );\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice Returns the UPnL of a party across all his open positions.\\r\\n     * @dev This is a naive function, inputs can NOT be trusted. Use cautiously.\\r\\n     *      Use Muon to verify inputs to prevent expensive computational costs.\\r\\n     * @dev positionPrices can have an incorrect length.\\r\\n     * @dev positionPrices can have an arbitrary order.\\r\\n     * @dev positionPrices can contain forged duplicates.\\r\\n     */\\r\\n    function calculateUPnLCross(\\r\\n        PositionPrice[] memory positionPrices,\\r\\n        address party\\r\\n    ) internal view returns (int256 uPnLCross) {\\r\\n        return _calculateUPnLCross(positionPrices, party);\\r\\n    }\\r\\n\\r\\n    function calculateProtocolFeeAmount(uint256 marketId, uint256 notionalUsd) internal view returns (uint256) {\\r\\n        return Decimal.from(notionalUsd).mul(MarketsInternal.getMarketProtocolFee(marketId)).asUint256();\\r\\n    }\\r\\n\\r\\n    function calculateLiquidationFeeAmount(uint256 notionalUsd) internal view returns (uint256) {\\r\\n        return Decimal.from(notionalUsd).mul(ConstantsInternal.getLiquidationFee()).asUint256();\\r\\n    }\\r\\n\\r\\n    function calculateCVAAmount(uint256 notionalSize) internal view returns (uint256) {\\r\\n        return Decimal.from(notionalSize).mul(ConstantsInternal.getCVA()).asUint256();\\r\\n    }\\r\\n\\r\\n    function calculateCrossMarginHealth(\\r\\n        address party,\\r\\n        int256 uPnLCross\\r\\n    ) internal view returns (Decimal.D256 memory ratio) {\\r\\n        MasterStorage.Layout storage s = MasterStorage.layout();\\r\\n\\r\\n        uint256 lockedMargin = s.crossLockedMargin[party];\\r\\n        uint256 openPositions = s.openPositionsCrossLength[party];\\r\\n\\r\\n        if (lockedMargin == 0 && openPositions == 0) {\\r\\n            return Decimal.ratio(1, 1);\\r\\n        } else if (lockedMargin == 0) {\\r\\n            return Decimal.zero();\\r\\n        }\\r\\n\\r\\n        if (uPnLCross >= 0) {\\r\\n            return Decimal.ratio(lockedMargin + uint256(uPnLCross), lockedMargin);\\r\\n        }\\r\\n\\r\\n        uint256 pnl = uint256(-uPnLCross);\\r\\n        if (pnl >= lockedMargin) {\\r\\n            return Decimal.zero();\\r\\n        }\\r\\n\\r\\n        ratio = Decimal.ratio(lockedMargin - pnl, lockedMargin);\\r\\n    }\\r\\n\\r\\n    /* ========== PRIVATE ========== */\\r\\n\\r\\n    /**\\r\\n     * @notice Returns the UPnL for a specific position.\\r\\n     * @dev This is a naive function, inputs can not be trusted. Use cautiously.\\r\\n     */\\r\\n    function _calculateUPnLIsolated(\\r\\n        Side side,\\r\\n        uint256 currentBalanceUnits,\\r\\n        uint256 initialNotionalUsd,\\r\\n        uint256 bidPrice,\\r\\n        uint256 askPrice\\r\\n    ) private pure returns (int256 uPnLA, int256 uPnLB) {\\r\\n        if (currentBalanceUnits == 0) return (0, 0);\\r\\n\\r\\n        uint256 precision = ConstantsInternal.getPrecision();\\r\\n        if (side == Side.BUY) {\\r\\n            require(bidPrice != 0, \\\"Oracle bidPrice is invalid\\\");\\r\\n            int256 notionalIsolatedA = int256((currentBalanceUnits * bidPrice) / precision);\\r\\n            uPnLA = notionalIsolatedA - int256(initialNotionalUsd);\\r\\n        } else {\\r\\n            require(askPrice != 0, \\\"Oracle askPrice is invalid\\\");\\r\\n            int256 notionalIsolatedA = int256((currentBalanceUnits * askPrice) / precision);\\r\\n            uPnLA = int256(initialNotionalUsd) - notionalIsolatedA;\\r\\n        }\\r\\n\\r\\n        return (uPnLA, -uPnLA);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @notice Returns the UPnL of a party across all his open positions.\\r\\n     * @dev This is a naive function, inputs can NOT be trusted. Use cautiously.\\r\\n     * @dev positionPrices can have an incorrect length.\\r\\n     * @dev positionPrices can have an arbitrary order.\\r\\n     * @dev positionPrices can contain forged duplicates.\\r\\n     */\\r\\n    function _calculateUPnLCross(\\r\\n        PositionPrice[] memory positionPrices,\\r\\n        address party\\r\\n    ) private view returns (int256 uPnLCrossA) {\\r\\n        MasterStorage.Layout storage s = MasterStorage.layout();\\r\\n\\r\\n        for (uint256 i = 0; i < positionPrices.length; i++) {\\r\\n            uint256 positionId = positionPrices[i].positionId;\\r\\n            uint256 bidPrice = positionPrices[i].bidPrice;\\r\\n            uint256 askPrice = positionPrices[i].askPrice;\\r\\n\\r\\n            Position memory position = s.allPositionsMap[positionId];\\r\\n            require(position.partyA == party, \\\"PositionId mismatch\\\");\\r\\n\\r\\n            (int256 _uPnLIsolatedA, ) = _calculateUPnLIsolated(\\r\\n                position.side,\\r\\n                position.currentBalanceUnits,\\r\\n                position.initialNotionalUsd,\\r\\n                bidPrice,\\r\\n                askPrice\\r\\n            );\\r\\n\\r\\n            uPnLCrossA += _uPnLIsolatedA;\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xa19d7633cd55bc10d5e729cf60a23c041d64ca5ad2b55d2147878c96ec8c96d6\",\"license\":\"BUSL-1.1\"},\"contracts/master-agreement/MasterStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { PositionType, OrderType, HedgerMode, Side } from \\\"../libraries/LibEnums.sol\\\";\\r\\n\\r\\nenum RequestForQuoteState {\\r\\n    NEW,\\r\\n    CANCELED,\\r\\n    ACCEPTED\\r\\n}\\r\\n\\r\\nenum PositionState {\\r\\n    OPEN,\\r\\n    MARKET_CLOSE_REQUESTED,\\r\\n    LIMIT_CLOSE_REQUESTED,\\r\\n    LIMIT_CLOSE_ACTIVE,\\r\\n    CLOSED,\\r\\n    LIQUIDATED\\r\\n}\\r\\n\\r\\nstruct RequestForQuote {\\r\\n    uint256 creationTimestamp;\\r\\n    uint256 mutableTimestamp;\\r\\n    uint256 rfqId;\\r\\n    RequestForQuoteState state;\\r\\n    PositionType positionType;\\r\\n    OrderType orderType;\\r\\n    address partyA;\\r\\n    address partyB;\\r\\n    HedgerMode hedgerMode;\\r\\n    uint256 marketId;\\r\\n    Side side;\\r\\n    uint256 notionalUsd;\\r\\n    uint256 lockedMarginA;\\r\\n    uint256 protocolFee;\\r\\n    uint256 liquidationFee;\\r\\n    uint256 cva;\\r\\n    uint256 minExpectedUnits;\\r\\n    uint256 maxExpectedUnits;\\r\\n    address affiliate;\\r\\n}\\r\\n\\r\\nstruct Position {\\r\\n    uint256 creationTimestamp;\\r\\n    uint256 mutableTimestamp;\\r\\n    uint256 positionId;\\r\\n    bytes16 uuid;\\r\\n    PositionState state;\\r\\n    PositionType positionType;\\r\\n    uint256 marketId;\\r\\n    address partyA;\\r\\n    address partyB;\\r\\n    Side side;\\r\\n    uint256 lockedMarginA;\\r\\n    uint256 lockedMarginB;\\r\\n    uint256 protocolFeePaid;\\r\\n    uint256 liquidationFee;\\r\\n    uint256 cva;\\r\\n    uint256 currentBalanceUnits;\\r\\n    uint256 initialNotionalUsd;\\r\\n    address affiliate;\\r\\n}\\r\\n\\r\\nlibrary MasterStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.master.agreement.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        // Balances\\r\\n        mapping(address => uint256) accountBalances;\\r\\n        mapping(address => uint256) marginBalances;\\r\\n        mapping(address => uint256) crossLockedMargin;\\r\\n        mapping(address => uint256) crossLockedMarginReserved;\\r\\n        // RequestForQuotes\\r\\n        mapping(uint256 => RequestForQuote) requestForQuotesMap;\\r\\n        uint256 requestForQuotesLength;\\r\\n        mapping(address => uint256) crossRequestForQuotesLength;\\r\\n        // Positions\\r\\n        mapping(uint256 => Position) allPositionsMap;\\r\\n        uint256 allPositionsLength;\\r\\n        mapping(address => uint256) openPositionsIsolatedLength;\\r\\n        mapping(address => uint256) openPositionsCrossLength;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x439f652dd38496d2536237e4e8874286203a43b1ae0775aadf23182ad6d3e58d\",\"license\":\"BUSL-1.1\"},\"contracts/oracle/OracleInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts/utils/cryptography/ECDSA.sol\\\";\\r\\nimport { OracleStorage, PublicKey, SchnorrSign, PositionPrice } from \\\"./OracleStorage.sol\\\";\\r\\nimport { SchnorrSECP256K1Verifier } from \\\"./SchnorrSECP256K1Verifier.sol\\\";\\r\\n\\r\\nlibrary OracleInternal {\\r\\n    using OracleStorage for OracleStorage.Layout;\\r\\n    using ECDSA for bytes32;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getMuonAppId() internal view returns (uint256) {\\r\\n        return OracleStorage.layout().muonAppId;\\r\\n    }\\r\\n\\r\\n    function getMuonAppCID() internal view returns (bytes memory) {\\r\\n        return OracleStorage.layout().muonAppCID;\\r\\n    }\\r\\n\\r\\n    function getMuonPublicKey() internal view returns (PublicKey memory) {\\r\\n        return OracleStorage.layout().muonPublicKey;\\r\\n    }\\r\\n\\r\\n    function getMuonGatewaySigner() internal view returns (address) {\\r\\n        return OracleStorage.layout().muonGatewaySigner;\\r\\n    }\\r\\n\\r\\n    function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) internal view {\\r\\n        (uint256 muonAppId, bytes memory muonAppCID, PublicKey memory muonPublicKey, ) = _getMuonConstants();\\r\\n\\r\\n        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, data));\\r\\n        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);\\r\\n        require(verified, \\\"TSS not verified\\\");\\r\\n    }\\r\\n\\r\\n    // To get the gatewaySignature, gwSign=true should be passed to the MuonApp.\\r\\n    function verifyTSSAndGatewayOrThrow(\\r\\n        bytes32 hash,\\r\\n        SchnorrSign calldata sign,\\r\\n        bytes calldata gatewaySignature\\r\\n    ) internal view {\\r\\n        (, , PublicKey memory muonPublicKey, address muonGatewaySigner) = _getMuonConstants();\\r\\n\\r\\n        bool verified = _verifySignature(uint256(hash), sign, muonPublicKey);\\r\\n        require(verified, \\\"TSS not verified\\\");\\r\\n\\r\\n        hash = hash.toEthSignedMessageHash();\\r\\n        address gatewaySigner = hash.recover(gatewaySignature);\\r\\n        require(gatewaySigner == muonGatewaySigner, \\\"Invalid gateway signer\\\");\\r\\n    }\\r\\n\\r\\n    function verifyPositionPriceOrThrow(\\r\\n        uint256 positionId,\\r\\n        uint256 bidPrice,\\r\\n        uint256 askPrice,\\r\\n        bytes calldata reqId,\\r\\n        SchnorrSign calldata sign,\\r\\n        bytes calldata gatewaySignature\\r\\n    ) internal view {\\r\\n        (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();\\r\\n\\r\\n        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionId, bidPrice, askPrice));\\r\\n        verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);\\r\\n    }\\r\\n\\r\\n    function verifyPositionPricesOrThrow(\\r\\n        uint256[] memory positionIds,\\r\\n        uint256[] memory bidPrices,\\r\\n        uint256[] memory askPrices,\\r\\n        bytes calldata reqId,\\r\\n        SchnorrSign calldata sign,\\r\\n        bytes calldata gatewaySignature\\r\\n    ) internal view {\\r\\n        (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();\\r\\n\\r\\n        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionIds, bidPrices, askPrices));\\r\\n        verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);\\r\\n    }\\r\\n\\r\\n    function createPositionPrice(\\r\\n        uint256 positionId,\\r\\n        uint256 bidPrice,\\r\\n        uint256 askPrice\\r\\n    ) internal pure returns (PositionPrice memory positionPrice) {\\r\\n        return PositionPrice(positionId, bidPrice, askPrice);\\r\\n    }\\r\\n\\r\\n    function createPositionPrices(\\r\\n        uint256[] memory positionIds,\\r\\n        uint256[] memory bidPrices,\\r\\n        uint256[] memory askPrices\\r\\n    ) internal pure returns (PositionPrice[] memory positionPrices) {\\r\\n        require(\\r\\n            positionPrices.length == bidPrices.length && positionPrices.length == askPrices.length,\\r\\n            \\\"Invalid position prices\\\"\\r\\n        );\\r\\n\\r\\n        positionPrices = new PositionPrice[](positionIds.length);\\r\\n        for (uint256 i = 0; i < positionIds.length; i++) {\\r\\n            positionPrices[i] = PositionPrice(positionIds[i], bidPrices[i], askPrices[i]);\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /* ========== SETTERS ========== */\\r\\n\\r\\n    function setMuonAppId(uint256 muonAppId) internal {\\r\\n        OracleStorage.layout().muonAppId = muonAppId;\\r\\n    }\\r\\n\\r\\n    function setMuonAppCID(bytes calldata muonAppCID) internal {\\r\\n        OracleStorage.layout().muonAppCID = muonAppCID;\\r\\n    }\\r\\n\\r\\n    function setMuonPublicKey(PublicKey memory muonPublicKey) internal {\\r\\n        OracleStorage.layout().muonPublicKey = muonPublicKey;\\r\\n    }\\r\\n\\r\\n    function setMuonGatewaySigner(address muonGatewaySigner) internal {\\r\\n        OracleStorage.layout().muonGatewaySigner = muonGatewaySigner;\\r\\n    }\\r\\n\\r\\n    /* ========== PRIVATE ========== */\\r\\n\\r\\n    function _getMuonConstants()\\r\\n        private\\r\\n        view\\r\\n        returns (uint256 muonAppId, bytes memory muonAppCID, PublicKey memory muonPublicKey, address muonGatewaySigner)\\r\\n    {\\r\\n        return (getMuonAppId(), getMuonAppCID(), getMuonPublicKey(), getMuonGatewaySigner());\\r\\n    }\\r\\n\\r\\n    function _verifySignature(\\r\\n        uint256 hash,\\r\\n        SchnorrSign memory signature,\\r\\n        PublicKey memory pubKey\\r\\n    ) private pure returns (bool) {\\r\\n        return\\r\\n            SchnorrSECP256K1Verifier.verifySignature(\\r\\n                pubKey.x,\\r\\n                pubKey.parity,\\r\\n                signature.signature,\\r\\n                hash,\\r\\n                signature.nonce\\r\\n            );\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x0a0876b03c799063d6d24b725c12eecd625aa27a544dfddf7b600a7f719bdcc4\",\"license\":\"BUSL-1.1\"},\"contracts/oracle/OracleStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nstruct SchnorrSign {\\r\\n    uint256 signature;\\r\\n    address owner;\\r\\n    address nonce;\\r\\n}\\r\\n\\r\\nstruct PublicKey {\\r\\n    uint256 x;\\r\\n    uint8 parity;\\r\\n}\\r\\n\\r\\nstruct PositionPrice {\\r\\n    uint256 positionId;\\r\\n    uint256 bidPrice;\\r\\n    uint256 askPrice;\\r\\n}\\r\\n\\r\\nlibrary OracleStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.oracle.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        uint256 muonAppId;\\r\\n        bytes muonAppCID;\\r\\n        PublicKey muonPublicKey;\\r\\n        address muonGatewaySigner;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xeb6804fb90bff79ed98c8b0f18e9d5e73003631ea296e71539026e4959f9f9c2\",\"license\":\"BUSL-1.1\"},\"contracts/oracle/SchnorrSECP256K1Verifier.sol\":{\"content\":\"// SPDX-License-Identifier: UNLICENSED\\r\\n// solhint-disable-next-line compiler-version\\r\\npragma solidity  >=0.7.0 <0.9.0;\\r\\n\\r\\nlibrary SchnorrSECP256K1Verifier {\\r\\n  // See https://en.bitcoin.it/wiki/Secp256k1 for this constant.\\r\\n  uint256 constant public Q = // Group order of secp256k1\\r\\n    0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141;\\r\\n  uint256 constant public HALF_Q = (Q >> 1) + 1;\\r\\n\\r\\n  /** **************************************************************************\\r\\n      @notice verifySignature returns true iff passed a valid Schnorr signature.\\r\\n      @dev See https://en.wikipedia.org/wiki/Schnorr_signature for reference.\\r\\n      @dev In what follows, let d be your secret key, PK be your public key,\\r\\n      PKx be the x ordinate of your public key, and PKyp be the parity bit for\\r\\n      the y ordinate (i.e., 0 if PKy is even, 1 if odd.)\\r\\n      **************************************************************************\\r\\n      @dev TO CREATE A VALID SIGNATURE FOR THIS METHOD\\r\\n      @dev First PKx must be less than HALF_Q. Then follow these instructions\\r\\n           (see evm/test/schnorr_test.js, for an example of carrying them out):\\r\\n      @dev 1. Hash the target message to a uint256, called msgHash here, using\\r\\n              keccak256\\r\\n      @dev 2. Pick k uniformly and cryptographically securely randomly from\\r\\n              {0,...,Q-1}. It is critical that k remains confidential, as your\\r\\n              private key can be reconstructed from k and the signature.\\r\\n      @dev 3. Compute k*g in the secp256k1 group, where g is the group\\r\\n              generator. (This is the same as computing the public key from the\\r\\n              secret key k. But it's OK if k*g's x ordinate is greater than\\r\\n              HALF_Q.)\\r\\n      @dev 4. Compute the ethereum address for k*g. This is the lower 160 bits\\r\\n              of the keccak hash of the concatenated affine coordinates of k*g,\\r\\n              as 32-byte big-endians. (For instance, you could pass k to\\r\\n              ethereumjs-utils's privateToAddress to compute this, though that\\r\\n              should be strictly a development convenience, not for handling\\r\\n              live secrets, unless you've locked your javascript environment\\r\\n              down very carefully.) Call this address\\r\\n              nonceTimesGeneratorAddress.\\r\\n      @dev 5. Compute e=uint256(keccak256(PKx as a 32-byte big-endian\\r\\n                                        \\u2016 PKyp as a single byte\\r\\n                                        \\u2016 msgHash\\r\\n                                        \\u2016 nonceTimesGeneratorAddress))\\r\\n              This value e is called \\\"msgChallenge\\\" in verifySignature's source\\r\\n              code below. Here \\\"\\u2016\\\" means concatenation of the listed byte\\r\\n              arrays.\\r\\n      @dev 6. Let x be your secret key. Compute s = (k - d * e) % Q. Add Q to\\r\\n              it, if it's negative. This is your signature. (d is your secret\\r\\n              key.)\\r\\n      **************************************************************************\\r\\n      @dev TO VERIFY A SIGNATURE\\r\\n      @dev Given a signature (s, e) of msgHash, constructed as above, compute\\r\\n      S=e*PK+s*generator in the secp256k1 group law, and then the ethereum\\r\\n      address of S, as described in step 4. Call that\\r\\n      nonceTimesGeneratorAddress. Then call the verifySignature method as:\\r\\n      @dev    verifySignature(PKx, PKyp, s, msgHash,\\r\\n                              nonceTimesGeneratorAddress)\\r\\n      **************************************************************************\\r\\n      @dev This signging scheme deviates slightly from the classical Schnorr\\r\\n      signature, in that the address of k*g is used in place of k*g itself,\\r\\n      both when calculating e and when verifying sum S as described in the\\r\\n      verification paragraph above. This reduces the difficulty of\\r\\n      brute-forcing a signature by trying random secp256k1 points in place of\\r\\n      k*g in the signature verification process from 256 bits to 160 bits.\\r\\n      However, the difficulty of cracking the public key using \\\"baby-step,\\r\\n      giant-step\\\" is only 128 bits, so this weakening constitutes no compromise\\r\\n      in the security of the signatures or the key.\\r\\n      @dev The constraint signingPubKeyX < HALF_Q comes from Eq. (281), p. 24\\r\\n      of Yellow Paper version 78d7b9a. ecrecover only accepts \\\"s\\\" inputs less\\r\\n      than HALF_Q, to protect against a signature- malleability vulnerability in\\r\\n      ECDSA. Schnorr does not have this vulnerability, but we must account for\\r\\n      ecrecover's defense anyway. And since we are abusing ecrecover by putting\\r\\n      signingPubKeyX in ecrecover's \\\"s\\\" argument the constraint applies to\\r\\n      signingPubKeyX, even though it represents a value in the base field, and\\r\\n      has no natural relationship to the order of the curve's cyclic group.\\r\\n      **************************************************************************\\r\\n      @param signingPubKeyX is the x ordinate of the public key. This must be\\r\\n             less than HALF_Q. \\r\\n      @param pubKeyYParity is 0 if the y ordinate of the public key is even, 1 \\r\\n             if it's odd.\\r\\n      @param signature is the actual signature, described as s in the above\\r\\n             instructions.\\r\\n      @param msgHash is a 256-bit hash of the message being signed.\\r\\n      @param nonceTimesGeneratorAddress is the ethereum address of k*g in the\\r\\n             above instructions\\r\\n      **************************************************************************\\r\\n      @return True if passed a valid signature, false otherwise. */\\r\\n  function verifySignature(\\r\\n    uint256 signingPubKeyX,\\r\\n    uint8 pubKeyYParity,\\r\\n    uint256 signature,\\r\\n    uint256 msgHash,\\r\\n    address nonceTimesGeneratorAddress) internal pure returns (bool) {\\r\\n    require(signingPubKeyX < HALF_Q, \\\"Public-key x >= HALF_Q\\\");\\r\\n    // Avoid signature malleability from multiple representations for \\u2124/Q\\u2124 elts\\r\\n    require(signature < Q, \\\"signature must be reduced modulo Q\\\");\\r\\n\\r\\n    // Forbid trivial inputs, to avoid ecrecover edge cases. The main thing to\\r\\n    // avoid is something which causes ecrecover to return 0x0: then trivial\\r\\n    // signatures could be constructed with the nonceTimesGeneratorAddress input\\r\\n    // set to 0x0.\\r\\n    //\\r\\n    require(nonceTimesGeneratorAddress != address(0) && signingPubKeyX > 0 &&\\r\\n      signature > 0 && msgHash > 0, \\\"no zero inputs allowed\\\");\\r\\n\\r\\n    uint256 msgChallenge = // \\\"e\\\"\\r\\n      uint256(keccak256(abi.encodePacked(nonceTimesGeneratorAddress, msgHash)));\\r\\n\\r\\n    // Verify msgChallenge * signingPubKey + signature * generator ==\\r\\n    //        nonce * generator\\r\\n    //\\r\\n    // https://ethresear.ch/t/you-can-kinda-abuse-ecrecover-to-do-ecmul-in-secp256k1-today/2384/9\\r\\n    // The point corresponding to the address returned by\\r\\n    // ecrecover(-s*r,v,r,e*r) is (r\\u207b\\u00b9 mod Q)*(e*r*R-(-s)*r*g)=e*R+s*g, where R\\r\\n    // is the (v,r) point. See https://crypto.stackexchange.com/a/18106\\r\\n    //\\r\\n    address recoveredAddress = ecrecover(\\r\\n      bytes32(Q - mulmod(signingPubKeyX, signature, Q)),\\r\\n      // https://ethereum.github.io/yellowpaper/paper.pdf p. 24, \\\"The\\r\\n      // value 27 represents an even y value and 28 represents an odd\\r\\n      // y value.\\\"\\r\\n      (pubKeyYParity == 0) ? 27 : 28,\\r\\n      bytes32(signingPubKeyX),\\r\\n      bytes32(mulmod(msgChallenge, signingPubKeyX, Q)));\\r\\n    return nonceTimesGeneratorAddress == recoveredAddress;\\r\\n  }\\r\\n\\r\\n  function validatePubKey (uint256 signingPubKeyX) internal pure {\\r\\n    require(signingPubKeyX < HALF_Q, \\\"Public-key x >= HALF_Q\\\");\\r\\n  }\\r\\n}\",\"keccak256\":\"0x31de71e75cf47d801c32fd8ba701a789a89201ee81ebaf7b106221c5b97c2305\",\"license\":\"UNLICENSED\"}},\"version\":1}",
+  "bytecode": "0x6080806040523461001657611763908161001c8239f35b600080fdfe604060808152600436101561001357600080fd5b6000803560e01c8063282cddd414610e3d5780633dca94d914610de65780634c723c2814610bf257806366a5dc6314610b9057806372706d5014610b5557806375384ae314610ad757806375e17c601461097a57806380a9fdc9146109085780639ae86671146105fa578063a9427811146105a3578063b3b66903146104c8578063eb02c3011461036e578063fc1462eb146102cb5763fc816325146100b857600080fd5b346102c8576100c6366110e6565b92906100d96100d485611341565b611295565b84815293601f196100e982611341565b01845b8181106102b1575050835b81811061014b575050508281519160208080850192818652845180945285019301945b8281106101275784840385f35b909192826102608261013c6001948a51610fce565b0196019101949291909461011a565b8061015a6102ac92848661137e565b35865260207fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10642815285872061018d61121d565b9181548352600182015490830152600281015487830152600e60038201549160ff8084166101ba81610fa4565b60608601526008908085831c166101d081610fc4565b608087015280808660101c166101e581610fc4565b60a0908189015260018060a01b03809760181c1660c089015260048501549087821660e08a01521c1661021781610fa4565b610100870152600583015461012087015260068301541661023781610fc4565b610140860152600782015461016086015281015461018085015260098101546101a0850152600a8101546101c0850152600b8101546101e0850152600c810154610200850152600d81015461022085015201541661024082015261029b82896113a4565b526102a681886113a4565b50611359565b6100f7565b6020906102bc6112bb565b82828a010152016100ec565b80fd5b50903461036a57602036600319011261036a5761034f610361836020946102f0611275565b526102fc600435611437565b90610305611275565b91825280610311611275565b527f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b0549061033d611275565b52670de0b6b3a7640000938491611437565b0490610359611275565b918252611467565b51049051908152f35b5080fd5b50346102c85760203660031901126102c8576103886113b8565b5060043581526000805160206117378339815191526020528181206103ab611254565b9181548352600182015460208401526002820154848401526003820154906001600160801b03198260801b16606085015260ff8260801c169060068210156104b457509160ff61024095926104b294608087015260881c1661040c81610fc4565b60a0850152600481015460c0850152600e60018060a01b03918260058201541660e087015260ff600682015484811661010089015260a01c1661044e81610fc4565b610120870152600781015461014087015260088101546101608701526009810154610180870152600a8101546101a0870152600b8101546101c0870152600c8101546101e0870152600d810154610200870152015416610220840152518092611133565bf35b634e487b7160e01b81526021600452602490fd5b50903461036a578060031936011261036a576004356024356fffffffffffffffffffffffffffffffff198082169081830361059f5783865260008051602061173783398151915260205284862060068101546001600160a01b0316330361056e576003018054808316608095861c179091558551931b16825260208201527f9f172f8fabd3bb89aca413683f7e7ce6226f4653b56d34e162f5a43c272f52f9908390a251f35b855162461bcd60e51b815260206004820152600a6024820152692737ba103830b93a3ca160b11b6044820152606490fd5b8580fd5b50903461036a57602036600319011261036a5760209181906001600160a01b036105cb6110cb565b1681527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10644845220549051908152f35b50346102c857816003193601126102c8576004359067ffffffffffffffff80831161036a573660238401121561036a578260040135918183116102c8576024938460608502820101368111610904578535936001600160a01b03851685036109005786602061066b6100d489611341565b80988152019301925b8284106108a65750505050809181925b845184101561089c5761069784866113a4565b515160206106a586886113a4565b510151886106b387896113a4565b5101519185526000805160206117378339815191526020528885206106d6611254565b90805482526001810154602083015260028101548b83015260038101546080906001600160801b031981831b16606085015260ff9160068383831c1610156108895781811c83169085015260881c81169061073082610fc4565b60a084810192909252600483015460c085015260058301546001600160a01b0390811660e086019081526006850154918216610100870152610120860193909291901c1661077d81610fc4565b8252600783015461014085015260088301546101608501526009830154610180850152600a8301546101a0850152600b8301546101c0850152600c8301546101e08501908152600d8401546102008601908152600e909401546001600160a01b039081166102209096019590955290519093888116911603610850579061081594939291519161080c83610fc4565b5190519161162a565b509083828201928312911290801582169115161761083d576108379093611359565b92610684565b634e487b7160e01b835260116004528583fd5b8b5162461bcd60e51b8152602060048201526013818d0152720a0dee6d2e8d2dedc92c840dad2e6dac2e8c6d606b1b6044820152606490fd5b634e487b7160e01b8a5260216004528c8afd5b6020908751908152f35b6060843603126108fc57885160608101818110848211176108e957916020916060938c528635815282870135838201528b8701358c820152815201930192610674565b634e487b7160e01b875260416004528987fd5b8480fd5b8380fd5b8280fd5b50903461036a57602036600319011261036a5761034f6103618360209461092d611275565b52610939600435611437565b90610942611275565b9182528061094e611275565b527f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b2549061033d611275565b50903461036a57606036600319011261036a5760043582526000805160206117378339815191526020528082206109af611254565b9080548252600181015460208301526002810154838301526003810154936001600160801b03198560801b16606084015260ff8560801c169060068210156104b45750610acb939460ff91608085015260881c16610a0c81610fc4565b60a0830152600481015460c083015260018060a01b038060058301541660e084015260ff600683015482811661010086015260a01c1692610a4c84610fc4565b83610120820152600783015461014082015260088301546101608201526009830154610180820152600a8301546101a0820152600b8301546101c0820152610220600c840154926101e08301938452600e600d860154956102008501968752015416910152610aba83610fc4565b51916044359260243592519161162a565b82519182526020820152f35b50903461036a578060031936011261036a5761034f61036183602094610afb611275565b52610b07602435611437565b90610b10611275565b91825280610b1c611275565b5260043581527f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931e8652600885822001549061033d611275565b50903461036a578060031936011261036a57610b88602092610b756110cb565b90610b7e611275565b52602435906114c9565b905190518152f35b50903461036a57602036600319011261036a57602090610bea610bb16110cb565b6001600160a01b031660009081527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd106486020526040902090565b549051908152f35b50346102c857610c01366110e6565b9290610c0f6100d485611341565b84815293601f19610c1f82611341565b01845b818110610dcf575050835b818110610c81575050508281519160208080850192818652845180945285019301945b828110610c5d5784840385f35b9091928261024082610c726001948a51611133565b01960191019492919094610c50565b610c8c81838561137e565b35855260206000805160206117378339815191528152848620610cad611254565b91815483526001820154908301526002810154868301526003810154906080916001600160801b031981841b16606085015260ff908181851c1660069485821015610dbb57860152610db695949392600e92909160881c8116610d0f81610fc4565b60a086810191909152600483015460c087015260058301546001600160a01b0390811660e088015294830154808616610100880152901c16610d5081610fc4565b610120850152600781015461014085015260088101546101608501526009810154610180850152600a8101546101a0850152600b8101546101c0850152600c8101546101e0850152600d81015461020085015201541661022082015261029b82896113a4565b610c2d565b634e487b7160e01b8c52602160045260248cfd5b602090610dda6113b8565b82828a01015201610c22565b50903461036a57602036600319011261036a5760209181906001600160a01b03610e0e6110cb565b1681527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10647845220549051908152f35b50903461036a57602036600319011261036a576104b28161026093610e606112bb565b5060043581527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd106426020522091610e9461121d565b928054845260018101546020850152600281015482850152600e60038201549160ff8316610ec181610fa4565b606087015260ff8360081c16610ed681610fc4565b608087015260ff8360101c16610eeb81610fc4565b60a087015260018060a01b03809360181c1660c087015260ff600482015484811660e089015260a01c16610f1e81610fa4565b610100870152600581015461012087015260ff600682015416610f4081610fc4565b6101408701526007810154610160870152600881015461018087015260098101546101a0870152600a8101546101c0870152600b8101546101e0870152600c810154610200870152600d810154610220870152015416610240840152518092610fce565b60031115610fae57565b634e487b7160e01b600052602160045260246000fd5b60021115610fae57565b8051825260208101516020830152604081015160408301526060810151610ff481610fa4565b6060830152608081015161100781610fc4565b608083015260a081015161101a81610fc4565b60a083015260018060a01b038060c08301511660c08401528060e08301511660e0840152610100808301519061104f82610fa4565b8401526101208083015190840152610140808301519061106e82610fc4565b840152610160808301519084015261018080830151908401526101a080830151908401526101c080830151908401526101e08083015190840152610200808301519084015261022080830151908401526102408092015116910152565b600435906001600160a01b03821682036110e157565b600080fd5b9060206003198301126110e15760043567ffffffffffffffff928382116110e157806023830112156110e15781600401359384116110e15760248460051b830101116110e1576024019190565b8051825260208101516020830152604081015160408301526001600160801b0319606082015116606083015260808101516006811015610fae57608083015260a081015161118081610fc4565b60a083015260c081015160c083015260018060a01b038060e08301511660e08401526101008181840151169084015261012080830151906111c082610fc4565b8401526101408083015190840152610160808301519084015261018080830151908401526101a080830151908401526101c080830151908401526101e0808301519084015261020080830151908401526102208092015116910152565b60405190610260820182811067ffffffffffffffff82111761123e57604052565b634e487b7160e01b600052604160045260246000fd5b60405190610240820182811067ffffffffffffffff82111761123e57604052565b604051906020820182811067ffffffffffffffff82111761123e57604052565b6040519190601f01601f1916820167ffffffffffffffff81118382101761123e57604052565b6112c361121d565b9060008083528060208401528060408401528060608401528060808401528060a08401528060c08401528060e08401528061010084015280610120840152806101408401528061016084015280610180840152806101a0840152806101c0840152806101e08401528061020084015280610220840152610240830152565b67ffffffffffffffff811161123e5760051b60200190565b60001981146113685760010190565b634e487b7160e01b600052601160045260246000fd5b919081101561138e5760051b0190565b634e487b7160e01b600052603260045260246000fd5b805182101561138e5760209160051b010190565b6113c0611254565b9060008083528060208401528060408401528060608401528060808401528060a08401528060c08401528060e08401528061010084015280610120840152806101408401528061016084015280610180840152806101a0840152806101c0840152806101e084015280610200840152610220830152565b670de0b6b3a7640000908060001904821181151516611368570290565b8060001904821181151516611368570290565b670de0b6b3a76400009161148991600061147f611275565b5251905190611454565b04611492611275565b90815290565b81156114a2570490565b634e487b7160e01b600052601260045260246000fd5b600160ff1b81146113685760000390565b60009291836114d6611275565b5260018060a01b03821684527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd1064060205261154660408520549260018060a01b03166000527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10648602052604060002090565b54821580918192611608575b501561157b5750505090611564611275565b5261156d611275565b670de0b6b3a7640000815290565b6115d957838112156115ee57611590906114b8565b818110156115d95781038181116115c5576115b8906115bd93946115b2611275565b52611437565b611498565b611492611275565b634e487b7160e01b84526011600452602484fd5b505090806115e5611275565b52611492611275565b81018082116115c5576115b8906115bd93946115b2611275565b90501538611552565b8181039291600013801582851316918412161761136857565b93909392919284156117295761163f81610fc4565b6116b95750801561167457611660670de0b6b3a76400009161166694611454565b04611611565b905b611671826114b8565b90565b60405162461bcd60e51b815260206004820152601a60248201527f4f7261636c6520626964507269636520697320696e76616c69640000000000006044820152606490fd5b809150156116e4576116d7670de0b6b3a7640000916116de94611454565b0490611611565b90611668565b60405162461bcd60e51b815260206004820152601a60248201527f4f7261636c652061736b507269636520697320696e76616c69640000000000006044820152606490fd5b505050505060009060009056fedfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10645a164736f6c6343000810000a",
+  "deployedBytecode": "0x604060808152600436101561001357600080fd5b6000803560e01c8063282cddd414610e3d5780633dca94d914610de65780634c723c2814610bf257806366a5dc6314610b9057806372706d5014610b5557806375384ae314610ad757806375e17c601461097a57806380a9fdc9146109085780639ae86671146105fa578063a9427811146105a3578063b3b66903146104c8578063eb02c3011461036e578063fc1462eb146102cb5763fc816325146100b857600080fd5b346102c8576100c6366110e6565b92906100d96100d485611341565b611295565b84815293601f196100e982611341565b01845b8181106102b1575050835b81811061014b575050508281519160208080850192818652845180945285019301945b8281106101275784840385f35b909192826102608261013c6001948a51610fce565b0196019101949291909461011a565b8061015a6102ac92848661137e565b35865260207fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10642815285872061018d61121d565b9181548352600182015490830152600281015487830152600e60038201549160ff8084166101ba81610fa4565b60608601526008908085831c166101d081610fc4565b608087015280808660101c166101e581610fc4565b60a0908189015260018060a01b03809760181c1660c089015260048501549087821660e08a01521c1661021781610fa4565b610100870152600583015461012087015260068301541661023781610fc4565b610140860152600782015461016086015281015461018085015260098101546101a0850152600a8101546101c0850152600b8101546101e0850152600c810154610200850152600d81015461022085015201541661024082015261029b82896113a4565b526102a681886113a4565b50611359565b6100f7565b6020906102bc6112bb565b82828a010152016100ec565b80fd5b50903461036a57602036600319011261036a5761034f610361836020946102f0611275565b526102fc600435611437565b90610305611275565b91825280610311611275565b527f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b0549061033d611275565b52670de0b6b3a7640000938491611437565b0490610359611275565b918252611467565b51049051908152f35b5080fd5b50346102c85760203660031901126102c8576103886113b8565b5060043581526000805160206117378339815191526020528181206103ab611254565b9181548352600182015460208401526002820154848401526003820154906001600160801b03198260801b16606085015260ff8260801c169060068210156104b457509160ff61024095926104b294608087015260881c1661040c81610fc4565b60a0850152600481015460c0850152600e60018060a01b03918260058201541660e087015260ff600682015484811661010089015260a01c1661044e81610fc4565b610120870152600781015461014087015260088101546101608701526009810154610180870152600a8101546101a0870152600b8101546101c0870152600c8101546101e0870152600d810154610200870152015416610220840152518092611133565bf35b634e487b7160e01b81526021600452602490fd5b50903461036a578060031936011261036a576004356024356fffffffffffffffffffffffffffffffff198082169081830361059f5783865260008051602061173783398151915260205284862060068101546001600160a01b0316330361056e576003018054808316608095861c179091558551931b16825260208201527f9f172f8fabd3bb89aca413683f7e7ce6226f4653b56d34e162f5a43c272f52f9908390a251f35b855162461bcd60e51b815260206004820152600a6024820152692737ba103830b93a3ca160b11b6044820152606490fd5b8580fd5b50903461036a57602036600319011261036a5760209181906001600160a01b036105cb6110cb565b1681527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10644845220549051908152f35b50346102c857816003193601126102c8576004359067ffffffffffffffff80831161036a573660238401121561036a578260040135918183116102c8576024938460608502820101368111610904578535936001600160a01b03851685036109005786602061066b6100d489611341565b80988152019301925b8284106108a65750505050809181925b845184101561089c5761069784866113a4565b515160206106a586886113a4565b510151886106b387896113a4565b5101519185526000805160206117378339815191526020528885206106d6611254565b90805482526001810154602083015260028101548b83015260038101546080906001600160801b031981831b16606085015260ff9160068383831c1610156108895781811c83169085015260881c81169061073082610fc4565b60a084810192909252600483015460c085015260058301546001600160a01b0390811660e086019081526006850154918216610100870152610120860193909291901c1661077d81610fc4565b8252600783015461014085015260088301546101608501526009830154610180850152600a8301546101a0850152600b8301546101c0850152600c8301546101e08501908152600d8401546102008601908152600e909401546001600160a01b039081166102209096019590955290519093888116911603610850579061081594939291519161080c83610fc4565b5190519161162a565b509083828201928312911290801582169115161761083d576108379093611359565b92610684565b634e487b7160e01b835260116004528583fd5b8b5162461bcd60e51b8152602060048201526013818d0152720a0dee6d2e8d2dedc92c840dad2e6dac2e8c6d606b1b6044820152606490fd5b634e487b7160e01b8a5260216004528c8afd5b6020908751908152f35b6060843603126108fc57885160608101818110848211176108e957916020916060938c528635815282870135838201528b8701358c820152815201930192610674565b634e487b7160e01b875260416004528987fd5b8480fd5b8380fd5b8280fd5b50903461036a57602036600319011261036a5761034f6103618360209461092d611275565b52610939600435611437565b90610942611275565b9182528061094e611275565b527f6153ab96f87058e42029646de88822d1a2d6637639f9e3da153f23d6da9f44b2549061033d611275565b50903461036a57606036600319011261036a5760043582526000805160206117378339815191526020528082206109af611254565b9080548252600181015460208301526002810154838301526003810154936001600160801b03198560801b16606084015260ff8560801c169060068210156104b45750610acb939460ff91608085015260881c16610a0c81610fc4565b60a0830152600481015460c083015260018060a01b038060058301541660e084015260ff600683015482811661010086015260a01c1692610a4c84610fc4565b83610120820152600783015461014082015260088301546101608201526009830154610180820152600a8301546101a0820152600b8301546101c0820152610220600c840154926101e08301938452600e600d860154956102008501968752015416910152610aba83610fc4565b51916044359260243592519161162a565b82519182526020820152f35b50903461036a578060031936011261036a5761034f61036183602094610afb611275565b52610b07602435611437565b90610b10611275565b91825280610b1c611275565b5260043581527f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931e8652600885822001549061033d611275565b50903461036a578060031936011261036a57610b88602092610b756110cb565b90610b7e611275565b52602435906114c9565b905190518152f35b50903461036a57602036600319011261036a57602090610bea610bb16110cb565b6001600160a01b031660009081527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd106486020526040902090565b549051908152f35b50346102c857610c01366110e6565b9290610c0f6100d485611341565b84815293601f19610c1f82611341565b01845b818110610dcf575050835b818110610c81575050508281519160208080850192818652845180945285019301945b828110610c5d5784840385f35b9091928261024082610c726001948a51611133565b01960191019492919094610c50565b610c8c81838561137e565b35855260206000805160206117378339815191528152848620610cad611254565b91815483526001820154908301526002810154868301526003810154906080916001600160801b031981841b16606085015260ff908181851c1660069485821015610dbb57860152610db695949392600e92909160881c8116610d0f81610fc4565b60a086810191909152600483015460c087015260058301546001600160a01b0390811660e088015294830154808616610100880152901c16610d5081610fc4565b610120850152600781015461014085015260088101546101608501526009810154610180850152600a8101546101a0850152600b8101546101c0850152600c8101546101e0850152600d81015461020085015201541661022082015261029b82896113a4565b610c2d565b634e487b7160e01b8c52602160045260248cfd5b602090610dda6113b8565b82828a01015201610c22565b50903461036a57602036600319011261036a5760209181906001600160a01b03610e0e6110cb565b1681527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10647845220549051908152f35b50903461036a57602036600319011261036a576104b28161026093610e606112bb565b5060043581527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd106426020522091610e9461121d565b928054845260018101546020850152600281015482850152600e60038201549160ff8316610ec181610fa4565b606087015260ff8360081c16610ed681610fc4565b608087015260ff8360101c16610eeb81610fc4565b60a087015260018060a01b03809360181c1660c087015260ff600482015484811660e089015260a01c16610f1e81610fa4565b610100870152600581015461012087015260ff600682015416610f4081610fc4565b6101408701526007810154610160870152600881015461018087015260098101546101a0870152600a8101546101c0870152600b8101546101e0870152600c810154610200870152600d810154610220870152015416610240840152518092610fce565b60031115610fae57565b634e487b7160e01b600052602160045260246000fd5b60021115610fae57565b8051825260208101516020830152604081015160408301526060810151610ff481610fa4565b6060830152608081015161100781610fc4565b608083015260a081015161101a81610fc4565b60a083015260018060a01b038060c08301511660c08401528060e08301511660e0840152610100808301519061104f82610fa4565b8401526101208083015190840152610140808301519061106e82610fc4565b840152610160808301519084015261018080830151908401526101a080830151908401526101c080830151908401526101e08083015190840152610200808301519084015261022080830151908401526102408092015116910152565b600435906001600160a01b03821682036110e157565b600080fd5b9060206003198301126110e15760043567ffffffffffffffff928382116110e157806023830112156110e15781600401359384116110e15760248460051b830101116110e1576024019190565b8051825260208101516020830152604081015160408301526001600160801b0319606082015116606083015260808101516006811015610fae57608083015260a081015161118081610fc4565b60a083015260c081015160c083015260018060a01b038060e08301511660e08401526101008181840151169084015261012080830151906111c082610fc4565b8401526101408083015190840152610160808301519084015261018080830151908401526101a080830151908401526101c080830151908401526101e0808301519084015261020080830151908401526102208092015116910152565b60405190610260820182811067ffffffffffffffff82111761123e57604052565b634e487b7160e01b600052604160045260246000fd5b60405190610240820182811067ffffffffffffffff82111761123e57604052565b604051906020820182811067ffffffffffffffff82111761123e57604052565b6040519190601f01601f1916820167ffffffffffffffff81118382101761123e57604052565b6112c361121d565b9060008083528060208401528060408401528060608401528060808401528060a08401528060c08401528060e08401528061010084015280610120840152806101408401528061016084015280610180840152806101a0840152806101c0840152806101e08401528061020084015280610220840152610240830152565b67ffffffffffffffff811161123e5760051b60200190565b60001981146113685760010190565b634e487b7160e01b600052601160045260246000fd5b919081101561138e5760051b0190565b634e487b7160e01b600052603260045260246000fd5b805182101561138e5760209160051b010190565b6113c0611254565b9060008083528060208401528060408401528060608401528060808401528060a08401528060c08401528060e08401528061010084015280610120840152806101408401528061016084015280610180840152806101a0840152806101c0840152806101e084015280610200840152610220830152565b670de0b6b3a7640000908060001904821181151516611368570290565b8060001904821181151516611368570290565b670de0b6b3a76400009161148991600061147f611275565b5251905190611454565b04611492611275565b90815290565b81156114a2570490565b634e487b7160e01b600052601260045260246000fd5b600160ff1b81146113685760000390565b60009291836114d6611275565b5260018060a01b03821684527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd1064060205261154660408520549260018060a01b03166000527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10648602052604060002090565b54821580918192611608575b501561157b5750505090611564611275565b5261156d611275565b670de0b6b3a7640000815290565b6115d957838112156115ee57611590906114b8565b818110156115d95781038181116115c5576115b8906115bd93946115b2611275565b52611437565b611498565b611492611275565b634e487b7160e01b84526011600452602484fd5b505090806115e5611275565b52611492611275565b81018082116115c5576115b8906115bd93946115b2611275565b90501538611552565b8181039291600013801582851316918412161761136857565b93909392919284156117295761163f81610fc4565b6116b95750801561167457611660670de0b6b3a76400009161166694611454565b04611611565b905b611671826114b8565b90565b60405162461bcd60e51b815260206004820152601a60248201527f4f7261636c6520626964507269636520697320696e76616c69640000000000006044820152606490fd5b809150156116e4576116d7670de0b6b3a7640000916116de94611454565b0490611611565b90611668565b60405162461bcd60e51b815260206004820152601a60248201527f4f7261636c652061736b507269636520697320696e76616c69640000000000006044820152606490fd5b505050505060009060009056fedfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10645a164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

@@ -1,0 +1,461 @@
+{
+  "address": "0xD5284E3Ff7272164178997725BF099B219294167",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "CreateMarket",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "previousAdminRole",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "newAdminRole",
+          "type": "bytes32"
+        }
+      ],
+      "name": "RoleAdminChanged",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "RoleGranted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "bytes32",
+          "name": "role",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "sender",
+          "type": "address"
+        }
+      ],
+      "name": "RoleRevoked",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "oldStatus",
+          "type": "bool"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "newStatus",
+          "type": "bool"
+        }
+      ],
+      "name": "UpdateMarketActive",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "oldFundingRateId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "newFundingRateId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "UpdateMarketFundingRateId",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "oldIdentifier",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "newIdentifier",
+          "type": "string"
+        }
+      ],
+      "name": "UpdateMarketIdentifier",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "oldMuonPriceFeedId",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "newMuonPriceFeedId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "UpdateMarketMuonPriceFeedId",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "oldProtocolFee",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "newProtocolFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "UpdateProtocolFee",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "identifier",
+          "type": "string"
+        },
+        {
+          "internalType": "enum MarketType",
+          "name": "marketType",
+          "type": "uint8"
+        },
+        {
+          "internalType": "bool",
+          "name": "active",
+          "type": "bool"
+        },
+        {
+          "internalType": "string",
+          "name": "baseCurrency",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "quoteCurrency",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "muonPriceFeedId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "fundingRateId",
+          "type": "bytes32"
+        },
+        {
+          "internalType": "uint256",
+          "name": "protocolFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "createMarket",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market",
+          "name": "market",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "active",
+          "type": "bool"
+        }
+      ],
+      "name": "updateMarketActive",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "fundingRateId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "updateMarketFundingRateId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "identifier",
+          "type": "string"
+        }
+      ],
+      "name": "updateMarketIdentifier",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bytes32",
+          "name": "muonPriceFeedId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "updateMarketMuonPriceFeedId",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "protocolFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "updateMarketProtocolFee",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xeada877fac3fcdb86f6b5a6f4c943f2458c5eccbd0371105ad7280d984d05d71",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0xD5284E3Ff7272164178997725BF099B219294167",
+    "transactionIndex": 1,
+    "gasUsed": "6970439",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x723549eab403dfca4e41bcba4f65dec644a853cb323e0337dba31701145885a9",
+    "transactionHash": "0xeada877fac3fcdb86f6b5a6f4c943f2458c5eccbd0371105ad7280d984d05d71",
+    "logs": [],
+    "blockNumber": 48067649,
+    "cumulativeGasUsed": "6970439",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "be9232a782139b4a70c2c17c27752f91",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"CreateMarket\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"oldStatus\",\"type\":\"bool\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"newStatus\",\"type\":\"bool\"}],\"name\":\"UpdateMarketActive\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"oldFundingRateId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"newFundingRateId\",\"type\":\"bytes32\"}],\"name\":\"UpdateMarketFundingRateId\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"oldIdentifier\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"newIdentifier\",\"type\":\"string\"}],\"name\":\"UpdateMarketIdentifier\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"oldMuonPriceFeedId\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"newMuonPriceFeedId\",\"type\":\"bytes32\"}],\"name\":\"UpdateMarketMuonPriceFeedId\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"oldProtocolFee\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"newProtocolFee\",\"type\":\"uint256\"}],\"name\":\"UpdateProtocolFee\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"name\":\"createMarket\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market\",\"name\":\"market\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"}],\"name\":\"updateMarketActive\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"}],\"name\":\"updateMarketFundingRateId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"}],\"name\":\"updateMarketIdentifier\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"}],\"name\":\"updateMarketMuonPriceFeedId\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"name\":\"updateMarketProtocolFee\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/markets/MarketsOwnable.sol\":\"MarketsOwnable\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/Context.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Provides information about the current execution context, including the\\n * sender of the transaction and its data. While these are generally available\\n * via msg.sender and msg.data, they should not be accessed in such a direct\\n * manner, since when dealing with meta-transactions the account sending and\\n * paying for execution may not be the actual sender (as far as an application\\n * is concerned).\\n *\\n * This contract is only required for intermediate, library-like contracts.\\n */\\nabstract contract Context {\\n    function _msgSender() internal view virtual returns (address) {\\n        return msg.sender;\\n    }\\n\\n    function _msgData() internal view virtual returns (bytes calldata) {\\n        return msg.data;\\n    }\\n}\\n\",\"keccak256\":\"0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/Strings.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (utils/Strings.sol)\\n\\npragma solidity ^0.8.0;\\n\\nimport \\\"./math/Math.sol\\\";\\n\\n/**\\n * @dev String operations.\\n */\\nlibrary Strings {\\n    bytes16 private constant _SYMBOLS = \\\"0123456789abcdef\\\";\\n    uint8 private constant _ADDRESS_LENGTH = 20;\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` decimal representation.\\n     */\\n    function toString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            uint256 length = Math.log10(value) + 1;\\n            string memory buffer = new string(length);\\n            uint256 ptr;\\n            /// @solidity memory-safe-assembly\\n            assembly {\\n                ptr := add(buffer, add(32, length))\\n            }\\n            while (true) {\\n                ptr--;\\n                /// @solidity memory-safe-assembly\\n                assembly {\\n                    mstore8(ptr, byte(mod(value, 10), _SYMBOLS))\\n                }\\n                value /= 10;\\n                if (value == 0) break;\\n            }\\n            return buffer;\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.\\n     */\\n    function toHexString(uint256 value) internal pure returns (string memory) {\\n        unchecked {\\n            return toHexString(value, Math.log256(value) + 1);\\n        }\\n    }\\n\\n    /**\\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.\\n     */\\n    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {\\n        bytes memory buffer = new bytes(2 * length + 2);\\n        buffer[0] = \\\"0\\\";\\n        buffer[1] = \\\"x\\\";\\n        for (uint256 i = 2 * length + 1; i > 1; --i) {\\n            buffer[i] = _SYMBOLS[value & 0xf];\\n            value >>= 4;\\n        }\\n        require(value == 0, \\\"Strings: hex length insufficient\\\");\\n        return string(buffer);\\n    }\\n\\n    /**\\n     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.\\n     */\\n    function toHexString(address addr) internal pure returns (string memory) {\\n        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);\\n    }\\n}\\n\",\"keccak256\":\"0xa4d1d62251f8574deb032a35fc948386a9b4de74b812d4f545a1ac120486b48a\",\"license\":\"MIT\"},\"@openzeppelin/contracts/utils/math/Math.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.8.0) (utils/math/Math.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Standard math utilities missing in the Solidity language.\\n */\\nlibrary Math {\\n    enum Rounding {\\n        Down, // Toward negative infinity\\n        Up, // Toward infinity\\n        Zero // Toward zero\\n    }\\n\\n    /**\\n     * @dev Returns the largest of two numbers.\\n     */\\n    function max(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a > b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the smallest of two numbers.\\n     */\\n    function min(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a < b ? a : b;\\n    }\\n\\n    /**\\n     * @dev Returns the average of two numbers. The result is rounded towards\\n     * zero.\\n     */\\n    function average(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b) / 2 can overflow.\\n        return (a & b) + (a ^ b) / 2;\\n    }\\n\\n    /**\\n     * @dev Returns the ceiling of the division of two numbers.\\n     *\\n     * This differs from standard division with `/` in that it rounds up instead\\n     * of rounding down.\\n     */\\n    function ceilDiv(uint256 a, uint256 b) internal pure returns (uint256) {\\n        // (a + b - 1) / b can overflow on addition, so we distribute.\\n        return a == 0 ? 0 : (a - 1) / b + 1;\\n    }\\n\\n    /**\\n     * @notice Calculates floor(x * y / denominator) with full precision. Throws if result overflows a uint256 or denominator == 0\\n     * @dev Original credit to Remco Bloemen under MIT license (https://xn--2-umb.com/21/muldiv)\\n     * with further edits by Uniswap Labs also under MIT license.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator\\n    ) internal pure returns (uint256 result) {\\n        unchecked {\\n            // 512-bit multiply [prod1 prod0] = x * y. Compute the product mod 2^256 and mod 2^256 - 1, then use\\n            // use the Chinese Remainder Theorem to reconstruct the 512 bit result. The result is stored in two 256\\n            // variables such that product = prod1 * 2^256 + prod0.\\n            uint256 prod0; // Least significant 256 bits of the product\\n            uint256 prod1; // Most significant 256 bits of the product\\n            assembly {\\n                let mm := mulmod(x, y, not(0))\\n                prod0 := mul(x, y)\\n                prod1 := sub(sub(mm, prod0), lt(mm, prod0))\\n            }\\n\\n            // Handle non-overflow cases, 256 by 256 division.\\n            if (prod1 == 0) {\\n                return prod0 / denominator;\\n            }\\n\\n            // Make sure the result is less than 2^256. Also prevents denominator == 0.\\n            require(denominator > prod1);\\n\\n            ///////////////////////////////////////////////\\n            // 512 by 256 division.\\n            ///////////////////////////////////////////////\\n\\n            // Make division exact by subtracting the remainder from [prod1 prod0].\\n            uint256 remainder;\\n            assembly {\\n                // Compute remainder using mulmod.\\n                remainder := mulmod(x, y, denominator)\\n\\n                // Subtract 256 bit number from 512 bit number.\\n                prod1 := sub(prod1, gt(remainder, prod0))\\n                prod0 := sub(prod0, remainder)\\n            }\\n\\n            // Factor powers of two out of denominator and compute largest power of two divisor of denominator. Always >= 1.\\n            // See https://cs.stackexchange.com/q/138556/92363.\\n\\n            // Does not overflow because the denominator cannot be zero at this stage in the function.\\n            uint256 twos = denominator & (~denominator + 1);\\n            assembly {\\n                // Divide denominator by twos.\\n                denominator := div(denominator, twos)\\n\\n                // Divide [prod1 prod0] by twos.\\n                prod0 := div(prod0, twos)\\n\\n                // Flip twos such that it is 2^256 / twos. If twos is zero, then it becomes one.\\n                twos := add(div(sub(0, twos), twos), 1)\\n            }\\n\\n            // Shift in bits from prod1 into prod0.\\n            prod0 |= prod1 * twos;\\n\\n            // Invert denominator mod 2^256. Now that denominator is an odd number, it has an inverse modulo 2^256 such\\n            // that denominator * inv = 1 mod 2^256. Compute the inverse by starting with a seed that is correct for\\n            // four bits. That is, denominator * inv = 1 mod 2^4.\\n            uint256 inverse = (3 * denominator) ^ 2;\\n\\n            // Use the Newton-Raphson iteration to improve the precision. Thanks to Hensel's lifting lemma, this also works\\n            // in modular arithmetic, doubling the correct bits in each step.\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^8\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^16\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^32\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^64\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^128\\n            inverse *= 2 - denominator * inverse; // inverse mod 2^256\\n\\n            // Because the division is now exact we can divide by multiplying with the modular inverse of denominator.\\n            // This will give us the correct result modulo 2^256. Since the preconditions guarantee that the outcome is\\n            // less than 2^256, this is the final result. We don't need to compute the high bits of the result and prod1\\n            // is no longer required.\\n            result = prod0 * inverse;\\n            return result;\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates x * y / denominator with full precision, following the selected rounding direction.\\n     */\\n    function mulDiv(\\n        uint256 x,\\n        uint256 y,\\n        uint256 denominator,\\n        Rounding rounding\\n    ) internal pure returns (uint256) {\\n        uint256 result = mulDiv(x, y, denominator);\\n        if (rounding == Rounding.Up && mulmod(x, y, denominator) > 0) {\\n            result += 1;\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Returns the square root of a number. If the number is not a perfect square, the value is rounded down.\\n     *\\n     * Inspired by Henry S. Warren, Jr.'s \\\"Hacker's Delight\\\" (Chapter 11).\\n     */\\n    function sqrt(uint256 a) internal pure returns (uint256) {\\n        if (a == 0) {\\n            return 0;\\n        }\\n\\n        // For our first guess, we get the biggest power of 2 which is smaller than the square root of the target.\\n        //\\n        // We know that the \\\"msb\\\" (most significant bit) of our target number `a` is a power of 2 such that we have\\n        // `msb(a) <= a < 2*msb(a)`. This value can be written `msb(a)=2**k` with `k=log2(a)`.\\n        //\\n        // This can be rewritten `2**log2(a) <= a < 2**(log2(a) + 1)`\\n        // \\u2192 `sqrt(2**k) <= sqrt(a) < sqrt(2**(k+1))`\\n        // \\u2192 `2**(k/2) <= sqrt(a) < 2**((k+1)/2) <= 2**(k/2 + 1)`\\n        //\\n        // Consequently, `2**(log2(a) / 2)` is a good first approximation of `sqrt(a)` with at least 1 correct bit.\\n        uint256 result = 1 << (log2(a) >> 1);\\n\\n        // At this point `result` is an estimation with one bit of precision. We know the true value is a uint128,\\n        // since it is the square root of a uint256. Newton's method converges quadratically (precision doubles at\\n        // every iteration). We thus need at most 7 iteration to turn our partial result with one bit of precision\\n        // into the expected uint128 result.\\n        unchecked {\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            result = (result + a / result) >> 1;\\n            return min(result, a / result);\\n        }\\n    }\\n\\n    /**\\n     * @notice Calculates sqrt(a), following the selected rounding direction.\\n     */\\n    function sqrt(uint256 a, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = sqrt(a);\\n            return result + (rounding == Rounding.Up && result * result < a ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 128;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 64;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 32;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 16;\\n            }\\n            if (value >> 8 > 0) {\\n                value >>= 8;\\n                result += 8;\\n            }\\n            if (value >> 4 > 0) {\\n                value >>= 4;\\n                result += 4;\\n            }\\n            if (value >> 2 > 0) {\\n                value >>= 2;\\n                result += 2;\\n            }\\n            if (value >> 1 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 2, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log2(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log2(value);\\n            return result + (rounding == Rounding.Up && 1 << result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >= 10**64) {\\n                value /= 10**64;\\n                result += 64;\\n            }\\n            if (value >= 10**32) {\\n                value /= 10**32;\\n                result += 32;\\n            }\\n            if (value >= 10**16) {\\n                value /= 10**16;\\n                result += 16;\\n            }\\n            if (value >= 10**8) {\\n                value /= 10**8;\\n                result += 8;\\n            }\\n            if (value >= 10**4) {\\n                value /= 10**4;\\n                result += 4;\\n            }\\n            if (value >= 10**2) {\\n                value /= 10**2;\\n                result += 2;\\n            }\\n            if (value >= 10**1) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log10(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log10(value);\\n            return result + (rounding == Rounding.Up && 10**result < value ? 1 : 0);\\n        }\\n    }\\n\\n    /**\\n     * @dev Return the log in base 256, rounded down, of a positive value.\\n     * Returns 0 if given 0.\\n     *\\n     * Adding one to the result gives the number of pairs of hex symbols needed to represent `value` as a hex string.\\n     */\\n    function log256(uint256 value) internal pure returns (uint256) {\\n        uint256 result = 0;\\n        unchecked {\\n            if (value >> 128 > 0) {\\n                value >>= 128;\\n                result += 16;\\n            }\\n            if (value >> 64 > 0) {\\n                value >>= 64;\\n                result += 8;\\n            }\\n            if (value >> 32 > 0) {\\n                value >>= 32;\\n                result += 4;\\n            }\\n            if (value >> 16 > 0) {\\n                value >>= 16;\\n                result += 2;\\n            }\\n            if (value >> 8 > 0) {\\n                result += 1;\\n            }\\n        }\\n        return result;\\n    }\\n\\n    /**\\n     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.\\n     * Returns 0 if given 0.\\n     */\\n    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {\\n        unchecked {\\n            uint256 result = log256(value);\\n            return result + (rounding == Rounding.Up && 1 << (result * 8) < value ? 1 : 0);\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0xa1e8e83cd0087785df04ac79fb395d9f3684caeaf973d9e2c71caef723a3a5d6\",\"license\":\"MIT\"},\"contracts/access/roles/AccessControlInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Context } from \\\"@openzeppelin/contracts/utils/Context.sol\\\";\\r\\nimport { Strings } from \\\"@openzeppelin/contracts/utils/Strings.sol\\\";\\r\\n\\r\\nimport { AccessControlStorage } from \\\"./AccessControlStorage.sol\\\";\\r\\nimport { IAccessControlEvents } from \\\"./IAccessControlEvents.sol\\\";\\r\\n\\r\\nabstract contract AccessControlInternal is Context, IAccessControlEvents {\\r\\n    using AccessControlStorage for AccessControlStorage.Layout;\\r\\n\\r\\n    bytes32 internal constant ADMIN_ROLE = keccak256(\\\"ADMIN_ROLE\\\");\\r\\n    bytes32 internal constant PAUSER_ROLE = keccak256(\\\"PAUSER_ROLE\\\");\\r\\n    bytes32 internal constant REVENUE_ROLE = keccak256(\\\"REVENUE_ROLE\\\");\\r\\n    bytes32 internal constant EMERGENCY_ROLE = keccak256(\\\"EMERGENCY_ROLE\\\");\\r\\n\\r\\n    /**\\r\\n     * @dev Modifier that checks that an account has a specific role. Reverts\\r\\n     * with a standardized message including the required role.\\r\\n     *\\r\\n     * The format of the revert reason is given by the following regular expression:\\r\\n     *\\r\\n     *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/\\r\\n     *\\r\\n     * _Available since v4.1._\\r\\n     */\\r\\n    modifier onlyRole(bytes32 role) {\\r\\n        _checkRole(role);\\r\\n        _;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Returns `true` if `account` has been granted `role`.\\r\\n     */\\r\\n    function _hasRole(bytes32 role, address account) internal view virtual returns (bool) {\\r\\n        return AccessControlStorage.layout().roles[role].members[account];\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Revert with a standard message if `_msgSender()` is missing `role`.\\r\\n     * Overriding this function changes the behavior of the {onlyRole} modifier.\\r\\n     *\\r\\n     * Format of the revert message is described in {_checkRole}.\\r\\n     *\\r\\n     * _Available since v4.6._\\r\\n     */\\r\\n    function _checkRole(bytes32 role) internal view virtual {\\r\\n        _checkRole(role, _msgSender());\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Revert with a standard message if `account` is missing `role`.\\r\\n     *\\r\\n     * The format of the revert reason is given by the following regular expression:\\r\\n     *\\r\\n     *  /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/\\r\\n     */\\r\\n    function _checkRole(bytes32 role, address account) internal view virtual {\\r\\n        if (!_hasRole(role, account)) {\\r\\n            revert(\\r\\n                string(\\r\\n                    abi.encodePacked(\\r\\n                        \\\"AccessControl: account \\\",\\r\\n                        Strings.toHexString(account),\\r\\n                        \\\" is missing role \\\",\\r\\n                        Strings.toHexString(uint256(role), 32)\\r\\n                    )\\r\\n                )\\r\\n            );\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Returns the admin role that controls `role`. See {grantRole} and\\r\\n     * {revokeRole}.\\r\\n     *\\r\\n     * To change a role's admin, use {_setRoleAdmin}.\\r\\n     */\\r\\n    function _getRoleAdmin(bytes32 role) internal view virtual returns (bytes32) {\\r\\n        return AccessControlStorage.layout().roles[role].adminRole;\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Revokes `role` from the calling account.\\r\\n     *\\r\\n     * Roles are often managed via {grantRole} and {revokeRole}: this function's\\r\\n     * purpose is to provide a mechanism for accounts to lose their privileges\\r\\n     * if they are compromised (such as when a trusted device is misplaced).\\r\\n     *\\r\\n     * If the calling account had been revoked `role`, emits a {RoleRevoked}\\r\\n     * event.\\r\\n     *\\r\\n     * Requirements:\\r\\n     *\\r\\n     * - the caller must be `account`.\\r\\n     *\\r\\n     * May emit a {RoleRevoked} event.\\r\\n     */\\r\\n    function _renounceRole(bytes32 role, address account) internal virtual {\\r\\n        require(account == _msgSender(), \\\"AccessControl: can only renounce roles for self\\\");\\r\\n\\r\\n        _revokeRole(role, account);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Grants `role` to `account`.\\r\\n     *\\r\\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\\r\\n     * event. Note that unlike {grantRole}, this function doesn't perform any\\r\\n     * checks on the calling account.\\r\\n     *\\r\\n     * May emit a {RoleGranted} event.\\r\\n     *\\r\\n     * [WARNING]\\r\\n     * ====\\r\\n     * This function should only be called from the constructor when setting\\r\\n     * up the initial roles for the system.\\r\\n     *\\r\\n     * Using this function in any other way is effectively circumventing the admin\\r\\n     * system imposed by {AccessControl}.\\r\\n     * ====\\r\\n     *\\r\\n     * NOTE: This function is deprecated in favor of {_grantRole}.\\r\\n     */\\r\\n    function _setupRole(bytes32 role, address account) internal virtual {\\r\\n        _grantRole(role, account);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Sets `adminRole` as ``role``'s admin role.\\r\\n     *\\r\\n     * Emits a {RoleAdminChanged} event.\\r\\n     */\\r\\n    function _setRoleAdmin(bytes32 role, bytes32 adminRole) internal virtual {\\r\\n        bytes32 previousAdminRole = _getRoleAdmin(role);\\r\\n        AccessControlStorage.layout().roles[role].adminRole = adminRole;\\r\\n        emit RoleAdminChanged(role, previousAdminRole, adminRole);\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Grants `role` to `account`.\\r\\n     *\\r\\n     * Internal function without access restriction.\\r\\n     *\\r\\n     * May emit a {RoleGranted} event.\\r\\n     */\\r\\n    function _grantRole(bytes32 role, address account) internal virtual {\\r\\n        if (!_hasRole(role, account)) {\\r\\n            AccessControlStorage.layout().roles[role].members[account] = true;\\r\\n            emit RoleGranted(role, account, _msgSender());\\r\\n        }\\r\\n    }\\r\\n\\r\\n    /**\\r\\n     * @dev Revokes `role` from `account`.\\r\\n     *\\r\\n     * Internal function without access restriction.\\r\\n     *\\r\\n     * May emit a {RoleRevoked} event.\\r\\n     */\\r\\n    function _revokeRole(bytes32 role, address account) internal virtual {\\r\\n        if (_hasRole(role, account)) {\\r\\n            AccessControlStorage.layout().roles[role].members[account] = false;\\r\\n            emit RoleRevoked(role, account, _msgSender());\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x1b107ad19e23d3d2149631af45a05c117b08bdb1f873a4ab5906a6b9571fa964\",\"license\":\"BUSL-1.1\"},\"contracts/access/roles/AccessControlStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary AccessControlStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.access.roles\\\");\\r\\n\\r\\n    struct RoleData {\\r\\n        mapping(address => bool) members;\\r\\n        bytes32 adminRole;\\r\\n    }\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(bytes32 => RoleData) roles;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xf0763c1101b8c5bee0ccc09cae6709683dac74be5ee63f43db9a9c74072b8f29\",\"license\":\"BUSL-1.1\"},\"contracts/access/roles/IAccessControlEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\n/**\\r\\n * @dev External interface of AccessControl declared to support ERC165 detection.\\r\\n */\\r\\ninterface IAccessControlEvents {\\r\\n    /**\\r\\n     * @dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`\\r\\n     *\\r\\n     * `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite\\r\\n     * {RoleAdminChanged} not being emitted signaling this.\\r\\n     *\\r\\n     * _Available since v3.1._\\r\\n     */\\r\\n    event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole);\\r\\n\\r\\n    /**\\r\\n     * @dev Emitted when `account` is granted `role`.\\r\\n     *\\r\\n     * `sender` is the account that originated the contract call, an admin role\\r\\n     * bearer except when using {AccessControl-_setupRole}.\\r\\n     */\\r\\n    event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender);\\r\\n\\r\\n    /**\\r\\n     * @dev Emitted when `account` is revoked `role`.\\r\\n     *\\r\\n     * `sender` is the account that originated the contract call:\\r\\n     *   - if using `revokeRole`, it is the admin role bearer\\r\\n     *   - if using `renounceRole`, it is the role bearer (i.e. `account`)\\r\\n     */\\r\\n    event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender);\\r\\n}\\r\\n\",\"keccak256\":\"0x449e17d44d427e4d47631f3c5091ca5210e5a958a0fc89233ada6e1f206d3144\",\"license\":\"BUSL-1.1\"},\"contracts/libraries/LibEnums.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nenum MarketType {\\r\\n    FOREX,\\r\\n    METALS,\\r\\n    ENERGIES,\\r\\n    INDICES,\\r\\n    STOCKS,\\r\\n    COMMODITIES,\\r\\n    BONDS,\\r\\n    ETFS,\\r\\n    CRYPTO\\r\\n}\\r\\n\\r\\nenum Side {\\r\\n    BUY,\\r\\n    SELL\\r\\n}\\r\\n\\r\\nenum HedgerMode {\\r\\n    SINGLE,\\r\\n    HYBRID,\\r\\n    AUTO\\r\\n}\\r\\n\\r\\nenum OrderType {\\r\\n    LIMIT,\\r\\n    MARKET\\r\\n}\\r\\n\\r\\nenum PositionType {\\r\\n    ISOLATED,\\r\\n    CROSS\\r\\n}\\r\\n\",\"keccak256\":\"0xbedbd913c1366fd4d16201404d7cc37f9e662311ff71e9fff1cd1003ef91f03f\",\"license\":\"BUSL-1.1\"},\"contracts/markets/IMarketsEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\ninterface IMarketsEvents {\\r\\n    event CreateMarket(uint256 indexed marketId, uint256 timestamp);\\r\\n    event UpdateMarketIdentifier(uint256 indexed marketId, string oldIdentifier, string newIdentifier);\\r\\n    event UpdateMarketActive(uint256 indexed marketId, bool oldStatus, bool newStatus);\\r\\n    event UpdateMarketMuonPriceFeedId(uint256 indexed marketId, bytes32 oldMuonPriceFeedId, bytes32 newMuonPriceFeedId);\\r\\n    event UpdateMarketFundingRateId(uint256 indexed marketId, bytes32 oldFundingRateId, bytes32 newFundingRateId);\\r\\n    event UpdateProtocolFee(uint256 indexed marketId, uint256 oldProtocolFee, uint256 newProtocolFee);\\r\\n}\\r\\n\",\"keccak256\":\"0xea7579b235599d982cf29949d17b749aa58ab1d7156a42eff48360dbbe8352cc\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsOwnable.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { AccessControlInternal } from \\\"../access/roles/AccessControlInternal.sol\\\";\\r\\nimport { MarketsStorage, Market } from \\\"./MarketsStorage.sol\\\";\\r\\nimport { MarketType } from \\\"../libraries/LibEnums.sol\\\";\\r\\nimport { IMarketsEvents } from \\\"./IMarketsEvents.sol\\\";\\r\\n\\r\\ncontract MarketsOwnable is AccessControlInternal, IMarketsEvents {\\r\\n    using MarketsStorage for MarketsStorage.Layout;\\r\\n\\r\\n    function createMarket(\\r\\n        string calldata identifier,\\r\\n        MarketType marketType,\\r\\n        bool active,\\r\\n        string calldata baseCurrency,\\r\\n        string calldata quoteCurrency,\\r\\n        string calldata symbol,\\r\\n        bytes32 muonPriceFeedId,\\r\\n        bytes32 fundingRateId,\\r\\n        uint256 protocolFee\\r\\n    ) external onlyRole(ADMIN_ROLE) returns (Market memory market) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        uint256 currentMarketId = s.marketList.length + 1;\\r\\n        market = Market(\\r\\n            currentMarketId,\\r\\n            identifier,\\r\\n            marketType,\\r\\n            active,\\r\\n            baseCurrency,\\r\\n            quoteCurrency,\\r\\n            symbol,\\r\\n            muonPriceFeedId,\\r\\n            fundingRateId,\\r\\n            protocolFee\\r\\n        );\\r\\n\\r\\n        s.marketMap[currentMarketId] = market;\\r\\n        s.marketList.push(market);\\r\\n\\r\\n        emit CreateMarket(currentMarketId, block.timestamp);\\r\\n    }\\r\\n\\r\\n    function updateMarketIdentifier(uint256 marketId, string calldata identifier) external onlyRole(ADMIN_ROLE) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        string memory oldIdentifier = s.marketMap[marketId].identifier;\\r\\n        s.marketMap[marketId].identifier = identifier;\\r\\n\\r\\n        emit UpdateMarketIdentifier(marketId, oldIdentifier, identifier);\\r\\n    }\\r\\n\\r\\n    function updateMarketActive(uint256 marketId, bool active) external onlyRole(ADMIN_ROLE) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        bool oldStatus = s.marketMap[marketId].active;\\r\\n        s.marketMap[marketId].active = active;\\r\\n\\r\\n        emit UpdateMarketActive(marketId, oldStatus, active);\\r\\n    }\\r\\n\\r\\n    function updateMarketMuonPriceFeedId(uint256 marketId, bytes32 muonPriceFeedId) external onlyRole(ADMIN_ROLE) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        bytes32 oldMuonPriceFeedId = s.marketMap[marketId].muonPriceFeedId;\\r\\n        s.marketMap[marketId].muonPriceFeedId = muonPriceFeedId;\\r\\n\\r\\n        emit UpdateMarketMuonPriceFeedId(marketId, oldMuonPriceFeedId, muonPriceFeedId);\\r\\n    }\\r\\n\\r\\n    function updateMarketFundingRateId(uint256 marketId, bytes32 fundingRateId) external onlyRole(ADMIN_ROLE) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        bytes32 oldFundingRateId = s.marketMap[marketId].fundingRateId;\\r\\n        s.marketMap[marketId].fundingRateId = fundingRateId;\\r\\n\\r\\n        emit UpdateMarketFundingRateId(marketId, oldFundingRateId, fundingRateId);\\r\\n    }\\r\\n\\r\\n    function updateMarketProtocolFee(uint256 marketId, uint256 protocolFee) external onlyRole(ADMIN_ROLE) {\\r\\n        MarketsStorage.Layout storage s = MarketsStorage.layout();\\r\\n\\r\\n        uint256 oldProtocolFee = s.marketMap[marketId].protocolFee;\\r\\n        s.marketMap[marketId].protocolFee = protocolFee;\\r\\n\\r\\n        emit UpdateProtocolFee(marketId, oldProtocolFee, protocolFee);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xdfdedbdfe5381a8249a877defe1138565343dd2cfca4a6f50accad1f36963b39\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { MarketType } from \\\"../libraries/LibEnums.sol\\\";\\r\\n\\r\\nstruct Market {\\r\\n    uint256 marketId;\\r\\n    string identifier;\\r\\n    MarketType marketType;\\r\\n    bool active;\\r\\n    string baseCurrency;\\r\\n    string quoteCurrency;\\r\\n    string symbol;\\r\\n    bytes32 muonPriceFeedId;\\r\\n    bytes32 fundingRateId;\\r\\n    uint256 protocolFee;\\r\\n}\\r\\n\\r\\nlibrary MarketsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.markets.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(uint256 => Market) marketMap;\\r\\n        Market[] marketList;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x5e360238be1f82158114f4077a304abfdf950831638affa193270da06daad288\",\"license\":\"BUSL-1.1\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610016576110fc908161001c8239f35b600080fdfe6080604052600436101561001257600080fd5b60003560e01c806310a07016146107af5780634f2e5f491461073e5780636ef2d16a146103e0578063963f8af91461017e578063c6647344146101075763d7c957e11461005e57600080fd5b3461010257604036600319011261010257600435602435801515808203610102577fc47d7fc0207cc383fd148db1590be3c88e086e7be48df0da828cea0950aa06ff916040916100ac610d2e565b846000526000805160206110b08339815191526020526100f360ff600285600020015460081c1692600285600020019061ff00825491151560081b169061ff001916179055565b825191151582526020820152a2005b600080fd5b34610102576040366003190112610102576004357fb03cba1fd26bee931da9fac9c0a6b1ec951fa21622fb17480acb831a2a83ed6d6040602435610149610d2e565b836000526000805160206110b083398151915260205260088260002001549080600884600020015582519182526020820152a2005b346101025760403660031901126101025767ffffffffffffffff600435602435828111610102576101b3903690600401610836565b6101be939193610d2e565b826000526000805160206110b08339815191529060209282845260018060406000200193604051948560008254926101f584610932565b938484528a87821691826000146103c057505060011461037f575b5061021d925003866108c9565b86600052855280604060002001918311610369576102458361023f8454610932565b8461096c565b6000601f84116001146102de579183806102ae979695937f9c03a6328d629f71172140597db1ffd5a40f57775041acf95d3166bde24d4708999a956000936102d3575b501b906000198460031b1c19161790555b80604051958694604086526040860190610887565b9284840386860152818452858401376000828201850152601f01601f191601030190a2005b86013592508b610288565b601f1984169083600052866000209160005b8181106103545750918593916102ae9897967f9c03a6328d629f71172140597db1ffd5a40f57775041acf95d3166bde24d47089a9b96941061033a575b505082811b019055610299565b850135600019600386901b60f8161c19169055898061032d565b8a8301358455928401929188019188016102f0565b634e487b7160e01b600052604160045260246000fd5b915050600052858780600020856000915b8583106103a757505061021d93508201018b610210565b80919294505483858c0101520191018890858993610390565b60ff19168582015261021d95151560051b85010192508d91506102109050565b34610102576101203660031901126101025767ffffffffffffffff60043581811161010257610413903690600401610836565b9160096024351015610102576044359081151582036101025760643581811161010257610444903690600401610836565b91906084358281116101025761045e903690600401610836565b91909260a43590811161010257610479903690600401610836565b949095600061012060405161048d816108ac565b8281526060602082015282604082015282606082015260606080820152606060a0820152606060c08201528260e08201528261010082015201526104cf610d2e565b6000805160206110d0833981519152549760018901891161072857604051996104f78b6108ac565b60018a018b523690610508926108eb565b60208a015260243560408a0152151560608901523690610527926108eb565b60808701523690610537926108eb565b60a08501523690610547926108eb565b60c083015260c43560e083015260e43561010083015261010435610120830152600181016000526000805160206110b083398151915260205281604060002090610590916109c0565b6000805160206110d083398151915254680100000000000000008110156103695760018101806000805160206110d0833981519152558110156107125782600961060e926000805160206110d0833981519152600052027feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d5299016109c0565b7f3e2e072ef21daabbedc368a9324906dd19c6af3ae6342fc9dc775643134e2d1c60206001604051934285520192a260405190602082528051602083015260208101519061066a61014092836040860152610160850190610887565b9160408201519260098410156106fc576106dc61012091869560608701526060850151151560808701526106c76106b3608087015192601f1993848a83030160a08b0152610887565b60a0870151838983030160c08a0152610887565b9060c0860151908783030160e0880152610887565b9260e0810151610100860152610100810151828601520151908301520390f35b634e487b7160e01b600052602160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b346101025760407f2794f30f33f94b4afa0127a2678849ece3366233aabb816d910f55ff0723eb6a61076f36610820565b61077a939193610d2e565b836000526000805160206110b083398151915260205260078260002001549080600784600020015582519182526020820152a2005b346101025760407fe84cbed4a32641f1259eae04f63540988c6dc276f2f522482d82b6acc59805216107e036610820565b6107eb939193610d2e565b836000526000805160206110b083398151915260205260068260002001549080600684600020015582519182526020820152a2005b6040906003190112610102576004359060243590565b9181601f840112156101025782359167ffffffffffffffff8311610102576020838186019501011161010257565b60005b8381106108775750506000910152565b8181015183820152602001610867565b906020916108a081518092818552858086019101610864565b601f01601f1916010190565b610140810190811067ffffffffffffffff82111761036957604052565b90601f8019910116810190811067ffffffffffffffff82111761036957604052565b92919267ffffffffffffffff82116103695760405191610915601f8201601f1916602001846108c9565b829481845281830111610102578281602093846000960137010152565b90600182811c92168015610962575b602083101461094c57565b634e487b7160e01b600052602260045260246000fd5b91607f1691610941565b90601f811161097a57505050565b600091825260208220906020601f850160051c830194106109b6575b601f0160051c01915b8281106109ab57505050565b81815560010161099f565b9092508290610996565b908051825560018083016020918284015191825167ffffffffffffffff938482116103695781906109fb826109f58654610932565b8661096c565b8690601f8311600114610ccb57600092610cc0575b5050600019600383901b1c191690831b1790555b60408401516002860160098210156106fc578054606087015161ff0090151560081b1660ff9390931661ffff19909116179190911790556003908186016080860151805190858211610369578190610a80826109f58654610932565b8790601f8311600114610c5e57600092610c53575b505060001982861b1c191690831b1790555b6004860160a0860151805190858211610369578190610aca826109f58654610932565b8790601f8311600114610bf157600092610be6575b505060001982861b1c191690831b1790555b600586019360c0860151805194851161036957610b1885610b128854610932565b8861096c565b81601f8611600114610b7257509284809360089896936101209896600095610b67575b50501b92600019911b1c19161790555b60e0810151600685015561010081015160078501550151910155565b015193503880610b3b565b9294939190601f1985168760005284600020946000905b828210610bcf57505091859391610120989660089a98969410610bb5575b50505050811b019055610b4b565b01519060f884600019921b161c1916905538808080610ba7565b808986988294978701518155019701940190610b89565b015190503880610adf565b90859350601f1983169185600052896000209260005b8b828210610c3d5750508411610c25575b505050811b019055610af1565b015160001983881b60f8161c19169055388080610c18565b8385015186558997909501949384019301610c07565b015190503880610a95565b90859350601f1983169185600052896000209260005b8b828210610caa5750508411610c92575b505050811b019055610aa7565b015160001983881b60f8161c19169055388080610c85565b8385015186558997909501949384019301610c74565b015190503880610a10565b90859350601f1983169185600052886000209260005b8a828210610d185750508411610cff575b505050811b019055610a24565b015160001960f88460031b161c19169055388080610cf2565b8385015186558997909501949384019301610ce1565b3360009081527f179938346c9d0d47f15c493beff04da15f2603b3cb62e7f87fb5c030ea789419602090815260408083205490927fa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c217759160ff1615610d925750505050565b83519167ffffffffffffffff9033606085018381118682101761108a578752602a855285850191873684378551156110765760308353855191600192831015611062576078602188015360295b838111610ff85750610fb65790875193608085019085821090821117610fa257885260428452868401946060368737845115610f8e57603086538451821015610f8e5790607860218601536041915b818311610f2057505050610ede57610eda938693610ebe93610eaf604894610e869a519a8b957f416363657373436f6e74726f6c3a206163636f756e74200000000000000000008c8801525180926037880190610864565b8401917001034b99036b4b9b9b4b733903937b6329607d1b603784015251809386840190610864565b010360288101875201856108c9565b5192839262461bcd60e51b845260048401526024830190610887565b0390fd5b60648587519062461bcd60e51b825280600483015260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152fd5b909192600f81166010811015610f7a576f181899199a1a9b1b9c1cb0b131b232b360811b901a610f50858861109e565b5360041c928015610f6657600019019190610e2e565b634e487b7160e01b82526011600452602482fd5b634e487b7160e01b83526032600452602483fd5b634e487b7160e01b81526032600452602490fd5b634e487b7160e01b86526041600452602486fd5b60648789519062461bcd60e51b825280600483015260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152fd5b90600f8116601081101561104e576f181899199a1a9b1b9c1cb0b131b232b360811b901a611026838a61109e565b5360041c90801561103a5760001901610ddf565b634e487b7160e01b87526011600452602487fd5b634e487b7160e01b88526032600452602488fd5b634e487b7160e01b86526032600452602486fd5b634e487b7160e01b85526032600452602485fd5b634e487b7160e01b85526041600452602485fd5b90815181101561071257016020019056fe35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931e35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931fa164736f6c6343000810000a",
+  "deployedBytecode": "0x6080604052600436101561001257600080fd5b60003560e01c806310a07016146107af5780634f2e5f491461073e5780636ef2d16a146103e0578063963f8af91461017e578063c6647344146101075763d7c957e11461005e57600080fd5b3461010257604036600319011261010257600435602435801515808203610102577fc47d7fc0207cc383fd148db1590be3c88e086e7be48df0da828cea0950aa06ff916040916100ac610d2e565b846000526000805160206110b08339815191526020526100f360ff600285600020015460081c1692600285600020019061ff00825491151560081b169061ff001916179055565b825191151582526020820152a2005b600080fd5b34610102576040366003190112610102576004357fb03cba1fd26bee931da9fac9c0a6b1ec951fa21622fb17480acb831a2a83ed6d6040602435610149610d2e565b836000526000805160206110b083398151915260205260088260002001549080600884600020015582519182526020820152a2005b346101025760403660031901126101025767ffffffffffffffff600435602435828111610102576101b3903690600401610836565b6101be939193610d2e565b826000526000805160206110b08339815191529060209282845260018060406000200193604051948560008254926101f584610932565b938484528a87821691826000146103c057505060011461037f575b5061021d925003866108c9565b86600052855280604060002001918311610369576102458361023f8454610932565b8461096c565b6000601f84116001146102de579183806102ae979695937f9c03a6328d629f71172140597db1ffd5a40f57775041acf95d3166bde24d4708999a956000936102d3575b501b906000198460031b1c19161790555b80604051958694604086526040860190610887565b9284840386860152818452858401376000828201850152601f01601f191601030190a2005b86013592508b610288565b601f1984169083600052866000209160005b8181106103545750918593916102ae9897967f9c03a6328d629f71172140597db1ffd5a40f57775041acf95d3166bde24d47089a9b96941061033a575b505082811b019055610299565b850135600019600386901b60f8161c19169055898061032d565b8a8301358455928401929188019188016102f0565b634e487b7160e01b600052604160045260246000fd5b915050600052858780600020856000915b8583106103a757505061021d93508201018b610210565b80919294505483858c0101520191018890858993610390565b60ff19168582015261021d95151560051b85010192508d91506102109050565b34610102576101203660031901126101025767ffffffffffffffff60043581811161010257610413903690600401610836565b9160096024351015610102576044359081151582036101025760643581811161010257610444903690600401610836565b91906084358281116101025761045e903690600401610836565b91909260a43590811161010257610479903690600401610836565b949095600061012060405161048d816108ac565b8281526060602082015282604082015282606082015260606080820152606060a0820152606060c08201528260e08201528261010082015201526104cf610d2e565b6000805160206110d0833981519152549760018901891161072857604051996104f78b6108ac565b60018a018b523690610508926108eb565b60208a015260243560408a0152151560608901523690610527926108eb565b60808701523690610537926108eb565b60a08501523690610547926108eb565b60c083015260c43560e083015260e43561010083015261010435610120830152600181016000526000805160206110b083398151915260205281604060002090610590916109c0565b6000805160206110d083398151915254680100000000000000008110156103695760018101806000805160206110d0833981519152558110156107125782600961060e926000805160206110d0833981519152600052027feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d5299016109c0565b7f3e2e072ef21daabbedc368a9324906dd19c6af3ae6342fc9dc775643134e2d1c60206001604051934285520192a260405190602082528051602083015260208101519061066a61014092836040860152610160850190610887565b9160408201519260098410156106fc576106dc61012091869560608701526060850151151560808701526106c76106b3608087015192601f1993848a83030160a08b0152610887565b60a0870151838983030160c08a0152610887565b9060c0860151908783030160e0880152610887565b9260e0810151610100860152610100810151828601520151908301520390f35b634e487b7160e01b600052602160045260246000fd5b634e487b7160e01b600052603260045260246000fd5b634e487b7160e01b600052601160045260246000fd5b346101025760407f2794f30f33f94b4afa0127a2678849ece3366233aabb816d910f55ff0723eb6a61076f36610820565b61077a939193610d2e565b836000526000805160206110b083398151915260205260078260002001549080600784600020015582519182526020820152a2005b346101025760407fe84cbed4a32641f1259eae04f63540988c6dc276f2f522482d82b6acc59805216107e036610820565b6107eb939193610d2e565b836000526000805160206110b083398151915260205260068260002001549080600684600020015582519182526020820152a2005b6040906003190112610102576004359060243590565b9181601f840112156101025782359167ffffffffffffffff8311610102576020838186019501011161010257565b60005b8381106108775750506000910152565b8181015183820152602001610867565b906020916108a081518092818552858086019101610864565b601f01601f1916010190565b610140810190811067ffffffffffffffff82111761036957604052565b90601f8019910116810190811067ffffffffffffffff82111761036957604052565b92919267ffffffffffffffff82116103695760405191610915601f8201601f1916602001846108c9565b829481845281830111610102578281602093846000960137010152565b90600182811c92168015610962575b602083101461094c57565b634e487b7160e01b600052602260045260246000fd5b91607f1691610941565b90601f811161097a57505050565b600091825260208220906020601f850160051c830194106109b6575b601f0160051c01915b8281106109ab57505050565b81815560010161099f565b9092508290610996565b908051825560018083016020918284015191825167ffffffffffffffff938482116103695781906109fb826109f58654610932565b8661096c565b8690601f8311600114610ccb57600092610cc0575b5050600019600383901b1c191690831b1790555b60408401516002860160098210156106fc578054606087015161ff0090151560081b1660ff9390931661ffff19909116179190911790556003908186016080860151805190858211610369578190610a80826109f58654610932565b8790601f8311600114610c5e57600092610c53575b505060001982861b1c191690831b1790555b6004860160a0860151805190858211610369578190610aca826109f58654610932565b8790601f8311600114610bf157600092610be6575b505060001982861b1c191690831b1790555b600586019360c0860151805194851161036957610b1885610b128854610932565b8861096c565b81601f8611600114610b7257509284809360089896936101209896600095610b67575b50501b92600019911b1c19161790555b60e0810151600685015561010081015160078501550151910155565b015193503880610b3b565b9294939190601f1985168760005284600020946000905b828210610bcf57505091859391610120989660089a98969410610bb5575b50505050811b019055610b4b565b01519060f884600019921b161c1916905538808080610ba7565b808986988294978701518155019701940190610b89565b015190503880610adf565b90859350601f1983169185600052896000209260005b8b828210610c3d5750508411610c25575b505050811b019055610af1565b015160001983881b60f8161c19169055388080610c18565b8385015186558997909501949384019301610c07565b015190503880610a95565b90859350601f1983169185600052896000209260005b8b828210610caa5750508411610c92575b505050811b019055610aa7565b015160001983881b60f8161c19169055388080610c85565b8385015186558997909501949384019301610c74565b015190503880610a10565b90859350601f1983169185600052886000209260005b8a828210610d185750508411610cff575b505050811b019055610a24565b015160001960f88460031b161c19169055388080610cf2565b8385015186558997909501949384019301610ce1565b3360009081527f179938346c9d0d47f15c493beff04da15f2603b3cb62e7f87fb5c030ea789419602090815260408083205490927fa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c217759160ff1615610d925750505050565b83519167ffffffffffffffff9033606085018381118682101761108a578752602a855285850191873684378551156110765760308353855191600192831015611062576078602188015360295b838111610ff85750610fb65790875193608085019085821090821117610fa257885260428452868401946060368737845115610f8e57603086538451821015610f8e5790607860218601536041915b818311610f2057505050610ede57610eda938693610ebe93610eaf604894610e869a519a8b957f416363657373436f6e74726f6c3a206163636f756e74200000000000000000008c8801525180926037880190610864565b8401917001034b99036b4b9b9b4b733903937b6329607d1b603784015251809386840190610864565b010360288101875201856108c9565b5192839262461bcd60e51b845260048401526024830190610887565b0390fd5b60648587519062461bcd60e51b825280600483015260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152fd5b909192600f81166010811015610f7a576f181899199a1a9b1b9c1cb0b131b232b360811b901a610f50858861109e565b5360041c928015610f6657600019019190610e2e565b634e487b7160e01b82526011600452602482fd5b634e487b7160e01b83526032600452602483fd5b634e487b7160e01b81526032600452602490fd5b634e487b7160e01b86526041600452602486fd5b60648789519062461bcd60e51b825280600483015260248201527f537472696e67733a20686578206c656e67746820696e73756666696369656e746044820152fd5b90600f8116601081101561104e576f181899199a1a9b1b9c1cb0b131b232b360811b901a611026838a61109e565b5360041c90801561103a5760001901610ddf565b634e487b7160e01b87526011600452602487fd5b634e487b7160e01b88526032600452602488fd5b634e487b7160e01b86526032600452602486fd5b634e487b7160e01b85526032600452602485fd5b634e487b7160e01b85526041600452602485fd5b90815181101561071257016020019056fe35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931e35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931fa164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

@@ -27,7 +27,7 @@ contract CloseMarket is CloseBase {
 
         _updatePositionState(position, PositionState.MARKET_CLOSE_REQUESTED);
 
-        emit RequestCloseMarket(positionId, msg.sender, position.partyB);
+        emit RequestClosePosition(positionId, msg.sender, position.partyB);
     }
 
     function requestCloseMarketAll(uint256[] calldata positionIds) external {
@@ -46,6 +46,6 @@ contract CloseMarket is CloseBase {
 
         _updatePositionState(position, PositionState.OPEN);
 
-        emit CancelCloseMarket(positionId, msg.sender, position.partyB);
+        emit CancelClosePosition(positionId, msg.sender, position.partyB);
     }
 }

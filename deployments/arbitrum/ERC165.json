@@ -1,0 +1,64 @@
+{
+  "address": "0x55e0E462F7d17be413E9E045660E771a933f8B9E",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xefbafa59cccfc296b7ff94ed69e2b44462e3288d23501f5e5fa2f747b4ebacf4",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x55e0E462F7d17be413E9E045660E771a933f8B9E",
+    "transactionIndex": 1,
+    "gasUsed": "611666",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x8d9b977e36c6f3e6dddcfe13a0fbed5a461061f9d6f382d0a1b3b6b5ee6d3e42",
+    "transactionHash": "0xefbafa59cccfc296b7ff94ed69e2b44462e3288d23501f5e5fa2f747b4ebacf4",
+    "logs": [],
+    "blockNumber": 48067594,
+    "cumulativeGasUsed": "611666",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "be9232a782139b4a70c2c17c27752f91",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{\"supportsInterface(bytes4)\":{\"details\":\"Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section] to learn more about how these ids are created. This function call must use less than 30 000 gas.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/introspection/ERC165.sol\":\"ERC165\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/introspection/IERC165.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts v4.4.1 (utils/introspection/IERC165.sol)\\n\\npragma solidity ^0.8.0;\\n\\n/**\\n * @dev Interface of the ERC165 standard, as defined in the\\n * https://eips.ethereum.org/EIPS/eip-165[EIP].\\n *\\n * Implementers can declare support of contract interfaces, which can then be\\n * queried by others ({ERC165Checker}).\\n *\\n * For an implementation, see {ERC165}.\\n */\\ninterface IERC165 {\\n    /**\\n     * @dev Returns true if this contract implements the interface defined by\\n     * `interfaceId`. See the corresponding\\n     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]\\n     * to learn more about how these ids are created.\\n     *\\n     * This function call must use less than 30 000 gas.\\n     */\\n    function supportsInterface(bytes4 interfaceId) external view returns (bool);\\n}\\n\",\"keccak256\":\"0x447a5f3ddc18419d41ff92b3773fb86471b1db25773e07f877f548918a185bf1\",\"license\":\"MIT\"},\"contracts/introspection/ERC165.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { IERC165 } from \\\"@openzeppelin/contracts/utils/introspection/IERC165.sol\\\";\\r\\nimport { ERC165Storage } from \\\"./ERC165Storage.sol\\\";\\r\\n\\r\\ncontract ERC165 is IERC165 {\\r\\n    using ERC165Storage for ERC165Storage.Layout;\\r\\n\\r\\n    /**\\r\\n     * @inheritdoc IERC165\\r\\n     */\\r\\n    function supportsInterface(bytes4 interfaceId) public view returns (bool) {\\r\\n        return ERC165Storage.layout().isSupportedInterface(interfaceId);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x68c3fe7fe53476d73be0d98d973254a292b5062e75a54fb6438dbfe597ae11b2\",\"license\":\"BUSL-1.1\"},\"contracts/introspection/ERC165Storage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary ERC165Storage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.introspection.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(bytes4 => bool) supportedInterfaces;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function isSupportedInterface(Layout storage l, bytes4 interfaceId) internal view returns (bool) {\\r\\n        return l.supportedInterfaces[interfaceId];\\r\\n    }\\r\\n\\r\\n    function setSupportedInterface(Layout storage l, bytes4 interfaceId, bool status) internal {\\r\\n        require(interfaceId != 0xffffffff, \\\"ERC165: invalid interface id\\\");\\r\\n        l.supportedInterfaces[interfaceId] = status;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x7fdbd15d9126fed219c0ea61b243a581eb01e414b76c6ed34203234d82abf641\",\"license\":\"BUSL-1.1\"}},\"version\":1}",
+  "bytecode": "0x60808060405234610015576095908161001b8239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c6301ffc9a714602857600080fd5b34608457602036600319011260845760043563ffffffff60e01b811680910360805760408360ff92602095527f0a438a7a1f9a2584bc07ed93973b0247d34f9a1fc8d1966afb5667f23e00fcb0855220541615158152f35b8280fd5b5080fdfea164736f6c6343000810000a",
+  "deployedBytecode": "0x6080806040526004361015601257600080fd5b600090813560e01c6301ffc9a714602857600080fd5b34608457602036600319011260845760043563ffffffff60e01b811680910360805760408360ff92602095527f0a438a7a1f9a2584bc07ed93973b0247d34f9a1fc8d1966afb5667f23e00fcb0855220541615158152f35b8280fd5b5080fdfea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {
+      "supportsInterface(bytes4)": {
+        "details": "Returns true if this contract implements the interface defined by `interfaceId`. See the corresponding https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section] to learn more about how these ids are created. This function call must use less than 30 000 gas."
+      }
+    },
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

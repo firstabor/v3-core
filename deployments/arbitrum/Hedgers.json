@@ -1,0 +1,144 @@
+{
+  "address": "0x6ef32D75E85e32e176A3FC87d6b04E8FBC79b7f7",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "hedger",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "Enlist",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "enlist",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "addr",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Hedger",
+          "name": "hedger",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_hedger",
+          "type": "address"
+        }
+      ],
+      "name": "getHedgerByAddress",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "success",
+          "type": "bool"
+        },
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "addr",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Hedger",
+          "name": "hedger",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getHedgers",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "addr",
+              "type": "address"
+            }
+          ],
+          "internalType": "struct Hedger[]",
+          "name": "hedgerList",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getHedgersLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "length",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0xd73016411c926ae704d6c415bff8c6369537085597d139d1339c80041323ec84",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x6ef32D75E85e32e176A3FC87d6b04E8FBC79b7f7",
+    "transactionIndex": 3,
+    "gasUsed": "2393433",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x1539afe01bd608df36ee8584b34928b03db58adf9e5035c5e62c8f4df48a3981",
+    "transactionHash": "0xd73016411c926ae704d6c415bff8c6369537085597d139d1339c80041323ec84",
+    "logs": [],
+    "blockNumber": 48067639,
+    "cumulativeGasUsed": "3755574",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "be9232a782139b4a70c2c17c27752f91",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"hedger\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"}],\"name\":\"Enlist\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"enlist\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"internalType\":\"struct Hedger\",\"name\":\"hedger\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_hedger\",\"type\":\"address\"}],\"name\":\"getHedgerByAddress\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"success\",\"type\":\"bool\"},{\"components\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"internalType\":\"struct Hedger\",\"name\":\"hedger\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getHedgers\",\"outputs\":[{\"components\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"internalType\":\"struct Hedger[]\",\"name\":\"hedgerList\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getHedgersLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"length\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/hedgers/Hedgers.sol\":\"Hedgers\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"contracts/hedgers/Hedgers.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { HedgersStorage, Hedger } from \\\"./HedgersStorage.sol\\\";\\r\\nimport { HedgersInternal } from \\\"./HedgersInternal.sol\\\";\\r\\nimport { IHedgersEvents } from \\\"./IHedgersEvents.sol\\\";\\r\\n\\r\\ncontract Hedgers is IHedgersEvents {\\r\\n    using HedgersStorage for HedgersStorage.Layout;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getHedgerByAddress(address _hedger) external view returns (bool success, Hedger memory hedger) {\\r\\n        return HedgersInternal.getHedgerByAddress(_hedger);\\r\\n    }\\r\\n\\r\\n    function getHedgers() external view returns (Hedger[] memory hedgerList) {\\r\\n        return HedgersInternal.getHedgers();\\r\\n    }\\r\\n\\r\\n    function getHedgersLength() external view returns (uint256 length) {\\r\\n        return HedgersInternal.getHedgersLength();\\r\\n    }\\r\\n\\r\\n    /* ========== WRITES ========== */\\r\\n\\r\\n    function enlist() external returns (Hedger memory hedger) {\\r\\n        HedgersStorage.Layout storage s = HedgersStorage.layout();\\r\\n\\r\\n        require(msg.sender != address(0), \\\"Invalid address\\\");\\r\\n        require(s.hedgerMap[msg.sender].addr != msg.sender, \\\"Hedger already exists\\\");\\r\\n\\r\\n        hedger = Hedger(msg.sender);\\r\\n        s.hedgerMap[msg.sender] = hedger;\\r\\n        s.hedgerList.push(hedger);\\r\\n\\r\\n        emit Enlist(msg.sender, block.timestamp);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xbf75ddf0b304b5bea167e0d655f7caaddc15cf5e195cdc0628107595477ba0ee\",\"license\":\"BUSL-1.1\"},\"contracts/hedgers/HedgersInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { HedgersStorage, Hedger } from \\\"./HedgersStorage.sol\\\";\\r\\n\\r\\nlibrary HedgersInternal {\\r\\n    using HedgersStorage for HedgersStorage.Layout;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getHedgerByAddress(address _hedger) internal view returns (bool success, Hedger memory hedger) {\\r\\n        hedger = HedgersStorage.layout().hedgerMap[_hedger];\\r\\n        return hedger.addr == address(0) ? (false, hedger) : (true, hedger);\\r\\n    }\\r\\n\\r\\n    function getHedgerByAddressOrThrow(address partyB) internal view returns (Hedger memory) {\\r\\n        (bool success, Hedger memory hedger) = getHedgerByAddress(partyB);\\r\\n        require(success, \\\"Hedger is not valid\\\");\\r\\n        return hedger;\\r\\n    }\\r\\n\\r\\n    function getHedgers() internal view returns (Hedger[] memory hedgerList) {\\r\\n        return HedgersStorage.layout().hedgerList;\\r\\n    }\\r\\n\\r\\n    function getHedgersLength() internal view returns (uint256 length) {\\r\\n        return HedgersStorage.layout().hedgerList.length;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x2c25f40d23343e43476a766f252ccd16e3a548ec2474306188d690f3fb670a10\",\"license\":\"BUSL-1.1\"},\"contracts/hedgers/HedgersStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nstruct Hedger {\\r\\n    address addr;\\r\\n}\\r\\n\\r\\nlibrary HedgersStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.hedgers.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(address => Hedger) hedgerMap;\\r\\n        Hedger[] hedgerList;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xf0c59f2ceb28b82d6a33882478e78b2e7c0c0523bb29aab656842862ac96c29a\",\"license\":\"BUSL-1.1\"},\"contracts/hedgers/IHedgersEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\ninterface IHedgersEvents {\\r\\n    event Enlist(address indexed hedger, uint256 timestamp);\\r\\n}\\r\\n\",\"keccak256\":\"0xd2787f328ed265fff1cd82987248a669f66dfd79146ea08de6eddb26d766a630\",\"license\":\"BUSL-1.1\"}},\"version\":1}",
+  "bytecode": "0x608080604052346100165761048c908161001c8239f35b600080fdfe6040608081526004908136101561001557600080fd5b600091823560e01c9081631a120481146102495781638b9bf154146101d25781638e17e6721461008f575063abac43ac1461004f57600080fd5b3461008b578160031936011261008b576020907f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc09549051908152f35b5080fd5b8391503461008b578160031936011261008b577f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc099182549067ffffffffffffffff8083116101bf57855193600584901b603f01601f19168501918211858310176101ac5750855281835292835260209392848301929091827ff970b6702c63c22f8bbcf706780454e4c039fcdc4515bd56dc14c1a9fe61dfa3855b83831061017a575050505083519485948186019282875251809352850193925b82811061015957505050500390f35b8351516001600160a01b03168552869550938101939281019260010161014a565b600189819261018d9b9897999a9b610410565b838060a01b03865416815281520192019201919097969593949761012a565b634e487b7160e01b835260419052602482fd5b634e487b7160e01b825260418452602482fd5b8391503461008b57602036600319011261008b576001600160a01b0390358181168103610245576102169083610206610410565b5283610210610410565b52610446565b9181610220610410565b93541680845261023c57915b8351921515835251166020820152f35b5060019161022c565b8280fd5b83833461008b578160031936011261008b5781610264610410565b5233156103dc576001600160a01b0390338261027f82610446565b5416146103a25761028e610410565b923384526102be8461029f33610446565b905181546001600160a01b0319166001600160a01b0391909116179055565b7f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc098054916801000000000000000083101561038f576001830180835583101561037c575283517ff970b6702c63c22f8bbcf706780454e4c039fcdc4515bd56dc14c1a9fe61dfa390910180546001600160a01b0319166001600160a01b03929092169190911790556020935080514281527fda14b6ae972704c02b82267def02d758f6bcd90cc58ff960966dbe77831e1351853392a2519151168152f35b634e487b7160e01b815260328752602490fd5b634e487b7160e01b815260418752602490fd5b5162461bcd60e51b8152602081850152601560248201527448656467657220616c72656164792065786973747360581b6044820152606490fd5b5162461bcd60e51b8152602081840152600f60248201526e496e76616c6964206164647265737360881b6044820152606490fd5b604051906020820182811067ffffffffffffffff82111761043057604052565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b031660009081527f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc08602052604090209056fea164736f6c6343000810000a",
+  "deployedBytecode": "0x6040608081526004908136101561001557600080fd5b600091823560e01c9081631a120481146102495781638b9bf154146101d25781638e17e6721461008f575063abac43ac1461004f57600080fd5b3461008b578160031936011261008b576020907f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc09549051908152f35b5080fd5b8391503461008b578160031936011261008b577f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc099182549067ffffffffffffffff8083116101bf57855193600584901b603f01601f19168501918211858310176101ac5750855281835292835260209392848301929091827ff970b6702c63c22f8bbcf706780454e4c039fcdc4515bd56dc14c1a9fe61dfa3855b83831061017a575050505083519485948186019282875251809352850193925b82811061015957505050500390f35b8351516001600160a01b03168552869550938101939281019260010161014a565b600189819261018d9b9897999a9b610410565b838060a01b03865416815281520192019201919097969593949761012a565b634e487b7160e01b835260419052602482fd5b634e487b7160e01b825260418452602482fd5b8391503461008b57602036600319011261008b576001600160a01b0390358181168103610245576102169083610206610410565b5283610210610410565b52610446565b9181610220610410565b93541680845261023c57915b8351921515835251166020820152f35b5060019161022c565b8280fd5b83833461008b578160031936011261008b5781610264610410565b5233156103dc576001600160a01b0390338261027f82610446565b5416146103a25761028e610410565b923384526102be8461029f33610446565b905181546001600160a01b0319166001600160a01b0391909116179055565b7f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc098054916801000000000000000083101561038f576001830180835583101561037c575283517ff970b6702c63c22f8bbcf706780454e4c039fcdc4515bd56dc14c1a9fe61dfa390910180546001600160a01b0319166001600160a01b03929092169190911790556020935080514281527fda14b6ae972704c02b82267def02d758f6bcd90cc58ff960966dbe77831e1351853392a2519151168152f35b634e487b7160e01b815260328752602490fd5b634e487b7160e01b815260418752602490fd5b5162461bcd60e51b8152602081850152601560248201527448656467657220616c72656164792065786973747360581b6044820152606490fd5b5162461bcd60e51b8152602081840152600f60248201526e496e76616c6964206164647265737360881b6044820152606490fd5b604051906020820182811067ffffffffffffffff82111761043057604052565b634e487b7160e01b600052604160045260246000fd5b6001600160a01b031660009081527f384062a99499d8d9927d649ae9d11b36f5aa216d4c273609f3156fb5f5cfdc08602052604090209056fea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}

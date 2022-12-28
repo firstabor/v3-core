@@ -2,8 +2,8 @@
 pragma solidity ^0.8.16;
 
 interface ICloseEvents {
-    event RequestCloseMarket(uint256 indexed positionId, address partyA, address partyB);
-    event CancelCloseMarket(uint256 indexed positionId, address partyA, address partyB);
+    event RequestClosePosition(uint256 indexed positionId, address partyA, address partyB);
+    event CancelClosePosition(uint256 indexed positionId, address partyA, address partyB);
     event ClosePosition(
         uint256 indexed positionId,
         address partyA,

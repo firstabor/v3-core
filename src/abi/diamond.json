@@ -1278,7 +1278,7 @@
       { "indexed": false, "internalType": "address", "name": "partyA", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "partyB", "type": "address" }
     ],
-    "name": "CancelCloseMarket",
+    "name": "CancelClosePosition",
     "type": "event"
   },
   {
@@ -1300,7 +1300,7 @@
       { "indexed": false, "internalType": "address", "name": "partyA", "type": "address" },
       { "indexed": false, "internalType": "address", "name": "partyB", "type": "address" }
     ],
-    "name": "RequestCloseMarket",
+    "name": "RequestClosePosition",
     "type": "event"
   },
   {

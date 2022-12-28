@@ -1,0 +1,536 @@
+{
+  "address": "0x0c69E57Dd4b55c0b7C8F14fDf4efA69a0dEac762",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketById",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market",
+          "name": "market",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "positionId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketFromPositionId",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market",
+          "name": "market",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketProtocolFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMarkets",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market[]",
+          "name": "markets",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "marketIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getMarketsByIds",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market[]",
+          "name": "markets",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "positionIds",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "getMarketsFromPositionIds",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market[]",
+          "name": "markets",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "start",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "end",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarketsInRange",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "marketId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "identifier",
+              "type": "string"
+            },
+            {
+              "internalType": "enum MarketType",
+              "name": "marketType",
+              "type": "uint8"
+            },
+            {
+              "internalType": "bool",
+              "name": "active",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "baseCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "quoteCurrency",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "symbol",
+              "type": "string"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "muonPriceFeedId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bytes32",
+              "name": "fundingRateId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "uint256",
+              "name": "protocolFee",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Market[]",
+          "name": "markets",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getMarketsLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "length",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isActiveMarket",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "marketId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isValidMarketId",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    }
+  ],
+  "transactionHash": "0x71edb2ab13eec92cc2047eac5efb5a175a9a1b147a9aa26a8a7b9c2433b278df",
+  "receipt": {
+    "to": null,
+    "from": "0xeB73A6fB886c9e4C01F29da7B239e6E4Db0bf3aF",
+    "contractAddress": "0x0c69E57Dd4b55c0b7C8F14fDf4efA69a0dEac762",
+    "transactionIndex": 3,
+    "gasUsed": "4645542",
+    "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "blockHash": "0x539d407a9552ce37537f53bd609b7867e2373dd21b52b69d709b5b5acea770d7",
+    "transactionHash": "0x71edb2ab13eec92cc2047eac5efb5a175a9a1b147a9aa26a8a7b9c2433b278df",
+    "logs": [],
+    "blockNumber": 48067646,
+    "cumulativeGasUsed": "6703843",
+    "status": 1,
+    "byzantium": true
+  },
+  "args": [],
+  "numDeployments": 1,
+  "solcInputHash": "d90b29cf48681035a62a283f3cda4c3c",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"}],\"name\":\"getMarketById\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market\",\"name\":\"market\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"positionId\",\"type\":\"uint256\"}],\"name\":\"getMarketFromPositionId\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market\",\"name\":\"market\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"}],\"name\":\"getMarketProtocolFee\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMarkets\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market[]\",\"name\":\"markets\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"marketIds\",\"type\":\"uint256[]\"}],\"name\":\"getMarketsByIds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market[]\",\"name\":\"markets\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256[]\",\"name\":\"positionIds\",\"type\":\"uint256[]\"}],\"name\":\"getMarketsFromPositionIds\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market[]\",\"name\":\"markets\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"start\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"end\",\"type\":\"uint256\"}],\"name\":\"getMarketsInRange\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"identifier\",\"type\":\"string\"},{\"internalType\":\"enum MarketType\",\"name\":\"marketType\",\"type\":\"uint8\"},{\"internalType\":\"bool\",\"name\":\"active\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"baseCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"quoteCurrency\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"symbol\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"muonPriceFeedId\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"fundingRateId\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"protocolFee\",\"type\":\"uint256\"}],\"internalType\":\"struct Market[]\",\"name\":\"markets\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getMarketsLength\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"length\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"}],\"name\":\"isActiveMarket\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"marketId\",\"type\":\"uint256\"}],\"name\":\"isValidMarketId\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"contracts/markets/Markets.sol\":\"Markets\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"none\",\"useLiteralContent\":true},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[],\"viaIR\":true},\"sources\":{\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\n// OpenZeppelin Contracts (last updated v4.6.0) (utils/math/SafeMath.sol)\\n\\npragma solidity ^0.8.0;\\n\\n// CAUTION\\n// This version of SafeMath should only be used with Solidity 0.8 or later,\\n// because it relies on the compiler's built in overflow checks.\\n\\n/**\\n * @dev Wrappers over Solidity's arithmetic operations.\\n *\\n * NOTE: `SafeMath` is generally not needed starting with Solidity 0.8, since the compiler\\n * now has built in overflow checking.\\n */\\nlibrary SafeMath {\\n    /**\\n     * @dev Returns the addition of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            uint256 c = a + b;\\n            if (c < a) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b > a) return (false, 0);\\n            return (true, a - b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the\\n            // benefit is lost if 'b' is also tested.\\n            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522\\n            if (a == 0) return (true, 0);\\n            uint256 c = a * b;\\n            if (c / a != b) return (false, 0);\\n            return (true, c);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the division of two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a / b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.\\n     *\\n     * _Available since v3.4._\\n     */\\n    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {\\n        unchecked {\\n            if (b == 0) return (false, 0);\\n            return (true, a % b);\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the addition of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `+` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Addition cannot overflow.\\n     */\\n    function add(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a + b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting on\\n     * overflow (when the result is negative).\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a - b;\\n    }\\n\\n    /**\\n     * @dev Returns the multiplication of two unsigned integers, reverting on\\n     * overflow.\\n     *\\n     * Counterpart to Solidity's `*` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Multiplication cannot overflow.\\n     */\\n    function mul(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a * b;\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a / b;\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting when dividing by zero.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(uint256 a, uint256 b) internal pure returns (uint256) {\\n        return a % b;\\n    }\\n\\n    /**\\n     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on\\n     * overflow (when the result is negative).\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {trySub}.\\n     *\\n     * Counterpart to Solidity's `-` operator.\\n     *\\n     * Requirements:\\n     *\\n     * - Subtraction cannot overflow.\\n     */\\n    function sub(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b <= a, errorMessage);\\n            return a - b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the integer division of two unsigned integers, reverting with custom message on\\n     * division by zero. The result is rounded towards zero.\\n     *\\n     * Counterpart to Solidity's `/` operator. Note: this function uses a\\n     * `revert` opcode (which leaves remaining gas untouched) while Solidity\\n     * uses an invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function div(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a / b;\\n        }\\n    }\\n\\n    /**\\n     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),\\n     * reverting with custom message when dividing by zero.\\n     *\\n     * CAUTION: This function is deprecated because it requires allocating memory for the error\\n     * message unnecessarily. For custom revert reasons use {tryMod}.\\n     *\\n     * Counterpart to Solidity's `%` operator. This function uses a `revert`\\n     * opcode (which leaves remaining gas untouched) while Solidity uses an\\n     * invalid opcode to revert (consuming all remaining gas).\\n     *\\n     * Requirements:\\n     *\\n     * - The divisor cannot be zero.\\n     */\\n    function mod(\\n        uint256 a,\\n        uint256 b,\\n        string memory errorMessage\\n    ) internal pure returns (uint256) {\\n        unchecked {\\n            require(b > 0, errorMessage);\\n            return a % b;\\n        }\\n    }\\n}\\n\",\"keccak256\":\"0x0f633a0223d9a1dcccfcf38a64c9de0874dfcbfac0c6941ccf074d63a2ce0e1e\",\"license\":\"MIT\"},\"contracts/constants/ConstantsInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { ConstantsStorage } from \\\"./ConstantsStorage.sol\\\";\\r\\nimport { IConstantsEvents } from \\\"./IConstantsEvents.sol\\\";\\r\\n\\r\\nlibrary ConstantsInternal {\\r\\n    using ConstantsStorage for ConstantsStorage.Layout;\\r\\n    using Decimal for Decimal.D256;\\r\\n\\r\\n    uint256 private constant PERCENT_BASE = 1e18;\\r\\n    uint256 private constant PRECISION = 1e18;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getPrecision() internal pure returns (uint256) {\\r\\n        return PRECISION;\\r\\n    }\\r\\n\\r\\n    function getPercentBase() internal pure returns (uint256) {\\r\\n        return PERCENT_BASE;\\r\\n    }\\r\\n\\r\\n    function getCollateral() internal view returns (address) {\\r\\n        return ConstantsStorage.layout().collateral;\\r\\n    }\\r\\n\\r\\n    function getLiquidationFee() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().liquidationFee, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getProtocolLiquidationShare() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().protocolLiquidationShare, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getCVA() internal view returns (Decimal.D256 memory) {\\r\\n        return Decimal.ratio(ConstantsStorage.layout().cva, PERCENT_BASE);\\r\\n    }\\r\\n\\r\\n    function getRequestTimeout() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().requestTimeout;\\r\\n    }\\r\\n\\r\\n    function getMaxOpenPositionsCross() internal view returns (uint256) {\\r\\n        return ConstantsStorage.layout().maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    /* ========== SETTERS ========== */\\r\\n\\r\\n    function setCollateral(address collateral) internal {\\r\\n        ConstantsStorage.layout().collateral = collateral;\\r\\n    }\\r\\n\\r\\n    function setLiquidationFee(uint256 liquidationFee) internal {\\r\\n        ConstantsStorage.layout().liquidationFee = liquidationFee;\\r\\n    }\\r\\n\\r\\n    function setProtocolLiquidationShare(uint256 protocolLiquidationShare) internal {\\r\\n        ConstantsStorage.layout().protocolLiquidationShare = protocolLiquidationShare;\\r\\n    }\\r\\n\\r\\n    function setCVA(uint256 cva) internal {\\r\\n        ConstantsStorage.layout().cva = cva;\\r\\n    }\\r\\n\\r\\n    function setRequestTimeout(uint256 requestTimeout) internal {\\r\\n        ConstantsStorage.layout().requestTimeout = requestTimeout;\\r\\n    }\\r\\n\\r\\n    function setMaxOpenPositionsCross(uint256 maxOpenPositionsCross) internal {\\r\\n        ConstantsStorage.layout().maxOpenPositionsCross = maxOpenPositionsCross;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x2cfd838c49a4c1e59f64b2a006ea74fbfcf98a376350bb0b1130150b9cee5806\",\"license\":\"BUSL-1.1\"},\"contracts/constants/ConstantsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nlibrary ConstantsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.constants.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        address collateral;\\r\\n        uint256 liquidationFee;\\r\\n        uint256 protocolLiquidationShare;\\r\\n        uint256 cva;\\r\\n        uint256 requestTimeout;\\r\\n        uint256 maxOpenPositionsCross;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x95ca5941aa95afe59bee8f04990cb8bcb0eafb0e277a0f53fada8397e53c2baf\",\"license\":\"BUSL-1.1\"},\"contracts/constants/IConstantsEvents.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\ninterface IConstantsEvents {\\r\\n    event SetCollateral(address oldAddress, address newAddress);\\r\\n    event SetLiquidationFee(uint256 oldFee, uint256 newFee);\\r\\n    event SetProtocolLiquidationShare(uint256 oldShare, uint256 newShare);\\r\\n    event SetCVA(uint256 oldCVA, uint256 newCVA);\\r\\n    event SetRequestTimeout(uint256 oldTimeout, uint256 newTimeout);\\r\\n    event SetMaxOpenPositionsCross(uint256 oldMax, uint256 newMax);\\r\\n}\\r\\n\",\"keccak256\":\"0x556ffdc7440aa7317b606497a3ada3e6e71faa64d2ad3da56fd8f6591b289745\",\"license\":\"BUSL-1.1\"},\"contracts/libraries/LibDecimal.sol\":{\"content\":\"// SPDX-License-Identifier: MIT\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport \\\"@openzeppelin/contracts/utils/math/SafeMath.sol\\\";\\r\\n\\r\\n/**\\r\\n * @title Decimal\\r\\n * @author dYdX\\r\\n *\\r\\n * Library that defines a fixed-point number with 18 decimal places.\\r\\n */\\r\\nlibrary Decimal {\\r\\n    using SafeMath for uint256;\\r\\n\\r\\n    // ============ Constants ============\\r\\n\\r\\n    uint256 constant BASE = 10 ** 18;\\r\\n\\r\\n    // ============ Structs ============\\r\\n\\r\\n    struct D256 {\\r\\n        uint256 value;\\r\\n    }\\r\\n\\r\\n    // ============ Static Functions ============\\r\\n\\r\\n    function zero() internal pure returns (D256 memory) {\\r\\n        return D256({ value: 0 });\\r\\n    }\\r\\n\\r\\n    function one() internal pure returns (D256 memory) {\\r\\n        return D256({ value: BASE });\\r\\n    }\\r\\n\\r\\n    function from(uint256 a) internal pure returns (D256 memory) {\\r\\n        return D256({ value: a.mul(BASE) });\\r\\n    }\\r\\n\\r\\n    function ratio(uint256 a, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(a, BASE, b) });\\r\\n    }\\r\\n\\r\\n    // ============ Self Functions ============\\r\\n\\r\\n    function add(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE)) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, uint256 b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.mul(BASE), reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.mul(b) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.div(b) });\\r\\n    }\\r\\n\\r\\n    function pow(D256 memory self, uint256 b) internal pure returns (D256 memory) {\\r\\n        if (b == 0) {\\r\\n            return one();\\r\\n        }\\r\\n\\r\\n        D256 memory temp = D256({ value: self.value });\\r\\n        for (uint256 i = 1; i < b; ++i) {\\r\\n            temp = mul(temp, self);\\r\\n        }\\r\\n\\r\\n        return temp;\\r\\n    }\\r\\n\\r\\n    function add(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.add(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value) });\\r\\n    }\\r\\n\\r\\n    function sub(D256 memory self, D256 memory b, string memory reason) internal pure returns (D256 memory) {\\r\\n        return D256({ value: self.value.sub(b.value, reason) });\\r\\n    }\\r\\n\\r\\n    function mul(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, b.value, BASE) });\\r\\n    }\\r\\n\\r\\n    function div(D256 memory self, D256 memory b) internal pure returns (D256 memory) {\\r\\n        return D256({ value: getPartial(self.value, BASE, b.value) });\\r\\n    }\\r\\n\\r\\n    function equals(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return self.value == b.value;\\r\\n    }\\r\\n\\r\\n    function greaterThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 2;\\r\\n    }\\r\\n\\r\\n    function lessThan(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) == 0;\\r\\n    }\\r\\n\\r\\n    function greaterThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) > 0;\\r\\n    }\\r\\n\\r\\n    function lessThanOrEqualTo(D256 memory self, D256 memory b) internal pure returns (bool) {\\r\\n        return compareTo(self, b) < 2;\\r\\n    }\\r\\n\\r\\n    function isZero(D256 memory self) internal pure returns (bool) {\\r\\n        return self.value == 0;\\r\\n    }\\r\\n\\r\\n    function asUint256(D256 memory self) internal pure returns (uint256) {\\r\\n        return self.value.div(BASE);\\r\\n    }\\r\\n\\r\\n    // ============ Core Methods ============\\r\\n\\r\\n    function getPartial(uint256 target, uint256 numerator, uint256 denominator) private pure returns (uint256) {\\r\\n        return target.mul(numerator).div(denominator);\\r\\n    }\\r\\n\\r\\n    function compareTo(D256 memory a, D256 memory b) private pure returns (uint256) {\\r\\n        if (a.value == b.value) {\\r\\n            return 1;\\r\\n        }\\r\\n        return a.value > b.value ? 2 : 0;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0xfa323074357185fffcd95c964c95e25fbba23f2ac0fd542ea23333721457f3d5\",\"license\":\"MIT\"},\"contracts/libraries/LibEnums.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nenum MarketType {\\r\\n    FOREX,\\r\\n    METALS,\\r\\n    ENERGIES,\\r\\n    INDICES,\\r\\n    STOCKS,\\r\\n    COMMODITIES,\\r\\n    BONDS,\\r\\n    ETFS,\\r\\n    CRYPTO\\r\\n}\\r\\n\\r\\nenum Side {\\r\\n    BUY,\\r\\n    SELL\\r\\n}\\r\\n\\r\\nenum HedgerMode {\\r\\n    SINGLE,\\r\\n    HYBRID,\\r\\n    AUTO\\r\\n}\\r\\n\\r\\nenum OrderType {\\r\\n    LIMIT,\\r\\n    MARKET\\r\\n}\\r\\n\\r\\nenum PositionType {\\r\\n    ISOLATED,\\r\\n    CROSS\\r\\n}\\r\\n\",\"keccak256\":\"0xbedbd913c1366fd4d16201404d7cc37f9e662311ff71e9fff1cd1003ef91f03f\",\"license\":\"BUSL-1.1\"},\"contracts/markets/Markets.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { MarketsInternal } from \\\"./MarketsInternal.sol\\\";\\r\\nimport { Market } from \\\"./MarketsStorage.sol\\\";\\r\\n\\r\\ncontract Markets {\\r\\n    function getMarkets() external view returns (Market[] memory markets) {\\r\\n        return MarketsInternal.getMarkets();\\r\\n    }\\r\\n\\r\\n    function getMarketById(uint256 marketId) external view returns (Market memory market) {\\r\\n        return MarketsInternal.getMarketById(marketId);\\r\\n    }\\r\\n\\r\\n    function getMarketsByIds(uint256[] memory marketIds) external view returns (Market[] memory markets) {\\r\\n        return MarketsInternal.getMarketsByIds(marketIds);\\r\\n    }\\r\\n\\r\\n    function getMarketsInRange(uint256 start, uint256 end) external view returns (Market[] memory markets) {\\r\\n        return MarketsInternal.getMarketsInRange(start, end);\\r\\n    }\\r\\n\\r\\n    function getMarketsLength() external view returns (uint256 length) {\\r\\n        return MarketsInternal.getMarketsLength();\\r\\n    }\\r\\n\\r\\n    function getMarketFromPositionId(uint256 positionId) external view returns (Market memory market) {\\r\\n        return MarketsInternal.getMarketFromPositionId(positionId);\\r\\n    }\\r\\n\\r\\n    function getMarketsFromPositionIds(uint256[] calldata positionIds) external view returns (Market[] memory markets) {\\r\\n        return MarketsInternal.getMarketsFromPositionIds(positionIds);\\r\\n    }\\r\\n\\r\\n    function getMarketProtocolFee(uint256 marketId) external view returns (uint256) {\\r\\n        return MarketsInternal.getMarketProtocolFee(marketId).value;\\r\\n    }\\r\\n\\r\\n    function isValidMarketId(uint256 marketId) external pure returns (bool) {\\r\\n        return MarketsInternal.isValidMarketId(marketId);\\r\\n    }\\r\\n\\r\\n    function isActiveMarket(uint256 marketId) external view returns (bool) {\\r\\n        return MarketsInternal.isActiveMarket(marketId);\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x8146214d89bc1e250c84a793adea0a9cc39a9c399ba248ddb90d2354419b01b4\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsInternal.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { Decimal } from \\\"../libraries/LibDecimal.sol\\\";\\r\\nimport { ConstantsInternal } from \\\"../constants/ConstantsInternal.sol\\\";\\r\\nimport { MarketsStorage, Market } from \\\"./MarketsStorage.sol\\\";\\r\\nimport { MasterStorage } from \\\"../master-agreement/MasterStorage.sol\\\";\\r\\n\\r\\nlibrary MarketsInternal {\\r\\n    using MarketsStorage for MarketsStorage.Layout;\\r\\n    using MasterStorage for MasterStorage.Layout;\\r\\n    using Decimal for Decimal.D256;\\r\\n\\r\\n    /* ========== VIEWS ========== */\\r\\n\\r\\n    function getMarkets() internal view returns (Market[] memory markets) {\\r\\n        return MarketsStorage.layout().marketList;\\r\\n    }\\r\\n\\r\\n    function getMarketById(uint256 marketId) internal view returns (Market memory market) {\\r\\n        return MarketsStorage.layout().marketMap[marketId];\\r\\n    }\\r\\n\\r\\n    function getMarketsByIds(uint256[] memory marketIds) internal view returns (Market[] memory markets) {\\r\\n        markets = new Market[](marketIds.length);\\r\\n        for (uint256 i = 0; i < marketIds.length; i++) {\\r\\n            markets[i] = MarketsStorage.layout().marketMap[marketIds[i]];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketsInRange(uint256 start, uint256 end) internal view returns (Market[] memory markets) {\\r\\n        uint256 length = end - start;\\r\\n        markets = new Market[](length);\\r\\n\\r\\n        for (uint256 i = 0; i < length; i++) {\\r\\n            markets[i] = MarketsStorage.layout().marketList[start + i];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketsLength() internal view returns (uint256 length) {\\r\\n        return MarketsStorage.layout().marketList.length;\\r\\n    }\\r\\n\\r\\n    function getMarketFromPositionId(uint256 positionId) internal view returns (Market memory market) {\\r\\n        uint256 marketId = MasterStorage.layout().allPositionsMap[positionId].marketId;\\r\\n        market = MarketsStorage.layout().marketMap[marketId];\\r\\n    }\\r\\n\\r\\n    function getMarketsFromPositionIds(uint256[] calldata positionIds) internal view returns (Market[] memory markets) {\\r\\n        markets = new Market[](positionIds.length);\\r\\n        for (uint256 i = 0; i < positionIds.length; i++) {\\r\\n            uint256 marketId = MasterStorage.layout().allPositionsMap[positionIds[i]].marketId;\\r\\n            markets[i] = MarketsStorage.layout().marketMap[marketId];\\r\\n        }\\r\\n    }\\r\\n\\r\\n    function getMarketProtocolFee(uint256 marketId) internal view returns (Decimal.D256 memory) {\\r\\n        uint256 fee = MarketsStorage.layout().marketMap[marketId].protocolFee;\\r\\n        return Decimal.ratio(fee, ConstantsInternal.getPercentBase());\\r\\n    }\\r\\n\\r\\n    function isValidMarketId(uint256 marketId) internal pure returns (bool) {\\r\\n        return marketId > 0;\\r\\n    }\\r\\n\\r\\n    function isActiveMarket(uint256 marketId) internal view returns (bool) {\\r\\n        return MarketsStorage.layout().marketMap[marketId].active;\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x67254b706dbe914ce93051221ea3cf451e952a69ffda0f21a09e8503ce992e7f\",\"license\":\"BUSL-1.1\"},\"contracts/markets/MarketsStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { MarketType } from \\\"../libraries/LibEnums.sol\\\";\\r\\n\\r\\nstruct Market {\\r\\n    uint256 marketId;\\r\\n    string identifier;\\r\\n    MarketType marketType;\\r\\n    bool active;\\r\\n    string baseCurrency;\\r\\n    string quoteCurrency;\\r\\n    string symbol;\\r\\n    bytes32 muonPriceFeedId;\\r\\n    bytes32 fundingRateId;\\r\\n    uint256 protocolFee;\\r\\n}\\r\\n\\r\\nlibrary MarketsStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.markets.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        mapping(uint256 => Market) marketMap;\\r\\n        Market[] marketList;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x5e360238be1f82158114f4077a304abfdf950831638affa193270da06daad288\",\"license\":\"BUSL-1.1\"},\"contracts/master-agreement/MasterStorage.sol\":{\"content\":\"// SPDX-License-Identifier: BUSL-1.1\\r\\npragma solidity ^0.8.16;\\r\\n\\r\\nimport { PositionType, OrderType, HedgerMode, Side } from \\\"../libraries/LibEnums.sol\\\";\\r\\n\\r\\nenum RequestForQuoteState {\\r\\n    NEW,\\r\\n    CANCELED,\\r\\n    ACCEPTED\\r\\n}\\r\\n\\r\\nenum PositionState {\\r\\n    OPEN,\\r\\n    MARKET_CLOSE_REQUESTED,\\r\\n    LIMIT_CLOSE_REQUESTED,\\r\\n    LIMIT_CLOSE_ACTIVE,\\r\\n    CLOSED,\\r\\n    LIQUIDATED\\r\\n}\\r\\n\\r\\nstruct RequestForQuote {\\r\\n    uint256 creationTimestamp;\\r\\n    uint256 mutableTimestamp;\\r\\n    uint256 rfqId;\\r\\n    RequestForQuoteState state;\\r\\n    PositionType positionType;\\r\\n    OrderType orderType;\\r\\n    address partyA;\\r\\n    address partyB;\\r\\n    HedgerMode hedgerMode;\\r\\n    uint256 marketId;\\r\\n    Side side;\\r\\n    uint256 notionalUsd;\\r\\n    uint256 lockedMarginA;\\r\\n    uint256 protocolFee;\\r\\n    uint256 liquidationFee;\\r\\n    uint256 cva;\\r\\n    uint256 minExpectedUnits;\\r\\n    uint256 maxExpectedUnits;\\r\\n    address affiliate;\\r\\n}\\r\\n\\r\\nstruct Position {\\r\\n    uint256 creationTimestamp;\\r\\n    uint256 mutableTimestamp;\\r\\n    uint256 positionId;\\r\\n    bytes16 uuid;\\r\\n    PositionState state;\\r\\n    PositionType positionType;\\r\\n    uint256 marketId;\\r\\n    address partyA;\\r\\n    address partyB;\\r\\n    Side side;\\r\\n    uint256 lockedMarginA;\\r\\n    uint256 lockedMarginB;\\r\\n    uint256 protocolFeePaid;\\r\\n    uint256 liquidationFee;\\r\\n    uint256 cva;\\r\\n    uint256 currentBalanceUnits;\\r\\n    uint256 initialNotionalUsd;\\r\\n    address affiliate;\\r\\n}\\r\\n\\r\\nlibrary MasterStorage {\\r\\n    bytes32 internal constant STORAGE_SLOT = keccak256(\\\"diamond.standard.master.agreement.storage\\\");\\r\\n\\r\\n    struct Layout {\\r\\n        // Balances\\r\\n        mapping(address => uint256) accountBalances;\\r\\n        mapping(address => uint256) marginBalances;\\r\\n        mapping(address => uint256) crossLockedMargin;\\r\\n        mapping(address => uint256) crossLockedMarginReserved;\\r\\n        // RequestForQuotes\\r\\n        mapping(uint256 => RequestForQuote) requestForQuotesMap;\\r\\n        uint256 requestForQuotesLength;\\r\\n        mapping(address => uint256) crossRequestForQuotesLength;\\r\\n        // Positions\\r\\n        mapping(uint256 => Position) allPositionsMap;\\r\\n        uint256 allPositionsLength;\\r\\n        mapping(address => uint256) openPositionsIsolatedLength;\\r\\n        mapping(address => uint256) openPositionsCrossLength;\\r\\n    }\\r\\n\\r\\n    function layout() internal pure returns (Layout storage l) {\\r\\n        bytes32 slot = STORAGE_SLOT;\\r\\n        assembly {\\r\\n            l.slot := slot\\r\\n        }\\r\\n    }\\r\\n}\\r\\n\",\"keccak256\":\"0x439f652dd38496d2536237e4e8874286203a43b1ae0775aadf23182ad6d3e58d\",\"license\":\"BUSL-1.1\"}},\"version\":1}",
+  "bytecode": "0x6080806040523461001657610a8b908161001c8239f35b600080fdfe60806040908082526004908136101561001757600080fd5b600091823560e01c9182630d64cdbd146105e0575081632a6969fc146104f05781633df1c4101461045e57816344c70b85146103e857816355e27ecf146103c75781636e048ae9146102ef57816392ef292c146102b1578163a239675314610250578163dae87fba14610143575063ec2c90161461009457600080fd5b346101405780600319360112610140577f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f8054906100d18261068e565b926100de8551948561066c565b82845290815260207feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d52998185015b8484106101235786518061011f888261079e565b0390f35b60098360019261013285610921565b81520192019301929061010b565b80fd5b82843461024c578060031936011261024c57823560249081359481860395861161023a576101728693966109bf565b9480967f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f928354985b8681106101af5787518061011f8b8261079e565b808601808711610228578a81101561021657906101f6600961021193888852027feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d529901610921565b610200828c610a34565b5261020b818b610a34565b50610a0f565b61019b565b634e487b7160e01b8552603283528385fd5b634e487b7160e01b8552601183528385fd5b634e487b7160e01b8552601190528184fd5b5080fd5b839150346102ad5760203660031901126102ad578161011f9361029a92610275610800565b5061027e610800565b50358152600080516020610a5f83398151915260205220610921565b90519182916020835260208301906106e6565b8280fd5b82843461024c578160031936011261024c576020907f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f549051908152f35b905082346102ad57602091826003193601126103c35780359267ffffffffffffffff918285116103bf57366023860112156103bf57848101359283116103bf576024600595368286891b830101116103bb5761034a856109bf565b96885b8681106103615787518061011f8b8261079e565b80846103b692841b850101358b527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10645875285898c2001548b52600080516020610a5f83398151915287526101f6898c20610921565b61034d565b8780fd5b8580fd5b8380fd5b905082346102ad5760203660031901126102ad576020925051903515158152f35b839150346102ad5760203660031901126102ad578161011f9361029a9261040d610800565b50610416610800565b50803582527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd1064560205282822001548152600080516020610a5f83398151915260205220610921565b8383346101405760203660031901126101405780825161047d8161061d565b5282358152600080516020610a5f833981519152602052600882822001548183516104a78161061d565b52670de0b6b3a76400009181600019048311821515166104dd576020848480850204908181516104d68161061d565b5251908152f35b634e487b7160e01b815260118552602490fd5b905082346102ad57602092836003193601126101405782359267ffffffffffffffff841161024c573660238501121561024c57830135926105308461068e565b9361053d8451958661066c565b80855260248686019160051b830101913683116103c357906024879201905b8382106105d1575050505061057183516109bf565b93815b84518110156105c4578061058b6105bf9287610a34565b518452600080516020610a5f83398151915283526105aa858520610921565b6105b48289610a34565b5261020b8188610a34565b610574565b83518061011f888261079e565b8135815290820190820161055c565b848492346103c35760203660031901126103c357358352600080516020610a5f833981519152602090815292206002015460081c60ff1615158152f35b6020810190811067ffffffffffffffff82111761063957604052565b634e487b7160e01b600052604160045260246000fd5b610140810190811067ffffffffffffffff82111761063957604052565b90601f8019910116810190811067ffffffffffffffff82111761063957604052565b67ffffffffffffffff81116106395760051b60200190565b919082519283825260005b8481106106d2575050826000602080949584010152601f8019910116010190565b6020818301810151848301820152016106b1565b908151815261070460208301516101408060208501528301906106a6565b60408301519060098210156107885761074161075391610765936040860152606086015115156060860152608086015185820360808701526106a6565b60a085015184820360a08601526106a6565b60c084015183820360c08501526106a6565b9160e081015160e083015261010080820151908301526101208091015191015290565b634e487b7160e01b600052602160045260246000fd5b602080820190808352835180925260408301928160408460051b8301019501936000915b8483106107d25750505050505090565b90919293949584806107f0600193603f198682030187528a516106e6565b98019301930191949392906107c2565b6040519061080d8261064f565b816101206000918281526060602082015282604082015282606082015260606080820152606060a0820152606060c08201528260e0820152826101008201520152565b90604051906000835490600182811c90808416968715610917575b602094858410891461090357879884899798995290816000146108e157506001146108a2575b5050506108a09250038361066c565b565b600090815285812095935091905b8183106108c95750506108a09350820101388080610891565b855488840185015294850194879450918301916108b0565b925050506108a094925060ff191682840152151560051b820101388080610891565b634e487b7160e01b85526022600452602485fd5b91607f169161086b565b9060405161092e8161064f565b80928054825261094060018201610850565b6020830152600281015460ff81169160098310156107885760ff600892610120946040870152831c161515606085015261097c60038201610850565b608085015261098d60048201610850565b60a085015261099e60058201610850565b60c0850152600681015460e085015260078101546101008501520154910152565b906109c98261068e565b6109d6604051918261066c565b82815280926109e7601f199161068e565b019060005b8281106109f857505050565b602090610a03610800565b828285010152016109ec565b6000198114610a1e5760010190565b634e487b7160e01b600052601160045260246000fd5b8051821015610a485760209160051b010190565b634e487b7160e01b600052603260045260246000fdfe35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931ea164736f6c6343000810000a",
+  "deployedBytecode": "0x60806040908082526004908136101561001757600080fd5b600091823560e01c9182630d64cdbd146105e0575081632a6969fc146104f05781633df1c4101461045e57816344c70b85146103e857816355e27ecf146103c75781636e048ae9146102ef57816392ef292c146102b1578163a239675314610250578163dae87fba14610143575063ec2c90161461009457600080fd5b346101405780600319360112610140577f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f8054906100d18261068e565b926100de8551948561066c565b82845290815260207feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d52998185015b8484106101235786518061011f888261079e565b0390f35b60098360019261013285610921565b81520192019301929061010b565b80fd5b82843461024c578060031936011261024c57823560249081359481860395861161023a576101728693966109bf565b9480967f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f928354985b8681106101af5787518061011f8b8261079e565b808601808711610228578a81101561021657906101f6600961021193888852027feb21176ac14497952fa1c3562b72ff4d112b01e8e843fa616cbfb607b14d529901610921565b610200828c610a34565b5261020b818b610a34565b50610a0f565b61019b565b634e487b7160e01b8552603283528385fd5b634e487b7160e01b8552601183528385fd5b634e487b7160e01b8552601190528184fd5b5080fd5b839150346102ad5760203660031901126102ad578161011f9361029a92610275610800565b5061027e610800565b50358152600080516020610a5f83398151915260205220610921565b90519182916020835260208301906106e6565b8280fd5b82843461024c578160031936011261024c576020907f35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931f549051908152f35b905082346102ad57602091826003193601126103c35780359267ffffffffffffffff918285116103bf57366023860112156103bf57848101359283116103bf576024600595368286891b830101116103bb5761034a856109bf565b96885b8681106103615787518061011f8b8261079e565b80846103b692841b850101358b527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd10645875285898c2001548b52600080516020610a5f83398151915287526101f6898c20610921565b61034d565b8780fd5b8580fd5b8380fd5b905082346102ad5760203660031901126102ad576020925051903515158152f35b839150346102ad5760203660031901126102ad578161011f9361029a9261040d610800565b50610416610800565b50803582527fdfc6b7cb23f07b62775a228b58db9a36de27f3d727948dc10389611c6fd1064560205282822001548152600080516020610a5f83398151915260205220610921565b8383346101405760203660031901126101405780825161047d8161061d565b5282358152600080516020610a5f833981519152602052600882822001548183516104a78161061d565b52670de0b6b3a76400009181600019048311821515166104dd576020848480850204908181516104d68161061d565b5251908152f35b634e487b7160e01b815260118552602490fd5b905082346102ad57602092836003193601126101405782359267ffffffffffffffff841161024c573660238501121561024c57830135926105308461068e565b9361053d8451958661066c565b80855260248686019160051b830101913683116103c357906024879201905b8382106105d1575050505061057183516109bf565b93815b84518110156105c4578061058b6105bf9287610a34565b518452600080516020610a5f83398151915283526105aa858520610921565b6105b48289610a34565b5261020b8188610a34565b610574565b83518061011f888261079e565b8135815290820190820161055c565b848492346103c35760203660031901126103c357358352600080516020610a5f833981519152602090815292206002015460081c60ff1615158152f35b6020810190811067ffffffffffffffff82111761063957604052565b634e487b7160e01b600052604160045260246000fd5b610140810190811067ffffffffffffffff82111761063957604052565b90601f8019910116810190811067ffffffffffffffff82111761063957604052565b67ffffffffffffffff81116106395760051b60200190565b919082519283825260005b8481106106d2575050826000602080949584010152601f8019910116010190565b6020818301810151848301820152016106b1565b908151815261070460208301516101408060208501528301906106a6565b60408301519060098210156107885761074161075391610765936040860152606086015115156060860152608086015185820360808701526106a6565b60a085015184820360a08601526106a6565b60c084015183820360c08501526106a6565b9160e081015160e083015261010080820151908301526101208091015191015290565b634e487b7160e01b600052602160045260246000fd5b602080820190808352835180925260408301928160408460051b8301019501936000915b8483106107d25750505050505090565b90919293949584806107f0600193603f198682030187528a516106e6565b98019301930191949392906107c2565b6040519061080d8261064f565b816101206000918281526060602082015282604082015282606082015260606080820152606060a0820152606060c08201528260e0820152826101008201520152565b90604051906000835490600182811c90808416968715610917575b602094858410891461090357879884899798995290816000146108e157506001146108a2575b5050506108a09250038361066c565b565b600090815285812095935091905b8183106108c95750506108a09350820101388080610891565b855488840185015294850194879450918301916108b0565b925050506108a094925060ff191682840152151560051b820101388080610891565b634e487b7160e01b85526022600452602485fd5b91607f169161086b565b9060405161092e8161064f565b80928054825261094060018201610850565b6020830152600281015460ff81169160098310156107885760ff600892610120946040870152831c161515606085015261097c60038201610850565b608085015261098d60048201610850565b60a085015261099e60058201610850565b60c0850152600681015460e085015260078101546101008501520154910152565b906109c98261068e565b6109d6604051918261066c565b82815280926109e7601f199161068e565b019060005b8281106109f857505050565b602090610a03610800565b828285010152016109ec565b6000198114610a1e5760010190565b634e487b7160e01b600052601160045260246000fd5b8051821015610a485760209160051b010190565b634e487b7160e01b600052603260045260246000fdfe35cc72510b152d9944ca07ae5bfb481ff4b7afbbbd870172068c721dd022931ea164736f6c6343000810000a",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  },
+  "storageLayout": {
+    "storage": [],
+    "types": null
+  }
+}
