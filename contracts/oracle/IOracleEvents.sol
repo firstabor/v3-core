@@ -6,4 +6,5 @@ interface IOracleEvents {
     event SetMuonAppCID(bytes oldCID, bytes newCID);
     event SetMuonPublicKey(uint256 oldX, uint8 oldParity, uint256 newX, uint8 newParity);
     event SetMuonGatewaySigner(address oldSigner, address newSigner);
+    event SetSignatureExpiryPeriod(uint256 oldPeriod, uint256 newPeriod);
 }
