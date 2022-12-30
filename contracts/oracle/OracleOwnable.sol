@@ -27,4 +27,9 @@ contract OracleOwnable is AccessControlInternal, IOracleEvents {
         emit SetMuonGatewaySigner(OracleInternal.getMuonGatewaySigner(), muonGatewaySigner);
         OracleInternal.setMuonGatewaySigner(muonGatewaySigner);
     }
+
+    function setSignatureExpiryPeriod(uint256 signatureExpiryPeriod) external onlyRole(ADMIN_ROLE) {
+        emit SetSignatureExpiryPeriod(OracleInternal.getSignatureExpiryPeriod(), signatureExpiryPeriod);
+        OracleInternal.setSignatureExpiryPeriod(signatureExpiryPeriod);
+    }
 }

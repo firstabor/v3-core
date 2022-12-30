@@ -27,6 +27,10 @@ library OracleInternal {
         return OracleStorage.layout().muonGatewaySigner;
     }
 
+    function getSignatureExpiryPeriod() internal view returns (uint256) {
+        return OracleStorage.layout().signatureExpiryPeriod;
+    }
+
     function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) internal view {
         (uint256 muonAppId, bytes memory muonAppCID, PublicKey memory muonPublicKey, ) = _getMuonConstants();
 
@@ -55,13 +59,17 @@ library OracleInternal {
         uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) internal view {
         (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();
+        require(timestamp + getSignatureExpiryPeriod() >= block.timestamp, "Signature expired");
 
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionId, bidPrice, askPrice));
+        bytes32 hash = keccak256(
+            abi.encodePacked(muonAppId, reqId, muonAppCID, positionId, bidPrice, askPrice, timestamp)
+        );
         verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
@@ -69,13 +77,17 @@ library OracleInternal {
         uint256[] memory positionIds,
         uint256[] memory bidPrices,
         uint256[] memory askPrices,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) internal view {
         (uint256 muonAppId, bytes memory muonAppCID, , ) = _getMuonConstants();
+        require(timestamp + getSignatureExpiryPeriod() >= block.timestamp, "Signature expired");
 
-        bytes32 hash = keccak256(abi.encodePacked(muonAppId, reqId, muonAppCID, positionIds, bidPrices, askPrices));
+        bytes32 hash = keccak256(
+            abi.encodePacked(muonAppId, reqId, muonAppCID, positionIds, bidPrices, askPrices, timestamp)
+        );
         verifyTSSAndGatewayOrThrow(hash, sign, gatewaySignature);
     }
 
@@ -119,6 +131,10 @@ library OracleInternal {
 
     function setMuonGatewaySigner(address muonGatewaySigner) internal {
         OracleStorage.layout().muonGatewaySigner = muonGatewaySigner;
+    }
+
+    function setSignatureExpiryPeriod(uint256 signatureExpiryPeriod) internal {
+        OracleStorage.layout().signatureExpiryPeriod = signatureExpiryPeriod;
     }
 
     /* ========== PRIVATE ========== */

@@ -26,6 +26,7 @@ library OracleStorage {
         bytes muonAppCID;
         PublicKey muonPublicKey;
         address muonGatewaySigner;
+        uint256 signatureExpiryPeriod;
     }
 
     function layout() internal pure returns (Layout storage l) {

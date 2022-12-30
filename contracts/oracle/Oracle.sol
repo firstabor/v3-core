@@ -21,6 +21,10 @@ contract Oracle {
         return OracleInternal.getMuonGatewaySigner();
     }
 
+    function getSignatureExpiryPeriod() external view returns (uint256) {
+        return OracleInternal.getSignatureExpiryPeriod();
+    }
+
     function verifyTSSOrThrow(string calldata data, bytes calldata reqId, SchnorrSign calldata sign) external view {
         OracleInternal.verifyTSSOrThrow(data, reqId, sign);
     }
@@ -37,21 +41,39 @@ contract Oracle {
         uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) external view {
-        OracleInternal.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sign, gatewaySignature);
+        OracleInternal.verifyPositionPriceOrThrow(
+            positionId,
+            bidPrice,
+            askPrice,
+            timestamp,
+            reqId,
+            sign,
+            gatewaySignature
+        );
     }
 
     function verifyPositionPricesOrThrow(
         uint256[] memory positionIds,
         uint256[] memory bidPrices,
         uint256[] memory askPrices,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
     ) external view {
-        OracleInternal.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, sign, gatewaySignature);
+        OracleInternal.verifyPositionPricesOrThrow(
+            positionIds,
+            bidPrices,
+            askPrices,
+            timestamp,
+            reqId,
+            sign,
+            gatewaySignature
+        );
     }
 }

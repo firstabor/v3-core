@@ -44,6 +44,7 @@ contract Liquidations is ILiquidationsEvents {
         uint256 positionId,
         uint256 bidPrice,
         uint256 askPrice,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
@@ -52,7 +53,15 @@ contract Liquidations is ILiquidationsEvents {
         Position memory position = s.allPositionsMap[positionId];
 
         // Verify oracle signatures
-        OracleInternal.verifyPositionPriceOrThrow(positionId, bidPrice, askPrice, reqId, sign, gatewaySignature);
+        OracleInternal.verifyPositionPriceOrThrow(
+            positionId,
+            bidPrice,
+            askPrice,
+            timestamp,
+            reqId,
+            sign,
+            gatewaySignature
+        );
 
         // Check if the position should be liquidated
         (bool shouldBeLiquidated, int256 uPnLA, ) = LiquidationsInternal.positionShouldBeLiquidatedIsolated(
@@ -131,6 +140,7 @@ contract Liquidations is ILiquidationsEvents {
         uint256[] calldata positionIds,
         uint256[] calldata bidPrices,
         uint256[] calldata askPrices,
+        uint256 timestamp,
         bytes calldata reqId,
         SchnorrSign calldata sign,
         bytes calldata gatewaySignature
@@ -138,7 +148,15 @@ contract Liquidations is ILiquidationsEvents {
         MasterStorage.Layout storage s = MasterStorage.layout();
 
         // Verify oracle signatures
-        OracleInternal.verifyPositionPricesOrThrow(positionIds, bidPrices, askPrices, reqId, sign, gatewaySignature);
+        OracleInternal.verifyPositionPricesOrThrow(
+            positionIds,
+            bidPrices,
+            askPrices,
+            timestamp,
+            reqId,
+            sign,
+            gatewaySignature
+        );
 
         // Check if all positionIds are provided by length
         require(positionIds.length == s.openPositionsCrossLength[partyA], "Invalid positionIds length");

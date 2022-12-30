@@ -956,6 +956,7 @@
       { "internalType": "uint256[]", "name": "positionIds", "type": "uint256[]" },
       { "internalType": "uint256[]", "name": "bidPrices", "type": "uint256[]" },
       { "internalType": "uint256[]", "name": "askPrices", "type": "uint256[]" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
       { "internalType": "bytes", "name": "reqId", "type": "bytes" },
       {
         "components": [
@@ -979,6 +980,7 @@
       { "internalType": "uint256", "name": "positionId", "type": "uint256" },
       { "internalType": "uint256", "name": "bidPrice", "type": "uint256" },
       { "internalType": "uint256", "name": "askPrice", "type": "uint256" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
       { "internalType": "bytes", "name": "reqId", "type": "bytes" },
       {
         "components": [
@@ -1521,10 +1523,18 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getSignatureExpiryPeriod",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "uint256", "name": "positionId", "type": "uint256" },
       { "internalType": "uint256", "name": "bidPrice", "type": "uint256" },
       { "internalType": "uint256", "name": "askPrice", "type": "uint256" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
       { "internalType": "bytes", "name": "reqId", "type": "bytes" },
       {
         "components": [
@@ -1548,6 +1558,7 @@
       { "internalType": "uint256[]", "name": "positionIds", "type": "uint256[]" },
       { "internalType": "uint256[]", "name": "bidPrices", "type": "uint256[]" },
       { "internalType": "uint256[]", "name": "askPrices", "type": "uint256[]" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" },
       { "internalType": "bytes", "name": "reqId", "type": "bytes" },
       {
         "components": [
@@ -1645,6 +1656,15 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "oldPeriod", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "newPeriod", "type": "uint256" }
+    ],
+    "name": "SetSignatureExpiryPeriod",
+    "type": "event"
+  },
+  {
     "inputs": [{ "internalType": "bytes", "name": "muonAppCID", "type": "bytes" }],
     "name": "setMuonAppCID",
     "outputs": [],
@@ -1671,6 +1691,13 @@
       { "internalType": "uint8", "name": "parity", "type": "uint8" }
     ],
     "name": "setMuonPublicKey",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "signatureExpiryPeriod", "type": "uint256" }],
+    "name": "setSignatureExpiryPeriod",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
