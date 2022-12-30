@@ -56,6 +56,15 @@ library AccountsInternal {
         require(success, "Failed to withdraw collateral");
     }
 
+    function withdrawRevenue(address delegate, uint256 amount) internal {
+        MasterStorage.Layout storage s = MasterStorage.layout();
+
+        require(s.accountBalances[address(this)] >= amount, "Insufficient account balance");
+        s.accountBalances[address(this)] -= amount;
+        bool success = IERC20(ConstantsInternal.getCollateral()).transfer(delegate, amount);
+        require(success, "Failed to withdraw collateral");
+    }
+
     function allocate(address party, uint256 amount) internal {
         MasterStorage.Layout storage s = MasterStorage.layout();
 
