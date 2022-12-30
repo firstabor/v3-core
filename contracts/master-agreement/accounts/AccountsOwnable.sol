@@ -9,7 +9,7 @@ contract AccountsOwnable is AccessControlInternal {
 
     function collectFees() external onlyRole(REVENUE_ROLE) {
         uint256 amount = AccountsInternal.getAccountBalance(address(this));
-        AccountsInternal.withdraw(address(this), amount);
+        AccountsInternal.withdrawRevenue(msg.sender, amount);
         emit CollectFees(block.timestamp, amount);
     }
 }
