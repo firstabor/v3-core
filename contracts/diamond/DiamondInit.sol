@@ -12,16 +12,11 @@ import { ConstantsInternal } from "../constants/ConstantsInternal.sol";
 
 contract DiamondInit {
     function init() external {
-        // Constants
-        ConstantsInternal.setCollateral(0xB62F2fb600D39A44883688DE20A8E058c76Ad558);
+        ConstantsInternal.setCollateral(0xDE1E704dae0B4051e80DAbB26ab6ad6c12262DA0); // DEI
         ConstantsInternal.setLiquidationFee(0.0005e18); // 0.05%
         ConstantsInternal.setProtocolLiquidationShare(0.5e18); // 50%
         ConstantsInternal.setCVA(0.01e18); // 1%
         ConstantsInternal.setRequestTimeout(2 minutes);
         ConstantsInternal.setMaxOpenPositionsCross(5);
-
-        // Oracle
-        // OracleInternal.setMuonAppId();
-        // OracleInternal.setMuonAppCID();
     }
 }
