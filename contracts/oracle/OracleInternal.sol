@@ -105,7 +105,7 @@ library OracleInternal {
         uint256[] memory askPrices
     ) internal pure returns (PositionPrice[] memory positionPrices) {
         require(
-            positionPrices.length == bidPrices.length && positionPrices.length == askPrices.length,
+            positionIds.length == bidPrices.length && positionIds.length == askPrices.length,
             "Invalid position prices"
         );
 
