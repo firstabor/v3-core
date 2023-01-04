@@ -121,10 +121,7 @@ contract Liquidations is ILiquidationsEvents {
         s.accountBalances[msg.sender] += (position.liquidationFee - protocolShare);
         s.accountBalances[address(this)] += protocolShare;
 
-        // Update mappings
-        _updatePositionStateIsolated(position);
-
-        // Emit the liquidation event
+        // Emit the liquidation event, executed *prior* to resetting the balance state.
         emit Liquidate(
             positionId,
             position.partyA,
@@ -133,6 +130,9 @@ contract Liquidations is ILiquidationsEvents {
             position.currentBalanceUnits,
             position.side == Side.BUY ? bidPrice : askPrice
         );
+
+        // Update mappings
+        _updatePositionStateIsolated(position);
     }
 
     function liquidatePartyCross(
@@ -318,11 +318,7 @@ contract Liquidations is ILiquidationsEvents {
         MasterStorage.Layout storage s = MasterStorage.layout();
         Position memory position = s.allPositionsMap[positionId];
 
-        _updatePositionStateBase(positionId);
-        s.openPositionsCrossLength[position.partyA]--;
-        s.openPositionsIsolatedLength[position.partyB]--;
-
-        // Emit the liquidation event
+        // Emit the liquidation event, executed *prior* to resetting the balance state.
         emit Liquidate(
             positionId,
             position.partyA,
@@ -331,6 +327,10 @@ contract Liquidations is ILiquidationsEvents {
             position.currentBalanceUnits,
             position.side == Side.BUY ? positionPrice.bidPrice : positionPrice.askPrice
         );
+
+        _updatePositionStateBase(positionId);
+        s.openPositionsCrossLength[position.partyA]--;
+        s.openPositionsIsolatedLength[position.partyB]--;
     }
 
     function _updatePositionStateBase(uint256 positionId) private {

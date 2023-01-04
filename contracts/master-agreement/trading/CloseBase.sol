@@ -34,6 +34,9 @@ abstract contract CloseBase is ICloseEvents {
         s.marginBalances[position.partyA] += (position.liquidationFee + position.cva);
         s.marginBalances[position.partyB] += (position.liquidationFee + position.cva);
 
+        // Emit event prior to updating the balance state
+        emit ClosePosition(positionId, position.partyA, position.partyB, position.currentBalanceUnits, price);
+
         // Update Position
         position.state = PositionState.CLOSED;
         position.currentBalanceUnits = 0;
@@ -47,8 +50,6 @@ abstract contract CloseBase is ICloseEvents {
             s.openPositionsCrossLength[position.partyA]--;
             s.openPositionsIsolatedLength[position.partyB]--;
         }
-
-        emit ClosePosition(positionId, position.partyA, position.partyB, position.currentBalanceUnits, price);
     }
 
     function _updatePositionState(Position storage position, PositionState state) internal {
