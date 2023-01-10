@@ -12,12 +12,13 @@ contract OpenPosition is OpenBase {
         uint256 rfqId,
         uint256 filledAmountUnits,
         uint256 avgPriceUsd,
-        bytes16 uuid
+        bytes16 uuid,
+        uint256 lockedMarginB
     ) external returns (Position memory position) {
         RequestForQuote storage rfq = MasterStorage.layout().requestForQuotesMap[rfqId];
 
         if (rfq.hedgerMode == HedgerMode.SINGLE && rfq.orderType == OrderType.MARKET) {
-            position = _openPositionMarketSingle(rfq, filledAmountUnits, uuid);
+            position = _openPositionMarketSingle(rfq, filledAmountUnits, uuid, lockedMarginB);
         } else {
             revert("Other modes not implemented yet");
         }
@@ -28,9 +29,10 @@ contract OpenPosition is OpenBase {
     function _openPositionMarketSingle(
         RequestForQuote memory rfq,
         uint256 filledAmountUnits,
-        bytes16 uuid
+        bytes16 uuid,
+        uint256 lockedMarginB
     ) private returns (Position memory position) {
         require(rfq.partyB == msg.sender, "Invalid party");
-        return _openPositionMarket(msg.sender, rfq.rfqId, filledAmountUnits, uuid);
+        return _openPositionMarket(msg.sender, rfq.rfqId, filledAmountUnits, uuid, lockedMarginB);
     }
 }

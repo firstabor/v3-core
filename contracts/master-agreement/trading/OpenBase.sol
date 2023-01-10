@@ -87,7 +87,8 @@ abstract contract OpenBase is IOpenEvents {
         address partyB,
         uint256 rfqId,
         uint256 filledAmountUnits,
-        bytes16 uuid
+        bytes16 uuid,
+        uint256 lockedMarginB
     ) internal returns (Position memory position) {
         MasterStorage.Layout storage s = MasterStorage.layout();
         RequestForQuote storage rfq = s.requestForQuotesMap[rfqId];
@@ -98,9 +99,6 @@ abstract contract OpenBase is IOpenEvents {
 
         // Update the RFQ
         _updateRequestForQuoteState(rfq, RequestForQuoteState.ACCEPTED);
-
-        // TODO: allow hedger to set his own locked margin amount
-        uint256 lockedMarginB = rfq.lockedMarginA;
 
         // Create the Position
         uint256 currentPositionId = s.allPositionsLength + 1;
