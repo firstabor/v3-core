@@ -1451,7 +1451,8 @@
       { "internalType": "uint256", "name": "rfqId", "type": "uint256" },
       { "internalType": "uint256", "name": "filledAmountUnits", "type": "uint256" },
       { "internalType": "uint256", "name": "avgPriceUsd", "type": "uint256" },
-      { "internalType": "bytes16", "name": "uuid", "type": "bytes16" }
+      { "internalType": "bytes16", "name": "uuid", "type": "bytes16" },
+      { "internalType": "uint256", "name": "lockedMarginB", "type": "uint256" }
     ],
     "name": "openPosition",
     "outputs": [
