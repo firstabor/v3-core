@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import { MasterStorage, Position } from "../MasterStorage.sol";
+import { MasterStorage, Position, PositionState } from "../MasterStorage.sol";
 import { ConstantsInternal } from "../../constants/ConstantsInternal.sol";
 
 library AccountsInternal {
@@ -89,6 +89,11 @@ library AccountsInternal {
         s.marginBalances[party] -= amount;
 
         require(position.partyA == party || position.partyB == party, "Invalid party");
+        require(
+            position.state != PositionState.CLOSED && position.state != PositionState.LIQUIDATED,
+            "Invalid position state"
+        );
+
         if (position.partyA == party) {
             position.lockedMarginA += amount;
         } else {
