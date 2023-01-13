@@ -14,7 +14,7 @@ library MarketsInternal {
     /* ========== VIEWS ========== */
 
     function getMarkets() internal view returns (Market[] memory markets) {
-        return MarketsStorage.layout().marketList;
+        return getMarketsInRange(1, MarketsStorage.layout().marketList.length);
     }
 
     function getMarketById(uint256 marketId) internal view returns (Market memory market) {
@@ -29,11 +29,11 @@ library MarketsInternal {
     }
 
     function getMarketsInRange(uint256 start, uint256 end) internal view returns (Market[] memory markets) {
-        uint256 length = end - start;
+        uint256 length = end - start + 1;
         markets = new Market[](length);
 
         for (uint256 i = 0; i < length; i++) {
-            markets[i] = MarketsStorage.layout().marketList[start + i];
+            markets[i] = MarketsStorage.layout().marketMap[start + i];
         }
     }
 
