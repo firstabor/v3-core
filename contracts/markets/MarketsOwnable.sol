@@ -60,6 +60,15 @@ contract MarketsOwnable is AccessControlInternal, IMarketsEvents {
         emit UpdateMarketActive(marketId, oldStatus, active);
     }
 
+    function updateMarketSymbol(uint256 marketId, string calldata symbol) external onlyRole(ADMIN_ROLE) {
+        MarketsStorage.Layout storage s = MarketsStorage.layout();
+
+        string memory oldSymbol = s.marketMap[marketId].symbol;
+        s.marketMap[marketId].symbol = symbol;
+
+        emit UpdateMarketSymbol(marketId, oldSymbol, symbol);
+    }
+
     function updateMarketMuonPriceFeedId(uint256 marketId, bytes32 muonPriceFeedId) external onlyRole(ADMIN_ROLE) {
         MarketsStorage.Layout storage s = MarketsStorage.layout();
 
